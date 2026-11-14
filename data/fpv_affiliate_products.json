@@ -1,8 +1,8 @@
 {
   "version": "1.0.0",
   "updated": "2026-06",
-  "disclaimer_th": "ทีมงานคัดเลือกอุปกรณ์จากความเข้ากันได้ทางวิศวกรรม ไม่ใช่จากสปอนเซอร์หรือโฆษณา",
-  "disclaimer_en": "Some links on this page may be affiliate links. ConfigDoctor may earn a small commission at no extra cost to you. Items are picked for engineering fit, not sponsorship.",
+  "disclaimer_th": "หน้านี้ไม่มีลิงก์ซื้อหรือ affiliate เป็นคำแนะนำเพื่อใช้อ้างอิงด้านความเข้ากันได้เท่านั้น",
+  "disclaimer_en": "No purchase links or affiliate links are provided. Recommendations are for informational purposes only.",
   "categories": {
     "motors": {
       "label_th": "มอเตอร์",
@@ -57,7 +57,6 @@
         "4S",
         "6S"
       ],
-      "affiliate_url": "https://aff.configdoctor.example.com/r/mt-01",
       "price_range": "฿650–750",
       "rating": 4.8,
       "rating_count": 187,
@@ -77,7 +76,6 @@
         "4S",
         "6S"
       ],
-      "affiliate_url": "https://aff.configdoctor.example.com/r/mt-02",
       "price_range": "฿550–650",
       "rating": 4.6,
       "rating_count": 234,
@@ -96,7 +94,6 @@
         "budget",
         "4S"
       ],
-      "affiliate_url": "https://aff.configdoctor.example.com/r/mt-03",
       "price_range": "฿450–550",
       "rating": 4.4,
       "rating_count": 312,
@@ -118,7 +115,6 @@
         "1S",
         "2S"
       ],
-      "affiliate_url": "https://aff.configdoctor.example.com/r/mt-04",
       "price_range": "฿180–220",
       "rating": 4.5,
       "rating_count": 156,
@@ -137,7 +133,6 @@
         "6S",
         "efficient"
       ],
-      "affiliate_url": "https://aff.configdoctor.example.com/r/mt-05",
       "price_range": "฿600–700",
       "rating": 4.7,
       "rating_count": 98,
@@ -155,7 +150,6 @@
         "freestyle",
         "durable"
       ],
-      "affiliate_url": "https://aff.configdoctor.example.com/r/fr-01",
       "price_range": "฿700–900",
       "rating": 4.7,
       "rating_count": 201,
@@ -173,7 +167,6 @@
         "freestyle",
         "racing"
       ],
-      "affiliate_url": "https://aff.configdoctor.example.com/r/fr-02",
       "price_range": "฿900–1,100",
       "rating": 4.5,
       "rating_count": 143,
@@ -191,7 +184,6 @@
         "cinewhoop",
         "ducted"
       ],
-      "affiliate_url": "https://aff.configdoctor.example.com/r/fr-03",
       "price_range": "฿1,400–1,700",
       "rating": 4.8,
       "rating_count": 167,
@@ -210,7 +202,6 @@
         "racing",
         "budget"
       ],
-      "affiliate_url": "https://aff.configdoctor.example.com/r/fr-04",
       "price_range": "฿500–650",
       "rating": 4.6,
       "rating_count": 289,
@@ -227,7 +218,6 @@
         "7inch",
         "longrange"
       ],
-      "affiliate_url": "https://aff.configdoctor.example.com/r/fr-05",
       "price_range": "฿1,800–2,200",
       "rating": 4.7,
       "rating_count": 88,
@@ -246,7 +236,6 @@
         "2inch",
         "indoor"
       ],
-      "affiliate_url": "https://aff.configdoctor.example.com/r/fr-06",
       "price_range": "฿350–450",
       "rating": 4.4,
       "rating_count": 195,
@@ -264,7 +253,6 @@
         "freestyle",
         "triblade"
       ],
-      "affiliate_url": "https://aff.configdoctor.example.com/r/pr-01",
       "price_range": "฿120–160",
       "rating": 4.7,
       "rating_count": 423,
@@ -282,7 +270,6 @@
         "freestyle",
         "smooth"
       ],
-      "affiliate_url": "https://aff.configdoctor.example.com/r/pr-02",
       "price_range": "฿150–190",
       "rating": 4.8,
       "rating_count": 356,
@@ -299,7 +286,6 @@
         "3inch",
         "cinewhoop"
       ],
-      "affiliate_url": "https://aff.configdoctor.example.com/r/pr-03",
       "price_range": "฿100–140",
       "rating": 4.6,
       "rating_count": 211,
@@ -316,7 +302,6 @@
         "5inch",
         "racing"
       ],
-      "affiliate_url": "https://aff.configdoctor.example.com/r/pr-04",
       "price_range": "฿130–170",
       "rating": 4.7,
       "rating_count": 289,
@@ -334,7 +319,6 @@
         "longrange",
         "efficient"
       ],
-      "affiliate_url": "https://aff.configdoctor.example.com/r/pr-05",
       "price_range": "฿180–230",
       "rating": 4.6,
       "rating_count": 134,
@@ -353,7 +337,6 @@
         "6S",
         "4-in-1"
       ],
-      "affiliate_url": "https://aff.configdoctor.example.com/r/esc-01",
       "price_range": "฿1,800–2,200",
       "rating": 4.8,
       "rating_count": 134,
@@ -372,7 +355,6 @@
         "4S",
         "4-in-1"
       ],
-      "affiliate_url": "https://aff.configdoctor.example.com/r/esc-02",
       "price_range": "฿1,600–2,000",
       "rating": 4.7,
       "rating_count": 178,
@@ -391,7 +373,6 @@
         "budget",
         "4-in-1"
       ],
-      "affiliate_url": "https://aff.configdoctor.example.com/r/esc-03",
       "price_range": "฿1,100–1,400",
       "rating": 4.5,
       "rating_count": 234,
@@ -410,7 +391,6 @@
         "cinewhoop",
         "4-in-1"
       ],
-      "affiliate_url": "https://aff.configdoctor.example.com/r/esc-04",
       "price_range": "฿800–1,000",
       "rating": 4.6,
       "rating_count": 156,
@@ -428,7 +408,6 @@
         "freestyle",
         "6S"
       ],
-      "affiliate_url": "https://aff.configdoctor.example.com/r/bt-01",
       "price_range": "฿900–1,100",
       "rating": 4.6,
       "rating_count": 312,
@@ -446,7 +425,6 @@
         "racing",
         "4S"
       ],
-      "affiliate_url": "https://aff.configdoctor.example.com/r/bt-02",
       "price_range": "฿1,000–1,300",
       "rating": 4.9,
       "rating_count": 201,
@@ -464,7 +442,6 @@
         "cinewhoop",
         "4S"
       ],
-      "affiliate_url": "https://aff.configdoctor.example.com/r/bt-03",
       "price_range": "฿500–650",
       "rating": 4.5,
       "rating_count": 178,
@@ -482,7 +459,6 @@
         "longrange",
         "6S"
       ],
-      "affiliate_url": "https://aff.configdoctor.example.com/r/bt-04",
       "price_range": "฿850–1,050",
       "rating": 4.4,
       "rating_count": 145,
@@ -501,7 +477,6 @@
         "2inch",
         "3S"
       ],
-      "affiliate_url": "https://aff.configdoctor.example.com/r/bt-05",
       "price_range": "฿250–350",
       "rating": 4.5,
       "rating_count": 134,
@@ -518,7 +493,6 @@
         "universal",
         "smart-charger"
       ],
-      "affiliate_url": "https://aff.configdoctor.example.com/r/ch-01",
       "price_range": "฿2,200–2,600",
       "rating": 4.8,
       "rating_count": 234,
@@ -535,7 +509,6 @@
         "universal",
         "beginner"
       ],
-      "affiliate_url": "https://aff.configdoctor.example.com/r/ch-02",
       "price_range": "฿900–1,200",
       "rating": 4.5,
       "rating_count": 312,
@@ -552,7 +525,6 @@
         "universal",
         "dual-port"
       ],
-      "affiliate_url": "https://aff.configdoctor.example.com/r/ch-03",
       "price_range": "฿2,500–3,000",
       "rating": 4.7,
       "rating_count": 167,
@@ -570,7 +542,6 @@
         "hd",
         "beginner"
       ],
-      "affiliate_url": "https://aff.configdoctor.example.com/r/gg-01",
       "price_range": "฿14,000–17,000",
       "rating": 4.9,
       "rating_count": 512,
@@ -589,7 +560,6 @@
         "racing",
         "freestyle"
       ],
-      "affiliate_url": "https://aff.configdoctor.example.com/r/gg-02",
       "price_range": "฿9,000–12,000",
       "rating": 4.7,
       "rating_count": 289,
@@ -606,7 +576,6 @@
         "analog",
         "racing"
       ],
-      "affiliate_url": "https://aff.configdoctor.example.com/r/gg-03",
       "price_range": "฿8,000–10,000",
       "rating": 4.6,
       "rating_count": 201,
@@ -623,7 +592,6 @@
         "analog",
         "budget"
       ],
-      "affiliate_url": "https://aff.configdoctor.example.com/r/gg-04",
       "price_range": "฿3,500–4,500",
       "rating": 4.5,
       "rating_count": 178,
@@ -641,7 +609,6 @@
         "longrange",
         "omni"
       ],
-      "affiliate_url": "https://aff.configdoctor.example.com/r/an-01",
       "price_range": "฿450–600",
       "rating": 4.7,
       "rating_count": 234,
@@ -659,7 +626,6 @@
         "freestyle",
         "compact"
       ],
-      "affiliate_url": "https://aff.configdoctor.example.com/r/an-02",
       "price_range": "฿250–350",
       "rating": 4.6,
       "rating_count": 312,
@@ -677,7 +643,6 @@
         "racing",
         "cp"
       ],
-      "affiliate_url": "https://aff.configdoctor.example.com/r/an-03",
       "price_range": "฿500–700",
       "rating": 4.5,
       "rating_count": 156,
