@@ -67,6 +67,13 @@ def test_edition_page_stylesheet_is_scoped_away_from_the_homepage():
     assert "#75e3b4" in css
 
 
+def test_landing_body_class_is_rendered_for_theme_scope(client):
+    response = client.get("/landing")
+
+    assert response.status_code == 200
+    assert '<body class="landing-page">' in response.get_data(as_text=True)
+
+
 def test_edition_stylesheet_public_mirror_matches_source():
     source = (PROJECT_ROOT / "static/css/edition-pages.css").read_bytes()
     public = (PROJECT_ROOT / "public/static/css/edition-pages.css").read_bytes()
