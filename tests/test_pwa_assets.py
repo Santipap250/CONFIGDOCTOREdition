@@ -57,17 +57,25 @@ def test_service_worker_is_root_scoped_and_not_stale_cached(client):
     assert response.headers.get("Service-Worker-Allowed") == "/"
     assert "no-cache" in response.headers.get("Cache-Control", "")
     assert "static/offline.html" in response.get_data(as_text=True)
-    assert "obixconfigdoctor-v8-static" in response.get_data(as_text=True)
+    assert "obixconfigdoctor-v9-static" in response.get_data(as_text=True)
 
 
 def test_offline_fallback_is_a_static_self_contained_page(client):
     response = client.get("/static/offline.html")
     assert response.status_code == 200
     html = response.get_data(as_text=True)
+    assert "<title>ออฟไลน์ · CONFIGDOCTOR Edition</title>" in html
+    assert "OBIX Config Doctor" not in html
     assert "ขณะนี้ออฟไลน์" in html
     assert "ไม่ได้ถูกเก็บไว้แบบออฟไลน์" in html
     assert "<script" not in html
     assert "https://" not in html
+
+
+def test_vercel_offline_fallback_mirror_matches_source():
+    source = (PROJECT_ROOT / "static" / "offline.html").read_bytes()
+    vercel_public = (PROJECT_ROOT / "public" / "static" / "offline.html").read_bytes()
+    assert vercel_public == source
 
 
 def test_vercel_bundle_keeps_root_favicon_and_short_exclusion_pattern():
