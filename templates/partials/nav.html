@@ -1,5 +1,5 @@
 {#
-  templates/partials/nav.html — OBIXConfig Doctor v7.0 "Nova"
+  templates/partials/nav.html — CONFIGDOCTOR Edition
   ══════════════════════════════════════════════════════
   UNIFIED HUD NAV — works on every page, one include.
 
@@ -72,7 +72,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;900&family=Sarabun:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700;800&family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 /* ════════════════════════════════════════════════════════════════
    OBIX UNIFIED HUD NAV v7.0 "NOVA"  (prefix: .on-)
@@ -81,10 +81,10 @@
 body.lang-en .on-th{display:none}
 body.lang-en .on-en{display:inline}
 :root{
-  --on-green:#10c47a;--on-cyan:#00e5ff;--on-blue:#3a82f6;
-  --on-gold:#f59e0b;--on-purple:#a855f7;--on-red:#f87171;
-  --on-muted:#8295a2;--on-muted2:#9bb4c5;--on-text:#c8dce8;
-  --on-bg:rgba(4,9,14,0.92);--on-border:rgba(255,255,255,0.06);
+  --on-green:var(--cd-accent,#75e3b4);--on-cyan:var(--cd-cyan,#7fd8df);--on-blue:#91b8e8;
+  --on-gold:var(--cd-warm,#d7c6a4);--on-purple:#b4a2d6;--on-red:var(--cd-danger,#e58e8e);
+  --on-muted:var(--cd-dim,#71857b);--on-muted2:var(--cd-muted,#a0b2aa);--on-text:var(--cd-text,#edf5f0);
+  --on-bg:rgba(8,17,15,.94);--on-border:var(--cd-line,rgba(201,232,219,.1));
 }
 body.light{--on-muted:#52616e;--on-muted2:#52616e;}
 /* ── TOP BAR ── */

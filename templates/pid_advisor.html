@@ -823,7 +823,7 @@ body::after{
   text-transform:uppercase;
   box-shadow:0 0 24px rgba(16,196,122,.08);
 }
-.pid-hero h1{
+.pid-hero h2{
   font-family:var(--font-head);
   font-size:clamp(28px,4.4vw,48px);
   line-height:.96;
@@ -832,7 +832,7 @@ body::after{
   text-shadow:0 0 24px rgba(255,255,255,.04);
   max-width: 14ch;
 }
-.pid-hero h1 em{
+.pid-hero h2 em{
   font-style:normal;
   background:linear-gradient(120deg, var(--green), var(--cyan), #a78bfa, var(--amber));
   background-size:240% 100%;
@@ -1124,7 +1124,7 @@ body::after{
     grid-template-columns:1fr;
     padding:18px;
   }
-  .pid-hero h1{max-width:none}
+  .pid-hero h2{max-width:none}
   .pid-hero-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}
   .smart-grid{grid-template-columns:1fr}
 }
@@ -1137,7 +1137,7 @@ body::after{
 /* motion reduction */
 @media (prefers-reduced-motion: reduce){
   body::before, body::after, .pid-hero::before, .pid-hero::after,
-  .pid-hero h1 em, .hero-metric::before, .smart-card::after{
+  .pid-hero h2 em, .hero-metric::before, .smart-card::after{
     animation:none !important;
   }
 }
@@ -1182,7 +1182,7 @@ body::after{
 <div class="pid-hero">
   <div class="pid-hero-copy">
     <div class="pid-hero-ey">🧠 PID Intelligence Engine</div>
-    <h1>อ่านอาการโดรนให้ขาด ก่อนมันงอแงกลางอากาศ</h1>
+    <h2>อ่านอาการโดรนให้ขาด ก่อนมันงอแงกลางอากาศ</h2>
     <p class="pid-hero-sub">
       วินิจฉัยอาการจาก PID, Filter และ Flight Style แบบเข้าใจง่าย พร้อมคำนวณค่า delta ที่เหมาะกับ profile ปัจจุบัน
       ให้ทั้งคำอธิบาย, แนวทางแก้ และ CLI พร้อมใช้งานในที่เดียว

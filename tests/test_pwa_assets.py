@@ -57,7 +57,14 @@ def test_service_worker_is_root_scoped_and_not_stale_cached(client):
     assert response.headers.get("Service-Worker-Allowed") == "/"
     assert "no-cache" in response.headers.get("Cache-Control", "")
     assert "static/offline.html" in response.get_data(as_text=True)
-    assert "obixconfigdoctor-v9-static" in response.get_data(as_text=True)
+    assert "obixconfigdoctor-v10-static" in response.get_data(as_text=True)
+
+
+def test_vercel_service_worker_mirror_matches_source():
+    source = (PROJECT_ROOT / "static" / "sw.js").read_bytes()
+    vercel_public = (PROJECT_ROOT / "public" / "static" / "sw.js").read_bytes()
+
+    assert source == vercel_public
 
 
 def test_offline_fallback_is_a_static_self_contained_page(client):

@@ -4,36 +4,18 @@
    The landing page has its own carefully composed stylesheet and is intentionally scoped out.
 */
 :root {
-  color-scheme: dark;
-  --cd-bg: #08110f !important;
-  --cd-bg-raised: #0c1715 !important;
-  --cd-surface: #111e1b !important;
-  --cd-surface-soft: rgba(18, 33, 29, .82) !important;
-  --cd-line: rgba(201, 232, 219, .10) !important;
-  --cd-line-strong: rgba(201, 232, 219, .17) !important;
-  --cd-text: #edf5f0 !important;
-  --cd-muted: #a0b2aa !important;
-  --cd-dim: #71857b !important;
-  --cd-accent: #75e3b4 !important;
-  --cd-accent-strong: #a0f2ce !important;
-  --cd-cyan: #7fd8df !important;
-  --cd-warm: #d7c6a4 !important;
-  --cd-heading: 'Manrope', 'Sarabun', system-ui, sans-serif !important;
-  --cd-body: 'Sarabun', system-ui, sans-serif !important;
-  --cd-mono: 'DM Mono', 'JetBrains Mono', ui-monospace, monospace !important;
-
   /* Bridge the variable names used by the existing tool pages. */
-  --bg: #08110f !important;
-  --bg0: #08110f !important;
-  --bg1: #0c1715 !important;
-  --bg2: #0c1715 !important;
-  --bg3: #111e1b !important;
-  --bg-primary: #08110f !important;
-  --bg-secondary: #0c1715 !important;
-  --card: #111e1b !important;
-  --card-bg: #111e1b !important;
+  --bg: var(--cd-bg) !important;
+  --bg0: var(--cd-bg) !important;
+  --bg1: var(--cd-bg-raised) !important;
+  --bg2: var(--cd-bg-raised) !important;
+  --bg3: var(--cd-surface) !important;
+  --bg-primary: var(--cd-bg) !important;
+  --bg-secondary: var(--cd-bg-raised) !important;
+  --card: var(--cd-surface) !important;
+  --card-bg: var(--cd-surface) !important;
   --card2: #14241f !important;
-  --surface: #111e1b !important;
+  --surface: var(--cd-surface) !important;
   --surface2: #14241f !important;
   --surface3: #172a24 !important;
   --panel: rgba(17, 30, 27, .96) !important;
@@ -42,42 +24,44 @@
   --border2: rgba(201, 232, 219, .08) !important;
   --border-hi: rgba(201, 232, 219, .18) !important;
   --line: rgba(201, 232, 219, .10) !important;
-  --text: #edf5f0 !important;
-  --text1: #edf5f0 !important;
-  --text2: #a0b2aa !important;
+  --text: var(--cd-text) !important;
+  --text1: var(--cd-text) !important;
+  --text2: var(--cd-muted) !important;
   --muted: #819389 !important;
   --muted2: #71857b !important;
-  --green: #75e3b4 !important;
-  --green-lite: #a0f2ce !important;
-  --green-mid: #83e8bb !important;
+  --green: var(--cd-accent) !important;
+  --green-lite: var(--cd-accent-strong) !important;
+  --green-mid: var(--cd-accent) !important;
   --green-dim: rgba(117, 227, 180, .10) !important;
   --green-glow: 0 0 20px rgba(117, 227, 180, .16) !important;
-  --teal: #75e3b4 !important;
-  --accent: #75e3b4 !important;
-  --accent-color: #75e3b4 !important;
-  --primary: #75e3b4 !important;
-  --cyan: #7fd8df !important;
-  --font-body: 'Sarabun', system-ui, sans-serif !important;
-  --font-head: 'Manrope', 'Sarabun', system-ui, sans-serif !important;
-  --font-mono: 'DM Mono', 'JetBrains Mono', ui-monospace, monospace !important;
-  --font-th: 'Sarabun', system-ui, sans-serif !important;
-  --font-en: 'Manrope', 'Sarabun', system-ui, sans-serif !important;
-  --font-d: 'Manrope', 'Sarabun', system-ui, sans-serif !important;
-  --font-t: 'Sarabun', system-ui, sans-serif !important;
-  --font-s: 'Sarabun', system-ui, sans-serif !important;
-  --fm: 'DM Mono', 'JetBrains Mono', ui-monospace, monospace !important;
-  --fd: 'Manrope', 'Sarabun', system-ui, sans-serif !important;
-  --fs: 'Sarabun', system-ui, sans-serif !important;
-  --ft: 'Sarabun', system-ui, sans-serif !important;
+  --teal: var(--cd-accent) !important;
+  --accent: var(--cd-accent) !important;
+  --accent-color: var(--cd-accent) !important;
+  --primary: var(--cd-accent) !important;
+  --cyan: var(--cd-cyan) !important;
+  --font-body: var(--cd-body) !important;
+  --font-head: var(--cd-heading) !important;
+  --font-mono: var(--cd-mono) !important;
+  --font-th: var(--cd-body) !important;
+  --font-en: var(--cd-heading) !important;
+  --font-d: var(--cd-heading) !important;
+  --font-t: var(--cd-body) !important;
+  --font-s: var(--cd-body) !important;
+  --fm: var(--cd-mono) !important;
+  --fd: var(--cd-heading) !important;
+  --fs: var(--cd-body) !important;
+  --ft: var(--cd-body) !important;
 }
 
-html:has(body:not(.landing-page)) { scroll-behavior: smooth; scroll-padding-top: 78px; }
+html:has(body:not(.landing-page)) { scroll-behavior: smooth; scroll-padding-top: 78px; overflow-x: clip; }
 body:not(.landing-page) {
   min-width: 320px;
+  width: 100%;
+  margin: 0 !important;
   overflow-x: hidden;
-  background: radial-gradient(ellipse 78% 38% at 46% -16%, rgba(52, 132, 102, .16), transparent 72%), #08110f !important;
-  color: #edf5f0 !important;
-  font-family: 'Sarabun', system-ui, sans-serif !important;
+  background: radial-gradient(ellipse 78% 38% at 46% -16%, rgba(52, 132, 102, .16), transparent 72%), var(--cd-bg) !important;
+  color: var(--cd-text) !important;
+  font-family: var(--cd-body) !important;
   font-size: 15px;
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
@@ -203,6 +187,8 @@ body:not(.landing-page) :is(.tip, .hint, .help-text, .field-hint, .subtle, .mute
 
 /* Inputs are calmer, legible and touch-friendly on phones. */
 body:not(.landing-page) :is(input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="file"]), select, textarea, .v5-input, .v5-select) {
+  box-sizing: border-box !important;
+  max-width: 100% !important;
   border-color: rgba(201, 232, 219, .15) !important;
   border-radius: 10px !important;
   background-color: rgba(5, 13, 10, .72) !important;
@@ -210,15 +196,15 @@ body:not(.landing-page) :is(input:not([type="checkbox"]):not([type="radio"]):not
   font-family: 'Sarabun', system-ui, sans-serif !important;
   box-shadow: none;
 }
-body:not(.landing-page) :is(input, select, textarea)::placeholder { color: #71857b !important; opacity: 1; }
+body:not(.landing-page) :is(input, select, textarea)::placeholder { color: var(--cd-dim) !important; opacity: 1; }
 body:not(.landing-page) :is(input:not([type="checkbox"]):not([type="radio"]):not([type="range"]), select, textarea):focus {
   border-color: rgba(117, 227, 180, .58) !important;
   box-shadow: 0 0 0 3px rgba(117, 227, 180, .09) !important;
   outline: none;
 }
-body:not(.landing-page) input[type="checkbox"], body:not(.landing-page) input[type="radio"] { accent-color: #75e3b4; }
-body:not(.landing-page) input[type="range"] { accent-color: #75e3b4; }
-body:not(.landing-page) select option { background: #111e1b; color: #edf5f0; }
+body:not(.landing-page) input[type="checkbox"], body:not(.landing-page) input[type="radio"] { accent-color: var(--cd-accent); }
+body:not(.landing-page) input[type="range"] { accent-color: var(--cd-accent); }
+body:not(.landing-page) select option { background: var(--cd-surface); color: var(--cd-text); }
 body:not(.landing-page) :is(pre, code, kbd, .code-block, .cli-editor, .v5-code) {
   border-color: rgba(201, 232, 219, .12);
   border-radius: 10px;
@@ -231,7 +217,7 @@ body:not(.landing-page) :is(
 ) {
   border-color: rgba(117, 227, 180, .38) !important;
   border-radius: 12px !important;
-  background: linear-gradient(135deg, #75e3b4, #a0f2ce) !important;
+  background: linear-gradient(135deg, var(--cd-accent), var(--cd-accent-strong)) !important;
   color: #082018 !important;
   font-family: var(--cd-heading) !important;
   font-weight: 750 !important;
@@ -281,12 +267,12 @@ body:not(.landing-page) .on-bar {
 }
 body:not(.landing-page) .on-bar::before,
 body:not(.landing-page) .on-bar::after {
-  background: linear-gradient(90deg, transparent, #75e3b4 35%, #7fd8df 65%, transparent) !important;
+  background: linear-gradient(90deg, transparent, var(--cd-accent) 35%, var(--cd-cyan) 65%, transparent) !important;
   opacity: .42 !important;
 }
-body:not(.landing-page) .on-logo-img { color: #75e3b4 !important; filter: drop-shadow(0 0 11px rgba(117, 227, 180, .22)) !important; }
-body:not(.landing-page) .on-logo-wordmark { color: #edf5f0 !important; font-family: 'Manrope', 'Sarabun', sans-serif !important; letter-spacing: .035em !important; }
-body:not(.landing-page) .on-logo-wordmark small { color: #75e3b4 !important; font-family: 'DM Mono', 'JetBrains Mono', monospace !important; }
+body:not(.landing-page) .on-logo-img { color: var(--cd-accent) !important; filter: drop-shadow(0 0 11px rgba(117, 227, 180, .22)) !important; }
+body:not(.landing-page) .on-logo-wordmark { color: var(--cd-text) !important; font-family: var(--cd-heading) !important; letter-spacing: .035em !important; }
+body:not(.landing-page) .on-logo-wordmark small { color: var(--cd-accent) !important; font-family: var(--cd-mono) !important; }
 body:not(.landing-page) :is(.on-ham, .on-crumb, .on-icon-btn:hover, .on-search-btn:hover, .on-dd-item.on-dd-act, .on-dlink.on-act) {
   border-color: rgba(117, 227, 180, .24) !important;
   color: #75e3b4 !important;
@@ -301,7 +287,7 @@ body:not(.landing-page) .on-mg.on-mg-active .on-mg-btn::after { background: #75e
 body:not(.landing-page) .on-dd { background: rgba(9, 19, 16, .98) !important; border-color: var(--cd-line) !important; }
 body:not(.landing-page) .on-dd::before { background: linear-gradient(90deg, transparent, #75e3b4, transparent) !important; }
 body:not(.landing-page) .on-overlay { background: rgba(0, 0, 0, .66) !important; }
-body:not(.landing-page) .on-drawer { background: radial-gradient(ellipse 80% 40% at 50% 0%, rgba(52, 132, 102, .15), transparent 72%), #08110f !important; }
+body:not(.landing-page) .on-drawer { background: radial-gradient(ellipse 80% 40% at 50% 0%, rgba(52, 132, 102, .15), transparent 72%), var(--cd-bg) !important; }
 body:not(.landing-page) :is(.on-dh, .on-dfoot) { border-color: var(--cd-line) !important; }
 body:not(.landing-page) .on-dlink.on-act .on-dtitle { color: #75e3b4 !important; }
 body:not(.landing-page) .on-dfoot-ver { color: #75e3b4 !important; }
@@ -347,4 +333,41 @@ body:not(.landing-page) :is(.footer-nav, .footer-nav a, .page-actions) { border-
     animation-iteration-count: 1 !important;
     transition-duration: .01ms !important;
   }
+}
+
+/* Shared shell typography and branded mobile app-bar. */
+body:not(.landing-page) :is(.on-bar, .on-bar *, .on-drawer, .on-drawer *) {
+  font-family: var(--cd-body) !important;
+}
+body:not(.landing-page) :is(.on-logo-wordmark, .on-mg-btn, .on-dd-hd, .on-dd-label, .on-dtitle, .on-dgroup, .on-dh-name, .on-tools-btn, .tp-title, .tp-item-title) {
+  font-family: var(--cd-heading) !important;
+}
+body:not(.landing-page) :is(.on-crumb, .on-ham-lbl, .on-dd-hint, .on-dmeta, .on-pill, .on-dd-badge, .on-dfoot-ver, .tp-count, .tp-shortcut) {
+  font-family: var(--cd-mono) !important;
+}
+body:not(.landing-page) .on-bar .on-mg.on-mg-active .on-mg-btn,
+body:not(.landing-page) .on-bar .on-mg.on-mg-active .on-mg-btn::after {
+  color: var(--cd-accent) !important;
+  border-color: rgba(117, 227, 180, .24) !important;
+  background-color: rgba(117, 227, 180, .07) !important;
+}
+body:not(.landing-page) .on-bar .on-mg.on-mg-active .on-mg-btn::after {
+  background: var(--cd-accent) !important;
+  box-shadow: 0 0 8px rgba(117, 227, 180, .4) !important;
+}
+body:not(.landing-page) .on-dd .on-dd-item.on-dd-act {
+  color: var(--cd-accent) !important;
+  border-color: rgba(117, 227, 180, .24) !important;
+  background: rgba(117, 227, 180, .07) !important;
+}
+body:not(.landing-page) .cd-sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
 }

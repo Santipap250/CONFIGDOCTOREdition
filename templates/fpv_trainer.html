@@ -167,9 +167,11 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);font-famil
 #gf,#cf{position:absolute;inset:0;opacity:0;pointer-events:none;z-index:15;transition:opacity .08s}
 #gf{background:rgba(0,255,136,.18)}
 #cf{background:rgba(248,113,113,.4)}
+@media(max-width:760px){ #gw{height:calc(100dvh - 55px - env(safe-area-inset-top))}}
 </style>
 {% endblock %}
 {% block content %}
+<h1 class="cd-sr-only">FPV Simulator — CONFIGDOCTOR Edition</h1>
 <div id="gw">
   <canvas id="three-cv"></canvas>
   <canvas id="fx-cv"></canvas>
@@ -217,7 +219,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);font-famil
   <div class="scr" id="s-menu">
     <div class="gbg"></div>
     <div class="mwrap">
-      <div class="mlogo">OBIXConfig Doctor</div>
+      <div class="mlogo">CONFIGDOCTOR Edition</div>
       <div class="mtitle"><span class="gr">FPV SIMULATOR</span><span class="sub">NEO · Cyberpunk Arena · Real 3D Physics</span></div>
       <div class="mdesc">ฝึกบินโดรน FPV ใน Neo Arena ไซเบอร์พังก์ · รองรับ Keyboard · Gamepad · Touch</div>
       <div class="mgrid">

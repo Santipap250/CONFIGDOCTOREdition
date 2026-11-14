@@ -879,7 +879,7 @@ function buildCLI(rec,bidirOk,poles,recEscA,cells,kv,propSz,style,escA,tEsc,cpu)
   var sl={freestyle:'Freestyle',racing:'Racing',longrange:'Long Range',cinematic:'Cinematic'}[style]||style;
   var lines=[
     {t:'cm',v:'# ═══════════════════════════════════════════'},
-    {t:'cm',v:'# OBIXConfig Doctor v5.0 — ESC Setup Export'},
+    {t:'cm',v:'# CONFIGDOCTOR Edition — ESC Setup Export'},
     {t:'cm',v:'# KV='+kv+' | '+cells+'S | Prop='+propSz+'" | '+sl},
     {t:'cm',v:'# ESC: '+escA+'A (rec ≥'+recEscA+'A) | FC: '+cpu.toUpperCase()+' | Thermal: '+tEsc.toFixed(0)+'°C est.'},
     {t:'cm',v:'# BiDir: '+(bidirOk?'ON ✓':'OFF — F4+'+cells+'S unstable')},
