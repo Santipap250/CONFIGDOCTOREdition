@@ -14,20 +14,28 @@
 - ลบ `templates/components/affiliate_card.html` ซึ่งตรวจแล้วว่าไม่มีที่ใดเรียกใช้ เปลี่ยนชื่อ product catalog เป็น `data/fpv_gear_products.json` และเปลี่ยน package ภายในเป็น `gear/`; เก็บข้อมูลคำแนะนำด้าน compatibility ไว้ แต่ไม่พบ PromptPay, purchase link, affiliate URL หรือ referral URL ในชุดข้อมูลและ UI ที่ตรวจ
 - ลบ ignore rules ซ้ำใน `.gitignore` และแก้ README/deployment guides ที่ยังกล่าวถึง QR asset ที่ไม่มีใน release
 
-## ผลตรวจที่รันจริง
+## ผลตรวจใน Sandbox
 
 - `python3 -m compileall -q .` — ผ่าน
 - Full pytest suite — **356 passed**
 - Jinja — **43 templates compiled**, ไม่มีข้อผิดพลาด
-- Flask test client — landing, leaderboard, PID Advisor, downloads, loop analyzer และ gear guide ตอบ `200` และเชื่อม Manifest ได้
-- Chromium บน viewport มือถือ 390×844 และแท็บเล็ต 800×844 — PWA Manifest โหลดได้, Service Worker ควบคุมหน้าและสร้าง cache ได้, mobile/tablet navigation และ modal focus ผ่าน, PID symptom/filter ทำงาน, offline navigation แสดง fallback สถานะ `503`; ไม่พบ JavaScript page errors และหน้า Leaderboard ไม่มี horizontal overflow ที่ 390 px
-- ตรวจ Static assets — Manifest, Service Worker, offline fallback, ไอคอน Android 192 และ maskable 512 มีอยู่และตอบ `200`; `static/` กับ `public/static/` ตรงกันครบ
+- Flask test client — landing, analyzer, PID Advisor, Leaderboard, downloads, loop analyzer, gear guide, Manifest, Service Worker และ favicon ตอบ `200`
+- Chromium บน viewport มือถือ 390×844 และแท็บเล็ต 800×844 — ทดสอบ Manifest, Service Worker, keyboard/focus, navigation, PID symptoms, Leaderboard dialogs และ offline fallback; ไม่พบ JavaScript page errors และหน้า Leaderboard ไม่มี horizontal overflow ที่ 390 px
+- ตรวจ static assets — `static/` กับ `public/static/` มี 48 ไฟล์ตรงกันแบบ byte-identical; `vercel.json` ถูกต้องและ `excludeFiles` ยาว 244 ตัวอักษร
 - ตรวจ Git tracking — ไม่พบ `.env`, private key หรือ SQLite database ที่ถูก track
+
+## ผลตรวจ Vercel Preview
+
+- GitHub PR #2 เปิด Preview ของ Vercel ที่สถานะ **Ready** พร้อม GitHub checks ของ Vercel ผ่าน 2 รายการ; ใช้ [Preview URL ของ PR #2](https://configdoctor-edition-git-fix-project-quality-b8c7f7-obixconfig.vercel.app)
+- เนื่องจาก Preview ถูกป้องกันด้วย Vercel Authentication การเรียกแบบไม่ล็อกอินจะถูก redirect ไป SSO ตามที่ตั้งใจ; การทดสอบเนื้อหาจริงทำผ่าน browser session ที่ผ่านการยืนยันตัวตน โดยไม่อ่านหรือส่งออก cookies
+- หน้า `/landing`, `/app`, `/pid-advisor`, `/leaderboard`, `/downloads`, `/loop-analyzer` และ `/fpv-gear` ตอบ `200`; `/healthz` ตอบ `200` พร้อม `{"status":"ok"}`
+- `/manifest.json`, `/sw.js`, `/favicon.ico`, `/static/offline.html` และไอคอน PWA ตอบ `200` ด้วย content type ที่ถูกต้อง; ไอคอน 192, favicon PNG 512 และ maskable 512 ตรวจขนาดได้ตรงตามกำหนด
+- Service Worker อยู่สถานะ `activated` และควบคุมหน้าเว็บ; Cache Storage มี cache `obixconfigdoctor-v7-static` จำนวน 10 entries รวม offline fallback, manifest และ maskable icon
 
 ## สถานะ Release และสิ่งที่ยังต้องทำ
 
-การเปลี่ยนแปลงอยู่บน branch ตรวจสอบแยกต่างหาก และยังไม่ได้ merge เข้า `main`; จึง **ยังไม่ใช่เนื้อหาใน Production** และไม่ได้อ้างว่า Vercel Preview/Production build ของ branch นี้ผ่านแล้ว ต้องตรวจ Preview หลังส่ง branch ก่อน merge/deploy
+PR #2 (`fix/project-quality-pwa-accessibility`) ยังเปิดอยู่และยังไม่ merge เข้า `main`; Preview ผ่านแล้วแต่ **Production ยังไม่ได้อัปเดตด้วยการเปลี่ยนแปลงชุดนี้** ต้อง merge PR ก่อนจึงจะมี Production deployment จาก commit นี้
 
 Vercel Production ที่ตั้งค่าไว้ก่อนหน้านี้มี environment variable ชื่อ `SECRET_KEY` และ `TRUST_PROXY` โดยไม่แสดงค่าลับที่นี่ ส่วน `DATABASE_URL` และ `REDIS_URL` ไม่ได้ตั้งค่าในงานนี้ จึงยังไม่มีการยืนยันความคงทนของข้อมูล Community/API บน filesystem ของ Vercel; หากต้องเก็บข้อมูลถาวร ต้องมีฐานข้อมูลภายนอกที่ตั้งค่าโดยเจ้าของระบบก่อน
 
-ไม่มีการสร้างหรือแก้ฐานข้อมูลภายนอก และไม่มีการ deploy จาก branch นี้ขึ้น Production ในรอบตรวจนี้
+ไม่มีการสร้างหรือแก้ฐานข้อมูลภายนอก ไม่มีการเปลี่ยน DNS และไม่มีการ deploy จาก branch นี้ขึ้น Production ในรอบตรวจนี้
