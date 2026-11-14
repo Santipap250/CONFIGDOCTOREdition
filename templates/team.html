@@ -655,15 +655,15 @@ body.no-team-bg-video .team-bg-video{display:none;}
 }
 
 /* Support panel */
-.team-support{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:24px;align-items:center;margin-top:40px;padding:clamp(20px,4vw,34px);border:1px solid rgba(0,255,68,.2);border-radius:24px;background:radial-gradient(circle at 0 0,rgba(0,255,68,.10),transparent 42%),linear-gradient(145deg,rgba(8,14,12,.96),rgba(4,8,10,.94));box-shadow:0 18px 44px rgba(0,0,0,.28)}
-.team-support-kicker{font:800 10px var(--font-head);letter-spacing:.2em;color:var(--green)}
-.team-support-copy h2{font-family:var(--font-body);font-size:clamp(22px,3vw,32px);font-weight:800;letter-spacing:-.02em;color:#fff;margin:10px 0 12px}
-.team-support-copy p{font-size:14px;line-height:1.8;color:var(--text2);max-width:650px;margin:0}
-.team-support-qr{width:100%;max-width:300px;justify-self:center;padding:14px;border-radius:18px;background:#fff;color:#14231b;text-align:center}
-.team-support-qr img{display:block;width:100%;height:auto;border-radius:9px;margin:0 auto 10px}
-.team-support-qr strong{display:block;font-size:14px;font-weight:800}
-.team-support-qr small{display:block;margin-top:4px;color:#53635a;font-size:11px}
-@media(max-width:760px){.team-support{grid-template-columns:1fr;padding:20px 16px}.team-support-copy h2{font-size:24px}.team-support-qr{max-width:280px}}
+
+
+
+
+
+
+
+
+@media(max-width:760px){}
 
 </style>
 {% endblock %}
@@ -890,20 +890,6 @@ body.no-team-bg-video .team-bg-video{display:none;}
     </div>
 
   </div><!-- /ai-grid -->
-
-  <!-- ── SUPPORT / PROMPTPAY ── -->
-  <section class="team-support" id="team-support" aria-labelledby="teamSupportTitle">
-    <div class="team-support-copy">
-      <span class="team-support-kicker">SUPPORT THE PROJECT</span>
-      <h2 id="teamSupportTitle">ร่วมสนับสนุนการพัฒนา ConfigDoctor</h2>
-      <p>ทุกการสนับสนุนช่วยดูแลค่าเซิร์ฟเวอร์ ทดลองเครื่องมือใหม่ และพัฒนาแพลตฟอร์ม FPV ให้ชุมชนใช้งานได้ต่อเนื่อง การสนับสนุนเป็นไปตามความสมัครใจและไม่มีผลต่อสิทธิ์การใช้งาน</p>
-    </div>
-    <div class="team-support-qr">
-      <img src="{{ url_for('static', filename='img/support-qr.png') }}" alt="PromptPay QR สำหรับสนับสนุน ConfigDoctor" loading="lazy" width="420" height="465">
-      <strong>สแกน QR ผ่านแอปธนาคาร</strong>
-      <small>PromptPay · นาย สันติภาพ สงมรักษ์</small>
-    </div>
-  </section>
 
   <!-- ── FOOTER NOTE ── -->
   <div class="v5-card v5-fade-in-3" style="margin-top:40px;text-align:center;padding:28px 24px">
