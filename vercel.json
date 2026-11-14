@@ -3,7 +3,7 @@
   "functions": {
     "app.py": {
       "maxDuration": 60,
-      "excludeFiles": "{tests/**,**/*.test.py,**/test_*.py,fixtures/**,.git/**,.venv/**,venv/**,**/__pycache__/**,**/*.pyc,data/*.db,requirements-dev.txt,static/img/**,static/css/**,static/js/**,static/video/**,static/favicon.ico,static/favicon.png,static/android-chrome-192x192.png,static/apple-touch-icon.png}"
+      "excludeFiles": "{tests/**,**/*.test.py,**/test_*.py,fixtures/**,**/__pycache__/**,**/*.pyc,data/*.db,requirements-dev.txt,static/img/**,static/css/**,static/js/**,static/video/**,static/favicon*,static/android-chrome-192x192.png,static/apple-touch-icon.png}"
     }
   }
 }
