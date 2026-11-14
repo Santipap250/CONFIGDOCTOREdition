@@ -64,6 +64,3 @@ tmp/
 # Local databases and scratch exports
 *.sqlite
 *.sqlite3
-data/*.db
-data/*.db-wal
-data/*.db-shm

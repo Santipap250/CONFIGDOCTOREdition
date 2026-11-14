@@ -211,7 +211,7 @@
           <span>▶ ดู CLI Preview</span>
           <span class="dl-preview-toggle-icon">▾</span>
         </div>
-        <pre class="dl-preview" data-fc="{{ it.fc }}" data-fn="{{ it.filename }}">Loading...</pre>
+        <pre class="dl-preview" data-fc="{{ it.fc }}" data-fn="{{ it.filename }}" role="status" aria-live="polite" aria-busy="false">Loading...</pre>
       </div>
 
       <div class="dl-actions">
@@ -234,7 +234,7 @@
 
 </div>
 
-<div class="v5-toast" id="v5Toast"></div>
+<div class="v5-toast" id="v5Toast" role="status" aria-live="polite"></div>
 
 <script>
 (function(){
@@ -274,10 +274,12 @@
 
     if(!open && pre.textContent === 'Loading...'){
       var fc = pre.dataset.fc, fn = pre.dataset.fn;
+      pre.setAttribute('aria-busy','true');
       fetch('/downloads/' + encodeURIComponent(fc) + '/' + encodeURIComponent(fn))
-        .then(function(r){ return r.text(); })
+        .then(function(r){ if(!r.ok)throw new Error('Preview request failed'); return r.text(); })
         .then(function(t){ pre.textContent = t.slice(0,3000) + (t.length>3000?'\n... (truncated)':''); })
-        .catch(function(){ pre.textContent = 'Preview unavailable'; });
+        .catch(function(){ pre.textContent = 'Preview unavailable. Please try again when online.'; })
+        .finally(function(){ pre.setAttribute('aria-busy','false'); });
     }
   };
 

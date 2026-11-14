@@ -1,16 +1,15 @@
-# affiliate/gear_recommender.py — OBIXConfig Doctor extension layer
+# gear/gear_recommender.py — OBIXConfig Doctor extension layer
 # ============================================================
-# FPV Affiliate Gear Recommendation — UI/catalog layer only.
+# FPV Gear Recommendation — compatibility/catalog layer only; no sales links.
 #
-# Scope: this module reads data/fpv_affiliate_products.json and maps a
+# Scope: this module reads data/fpv_gear_products.json and maps a
 # drone's *already-computed* class/style/size (plain strings/numbers — the
 # output of analyzer/logic, never their internals) onto a small catalog of
 # representative FPV parts. It does NOT perform PID math, motor/prop
-# physics, or blackbox analysis, and it never imports analyzer/* or
-# logic/*. It is safe to delete this entire package without touching any
-# analysis logic elsewhere in the app — only app.py's /fpv-gear route and
-# the two small UI hooks (templates/fpv/index.html, templates/index.html)
-# would need their links removed.
+# physics, blackbox analysis, sales links or referral tracking, and it never
+# imports analyzer/* or logic/*. The /fpv-gear route depends on this optional
+# presentation layer; core analysis works independently if the route is
+# intentionally disabled.
 # ============================================================
 import json
 import os
@@ -18,7 +17,7 @@ from functools import lru_cache
 
 _DATA_PATH = os.path.join(
     os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-    "data", "fpv_affiliate_products.json",
+    "data", "fpv_gear_products.json",
 )
 
 # Stable display order for category sections on the /fpv-gear page.

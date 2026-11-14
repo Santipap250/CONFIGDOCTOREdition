@@ -289,7 +289,7 @@ select option{background:#111820}
 
         <div class="phys-card">
           <div class="phys-title">📊 LATENCY BREAKDOWN</div>
-          <div class="phys-eq" id="physicsEq">loading...</div>
+          <div class="phys-eq" id="physicsEq" role="status" aria-live="polite" aria-busy="true">loading...</div>
         </div>
       </div>
 
@@ -414,6 +414,7 @@ function analyzeLoop() {
   const breakdown=stages.map(s=>{const bar='█'.repeat(Math.max(1,Math.round(s.latUs/maxLatUs*20)));return`\u001b[0m${(s.icon+' '+s.name).padEnd(30)} ${bar.padEnd(20)} ${s.latUs>=1000?(s.latUs/1000).toFixed(1)+'ms':s.latUs+'µs'}`;}).join('\n');
   const bkLines=stages.map(s=>{const bar='█'.repeat(Math.max(1,Math.round(s.latUs/maxLatUs*20)));return`<span class="mu">${(s.icon+' '+s.name).padEnd(32)}</span><span class="hi">${bar.padEnd(20,' ')}</span><span class="go">${s.latUs>=1000?(s.latUs/1000).toFixed(1)+'ms':s.latUs+'µs'}</span>`;}).join('\n');
   document.getElementById('physicsEq').innerHTML=bkLines+`\n<span class="mu">${'─'.repeat(55)}</span>\n<span class="mu">Total:${' '.repeat(26)}</span><span style="color:${totColor};font-size:.9rem;font-weight:700">${totalMs.toFixed(2)} ms</span>`;
+  document.getElementById('physicsEq').setAttribute('aria-busy','false');
 
   document.getElementById('resultPanel').style.display='block';
   document.getElementById('hintPanel').style.display='none';

@@ -15,7 +15,7 @@ OBIXCONFIGDOCTOR is a Flask-based FPV drone configuration and analysis platform.
 - **Configuration tools:** Betaflight CLI analysis and comparison, CLI Surgeon, PID Advisor, Quick Tune and Rates Visualizer.
 - **Flight-data tools:** Blackbox CSV analysis, loop analysis, OSD layout export and tuning log support.
 - **Hardware helpers:** Battery Health, Motor Thermal, ESC Checker, VTX tools and FPV Gear recommendations.
-- **Community features:** ratings and likes API, downloads, team/about pages and PromptPay support information.
+- **Community features:** ratings and likes API, downloads, team/about pages and configuration sharing tools.
 
 ## Technology
 
@@ -34,7 +34,7 @@ OBIXCONFIGDOCTOR/
 ├── core.py                   # Shared analysis, database and helper logic
 ├── analyzer/                 # FPV analysis engines
 ├── blueprints/               # Flask route groups
-├── affiliate/                # FPV gear catalogue/recommender
+├── gear/                     # FPV compatibility catalogue/recommender
 ├── logic/                    # Presets and configuration logic
 ├── templates/                # Jinja2 pages and partials
 ├── static/                   # Source assets + local/static fallback

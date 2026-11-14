@@ -49,7 +49,16 @@ def robots_txt():
 
 @bp.route("/manifest.json")
 def manifest_json():
-    return send_from_directory(current_app.config["STATIC_DIR"], "manifest.json")
+    response = make_response(send_from_directory(current_app.config["STATIC_DIR"], "manifest.json"))
+    response.headers["Cache-Control"] = "public, max-age=3600"
+    return response
+
+
+@bp.route("/favicon.ico")
+def favicon_ico():
+    response = make_response(send_from_directory(current_app.config["STATIC_DIR"], "favicon.ico"))
+    response.headers["Cache-Control"] = "public, max-age=86400"
+    return response
 
 
 @bp.route("/sw.js")
@@ -57,6 +66,7 @@ def sw_js():
     response = make_response(send_from_directory(current_app.config["STATIC_DIR"], "sw.js"))
     response.headers["Content-Type"] = "application/javascript"
     response.headers["Service-Worker-Allowed"] = "/"
+    response.headers["Cache-Control"] = "no-cache"
     return response
 
 

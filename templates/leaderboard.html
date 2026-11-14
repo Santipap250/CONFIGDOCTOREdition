@@ -36,7 +36,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-t);min-height
 .controls{display:flex;align-items:center;justify-content:space-between;gap:12px;
   margin-bottom:24px;flex-wrap:wrap}
 .filter-tabs{display:flex;gap:6px;flex-wrap:wrap}
-.ftab{font-family:var(--font-d);font-size:10px;letter-spacing:.08em;padding:7px 14px;
+.ftab{appearance:none;font-family:var(--font-d);font-size:10px;letter-spacing:.08em;padding:7px 14px;
   border-radius:100px;border:1px solid var(--border);background:var(--surface);
   color:var(--muted2);cursor:pointer;transition:all .15s}
 .ftab:hover{border-color:rgba(0,255,136,.3);color:var(--text)}
@@ -45,6 +45,9 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-t);min-height
   border-radius:100px;background:linear-gradient(135deg,var(--amber),#cc8800);
   color:#020509;font-weight:700;border:none;cursor:pointer;transition:all .18s;white-space:nowrap}
 .submit-btn:hover{box-shadow:0 0 18px rgba(255,183,0,.3)}
+.lb-detail-trigger{appearance:none;border:0;background:none;color:inherit;font:inherit;font-weight:700;text-align:left;padding:0;cursor:pointer}
+.lb-detail-trigger:focus-visible{outline:2px solid var(--amber);outline-offset:2px;border-radius:3px}
+.lb-storage-status{min-height:1.3em;color:var(--muted2);font-size:11px;margin:-12px 0 12px}
 
 /* Podium */
 .podium{display:grid;grid-template-columns:1fr 1.15fr 1fr;gap:12px;margin-bottom:32px;
@@ -142,7 +145,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-t);min-height
 .pid-3labels{display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;margin-bottom:4px}
 .pid-3labels span{font-size:10px;color:var(--muted);text-align:center;font-family:var(--font-d)}
 .style-sel{display:flex;gap:6px;flex-wrap:wrap;grid-column:1/-1}
-.ss-btn{font-family:var(--font-d);font-size:10px;letter-spacing:.07em;padding:5px 12px;
+.ss-btn{appearance:none;font-family:var(--font-d);font-size:10px;letter-spacing:.07em;padding:5px 12px;line-height:1.3;
   border-radius:100px;border:1px solid var(--border);background:var(--panel);
   color:var(--muted2);cursor:pointer;transition:all .14s}
 .ss-btn:hover{border-color:rgba(255,183,0,.3);color:var(--text)}
@@ -208,10 +211,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-t);min-height
 <div class="bg-hex"></div>
 <div class="wrap">
 
-<div class="hero">
-  <div class="hero-tag">COMMUNITY LEADERBOARD</div>
-  <h1>Config <em>Leaderboard</em></h1>
-  <p>แชร์ config ที่ fly ดี vote ให้เพื่อน copy ไปใช้ได้เลย — ชุมชน FPV ไทยสร้างขึ้นด้วยกัน</p>
+<div class="hero" aria-label="จุดเด่นของ Leaderboard">
   <div class="hero-chips">
     <span class="hchip">🏆 Community Ranked</span>
     <span class="hchip">🗳️ Vote & Rate</span>
@@ -221,15 +221,16 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-t);min-height
 </div>
 
 <div class="controls">
-  <div class="filter-tabs">
-    <span class="ftab on" data-f="all">ทั้งหมด</span>
-    <span class="ftab" data-f="FREESTYLE">Freestyle</span>
-    <span class="ftab" data-f="RACING">Racing</span>
-    <span class="ftab" data-f="LONG RANGE">Long Range</span>
-    <span class="ftab" data-f="CINEMATIC">Cinematic</span>
+  <div class="filter-tabs" role="group" aria-label="กรองตามสไตล์การบิน">
+    <button type="button" class="ftab on" data-f="all" aria-pressed="true">ทั้งหมด</button>
+    <button type="button" class="ftab" data-f="FREESTYLE" aria-pressed="false">Freestyle</button>
+    <button type="button" class="ftab" data-f="RACING" aria-pressed="false">Racing</button>
+    <button type="button" class="ftab" data-f="LONG RANGE" aria-pressed="false">Long Range</button>
+    <button type="button" class="ftab" data-f="CINEMATIC" aria-pressed="false">Cinematic</button>
   </div>
   <button type="button" class="submit-btn" onclick="openSubmit()">🏅 SUBMIT CONFIG</button>
 </div>
+<div class="lb-storage-status" id="lbStorageStatus" role="status" aria-live="polite"></div>
 
 <div class="podium" id="podium"></div>
 <div class="lb-table">
@@ -237,34 +238,34 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-t);min-height
     <span>#</span><span>Build & Pilot</span><span>PID R/P/Y</span>
     <span>Style</span><span>Score</span><span>Vote</span>
   </div>
-  <div id="lbBody"></div>
+  <div id="lbBody" tabindex="-1" aria-live="polite"></div>
 </div>
 
 </div>
 
 <!-- SUBMIT MODAL -->
-<div class="modal-overlay" id="subModal">
-<div class="modal">
+<div class="modal-overlay" id="subModal" aria-hidden="true" inert>
+<div class="modal" role="dialog" aria-modal="true" aria-labelledby="submitTitle" tabindex="-1">
   <div class="modal-hd">
-    <div class="modal-title">🏅 SUBMIT CONFIG</div>
-    <button type="button" class="modal-close" onclick="closeSubmit()">✕</button>
+    <div class="modal-title" id="submitTitle">🏅 SUBMIT CONFIG</div>
+    <button type="button" class="modal-close" aria-label="ปิดหน้าต่างส่ง config" onclick="closeSubmit()">✕</button>
   </div>
   <div class="mgrid">
-    <div class="mf"><label>Build Name</label>
-      <input id="s_name" placeholder='5" Freestyle V2' maxlength="50" type="text"></div>
-    <div class="mf"><label>Pilot / Callsign</label>
-      <input id="s_pilot" placeholder="@thaiflyer" maxlength="30" type="text"></div>
-    <div class="mf"><label>Frame Size</label>
-      <input id="s_size" placeholder='5"' maxlength="10" type="text"></div>
-    <div class="mf"><label>Battery</label>
-      <input id="s_batt" placeholder="4S 1500mAh" maxlength="20" type="text"></div>
+    <div class="mf"><label for="s_name">Build Name</label>
+      <input id="s_name" aria-label="Build Name" placeholder='5" Freestyle V2' maxlength="50" type="text"></div>
+    <div class="mf"><label for="s_pilot">Pilot / Callsign</label>
+      <input id="s_pilot" aria-label="Pilot or callsign" placeholder="@thaiflyer" maxlength="30" type="text"></div>
+    <div class="mf"><label for="s_size">Frame Size</label>
+      <input id="s_size" aria-label="Frame size" placeholder='5"' maxlength="10" type="text"></div>
+    <div class="mf"><label for="s_batt">Battery</label>
+      <input id="s_batt" aria-label="Battery" placeholder="4S 1500mAh" maxlength="20" type="text"></div>
 
-    <div class="style-sel">
-      <span class="ss-btn on" data-v="FREESTYLE">Freestyle</span>
-      <span class="ss-btn" data-v="RACING">Racing</span>
-      <span class="ss-btn" data-v="LONG RANGE">Long Range</span>
-      <span class="ss-btn" data-v="CINEMATIC">Cinematic</span>
-      <span class="ss-btn" data-v="MICRO">Micro</span>
+    <div class="style-sel" role="group" aria-label="Flight style">
+      <button type="button" class="ss-btn on" data-v="FREESTYLE" aria-pressed="true">Freestyle</button>
+      <button type="button" class="ss-btn" data-v="RACING" aria-pressed="false">Racing</button>
+      <button type="button" class="ss-btn" data-v="LONG RANGE" aria-pressed="false">Long Range</button>
+      <button type="button" class="ss-btn" data-v="CINEMATIC" aria-pressed="false">Cinematic</button>
+      <button type="button" class="ss-btn" data-v="MICRO" aria-pressed="false">Micro</button>
     </div>
 
     <div class="pid-mini-grid">
@@ -272,49 +273,49 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-t);min-height
         <div class="pid-mg-lbl r">ROLL</div>
         <div class="pid-3labels"><span>P</span><span>I</span><span>D</span></div>
         <div class="pid-3cols">
-          <input type="number" id="s_rp" placeholder="48" min="0" max="200">
-          <input type="number" id="s_ri" placeholder="90" min="0" max="200">
-          <input type="number" id="s_rd" placeholder="38" min="0" max="200">
+          <input type="number" id="s_rp" aria-label="Roll P" placeholder="48" min="0" max="200">
+          <input type="number" id="s_ri" aria-label="Roll I" placeholder="90" min="0" max="200">
+          <input type="number" id="s_rd" aria-label="Roll D" placeholder="38" min="0" max="200">
         </div>
       </div>
       <div class="pid-mg-col">
         <div class="pid-mg-lbl p">PITCH</div>
         <div class="pid-3labels"><span>P</span><span>I</span><span>D</span></div>
         <div class="pid-3cols">
-          <input type="number" id="s_pp" placeholder="52" min="0" max="200">
-          <input type="number" id="s_pi" placeholder="90" min="0" max="200">
-          <input type="number" id="s_pd" placeholder="40" min="0" max="200">
+          <input type="number" id="s_pp" aria-label="Pitch P" placeholder="52" min="0" max="200">
+          <input type="number" id="s_pi" aria-label="Pitch I" placeholder="90" min="0" max="200">
+          <input type="number" id="s_pd" aria-label="Pitch D" placeholder="40" min="0" max="200">
         </div>
       </div>
       <div class="pid-mg-col">
         <div class="pid-mg-lbl y">YAW</div>
         <div class="pid-3labels"><span>P</span><span>I</span><span>D</span></div>
         <div class="pid-3cols">
-          <input type="number" id="s_yp" placeholder="40" min="0" max="200">
-          <input type="number" id="s_yi" placeholder="90" min="0" max="200">
-          <input type="number" id="s_yd" placeholder="0" min="0" max="40">
+          <input type="number" id="s_yp" aria-label="Yaw P" placeholder="40" min="0" max="200">
+          <input type="number" id="s_yi" aria-label="Yaw I" placeholder="90" min="0" max="200">
+          <input type="number" id="s_yd" aria-label="Yaw D" placeholder="0" min="0" max="40">
         </div>
       </div>
     </div>
 
-    <div class="mf mf-full"><label>CLI Config (แปะทั้งหมดเลย)</label>
-      <textarea id="s_cli" placeholder="# paste CLI diff/dump ที่นี่&#10;set rates_type = ACTUAL&#10;set p_roll = 48&#10;...&#10;save" rows="5"></textarea>
+    <div class="mf mf-full"><label for="s_cli">CLI Config (แปะทั้งหมดเลย)</label>
+      <textarea id="s_cli" aria-label="CLI configuration" placeholder="# paste CLI diff/dump ที่นี่&#10;set rates_type = ACTUAL&#10;set p_roll = 48&#10;...&#10;save" rows="5"></textarea>
     </div>
-    <div class="mf mf-full"><label>รายละเอียด / เหตุผลที่แชร์</label>
-      <textarea id="s_note" placeholder="tune สำหรับ freestyle กลางคืน ใบ HQ 5x4.3 ลม 10 km/h — lock-in ดีมาก ไม่มี propwash เลย" rows="3"></textarea>
+    <div class="mf mf-full"><label for="s_note">รายละเอียด / เหตุผลที่แชร์</label>
+      <textarea id="s_note" aria-label="รายละเอียดหรือเหตุผลที่แชร์" placeholder="tune สำหรับ freestyle กลางคืน ใบ HQ 5x4.3 ลม 10 km/h — lock-in ดีมาก ไม่มี propwash เลย" rows="3"></textarea>
     </div>
   </div>
   <button type="button" class="submit-modal-btn" onclick="submitConfig()">🚀 SUBMIT</button>
-  <div class="notice">⚠️ config ที่ submit จะแสดงเป็นตัวอย่างในเครื่องนี้ ยังไม่มี server storage<br>ทีม OBIX กำลังพัฒนา backend อยู่ครับ</div>
+  <div class="notice">รายการและคะแนนเก็บไว้ในเบราว์เซอร์นี้เท่านั้น ยังไม่แชร์ข้ามอุปกรณ์หรือผู้ใช้ และอาจหายเมื่อล้างข้อมูลเว็บไซต์</div>
 </div>
 </div>
 
 <!-- DETAIL MODAL -->
-<div class="detail-overlay" id="detailModal">
-<div class="detail-modal">
+<div class="detail-overlay" id="detailModal" aria-hidden="true" inert>
+<div class="detail-modal" role="dialog" aria-modal="true" aria-labelledby="dt_title" tabindex="-1">
   <div class="modal-hd">
     <div class="modal-title" id="dt_title">Build Detail</div>
-    <button type="button" class="modal-close" onclick="closeDetail()">✕</button>
+    <button type="button" class="modal-close" aria-label="ปิดรายละเอียด config" onclick="closeDetail()">✕</button>
   </div>
   <div id="dt_body"></div>
 </div>
@@ -325,7 +326,11 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-t);min-height
 const VKEY='obix_lb_votes_v1';
 const UKEY='obix_lb_user_v1';
 let filter='all', selectedStyle='FREESTYLE';
-let voted=JSON.parse(localStorage.getItem(VKEY)||'{}');
+function readStoredJSON(key,fallback){try{const raw=window.localStorage.getItem(key);return raw?JSON.parse(raw):fallback;}catch(_){return fallback;}}
+function writeStoredJSON(key,value){try{window.localStorage.setItem(key,JSON.stringify(value));return true;}catch(_){return false;}}
+function setStorageStatus(message){const el=document.getElementById('lbStorageStatus');if(el)el.textContent=message;}
+let voted=readStoredJSON(VKEY,{});
+if(!voted||typeof voted!=='object'||Array.isArray(voted))voted={};
 
 // Seed data
 const SEED=[
@@ -351,7 +356,22 @@ const SEED=[
    cli:'set rates_type = ACTUAL\nset roll_rc_rate = 130\nset p_roll = 50\nset i_roll = 92\nset d_roll = 40\nsave'},
 ];
 
-let configs=[...SEED,...(JSON.parse(localStorage.getItem(UKEY)||'[]'))];
+function sanitizePid(input){
+  const source=input&&typeof input==='object'?input:{};
+  const keys=['rp','ri','rd','pp','pi','pd','yp','yi','yd'];
+  return Object.fromEntries(keys.map(key=>{
+    const value=Number(source[key]);
+    return [key,Number.isFinite(value)&&value>=0&&value<=200?Math.round(value):null];
+  }));
+}
+const savedConfigs=readStoredJSON(UKEY,[]);
+let configs=[...SEED,...(Array.isArray(savedConfigs)?savedConfigs.filter(c=>c&&Number.isSafeInteger(Number(c.id))&&Number(c.id)>0&&typeof c.name==='string').slice(0,100).map(c=>({
+  id:Number(c.id),name:String(c.name).slice(0,50),pilot:String(c.pilot||'Anonymous').slice(0,30),
+  size:String(c.size||'').slice(0,10),batt:String(c.batt||'').slice(0,20),
+  style:['FREESTYLE','RACING','LONG RANGE','CINEMATIC','MICRO'].includes(c.style)?c.style:'FREESTYLE',
+  pid:sanitizePid(c.pid),note:String(c.note||'').slice(0,500),cli:String(c.cli||'').slice(0,12000),
+  votes:Number.isFinite(Number(c.votes))?Math.max(0,Math.min(100000,Number(c.votes))):0
+})):[])];
 
 function score(c){return c.votes*10;}
 function sortedFiltered(){
@@ -391,14 +411,14 @@ function renderTable(){
     const rnkCls=i===0?'g':i===1?'s':i===2?'b':'n';
     const pid=c.pid||{};
     const isVoted=!!voted[c.id];
-    return `<div class="lb-row ${rCls}" onclick="showDetail(${c.id})">
+    return `<div class="lb-row ${rCls}" role="group" onclick="showDetail(${c.id}, this)">
       <div class="rank-badge ${rnkCls}">${i===0?'🥇':i===1?'🥈':i===2?'🥉':`#${i+1}`}</div>
       <div class="entry-info">
-        <div class="ei-name">${esc(c.name)}</div>
+        <div class="ei-name"><button type="button" class="lb-detail-trigger" aria-label="ดูรายละเอียด ${esc(c.name)}" onclick="event.stopPropagation();showDetail(${c.id}, this)">${esc(c.name)}</button></div>
         <div class="ei-pilot">${esc(c.pilot)} <span class="ei-tag">${esc(c.size||'')}</span> <span class="ei-tag">${esc(c.batt||'')}</span></div>
       </div>
       <div class="pid-mini"><span style="color:var(--green)">${pid.rp??'—'}/${pid.ri??'—'}/${pid.rd??'—'}</span><br><span style="color:var(--blue);font-size:10px">${pid.pp??'—'}/${pid.pi??'—'}/${pid.pd??'—'}</span></div>
-      <div><span class="style-tag ${styleCls(c.style)}">${c.style}</span></div>
+      <div><span class="style-tag ${styleCls(c.style)}">${esc(c.style)}</span></div>
       <div class="score-cell">${c.votes}</div>
       <div class="vote-cell" onclick="event.stopPropagation()">
         <button type="button" class="vote-btn ${isVoted?'voted':''}" onclick="vote(${c.id})">${isVoted?'✅':'👍'}</button>
@@ -412,12 +432,22 @@ function vote(id){
   const c=configs.find(x=>x.id===id);if(!c)return;
   if(voted[id]){c.votes--;delete voted[id];}
   else{c.votes++;voted[id]=true;}
-  localStorage.setItem(VKEY,JSON.stringify(voted));
+  if(!writeStoredJSON(VKEY,voted))setStorageStatus('บันทึกคะแนนในเบราว์เซอร์นี้ไม่ได้; คะแนนยังอยู่จนกว่าจะปิดหน้านี้');
   renderTable();
 }
 
-function showDetail(id){
+let detailReturnFocus=null,submitReturnFocus=null;
+function trapDialogTab(e,dialog){
+  if(e.key!=='Tab'||!dialog)return;
+  const items=Array.from(dialog.querySelectorAll('button:not([disabled]),input:not([disabled]),textarea:not([disabled]),select:not([disabled]),a[href],[tabindex]:not([tabindex="-1"])')).filter(el=>el.getClientRects().length>0);
+  if(!items.length){e.preventDefault();return;}
+  const first=items[0],last=items[items.length-1];
+  if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}
+  else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}
+}
+function showDetail(id,opener){
   const c=configs.find(x=>x.id===id);if(!c)return;
+  detailReturnFocus=opener||document.activeElement;
   const pid=c.pid||{};
   document.getElementById('dt_title').textContent=c.name;
   document.getElementById('dt_body').innerHTML=`
@@ -439,9 +469,14 @@ function showDetail(id){
       <button type="button" class="vote-btn ${voted[id]?'voted':''}" onclick="vote(${id});closeDetail()" style="padding:7px 18px;font-size:13px">${voted[id]?'✅ Voted':'👍 Vote'}</button>
       <span style="font-family:var(--font-m);color:var(--amber);font-size:18px;font-weight:700">${c.votes} votes</span>
     </div>`;
-  document.getElementById('detailModal').classList.add('open');
+  const overlay=document.getElementById('detailModal');
+  overlay.removeAttribute('inert');overlay.setAttribute('aria-hidden','false');overlay.classList.add('open');
+  const close=overlay.querySelector('.modal-close');if(close)close.focus();
 }
-function closeDetail(){document.getElementById('detailModal').classList.remove('open');}
+function closeDetail(){
+  const overlay=document.getElementById('detailModal');overlay.classList.remove('open');overlay.setAttribute('aria-hidden','true');overlay.setAttribute('inert','');
+  if(detailReturnFocus&&detailReturnFocus.isConnected&&detailReturnFocus.matches('button,a,[tabindex="0"]'))detailReturnFocus.focus();else document.getElementById('lbBody').focus();
+}
 document.getElementById('detailModal').addEventListener('click',e=>{if(e.target===document.getElementById('detailModal'))closeDetail();});
 
 function copyCLI(id){
@@ -452,14 +487,21 @@ function copyCLI(id){
   });
 }
 
-function openSubmit(){document.getElementById('subModal').classList.add('open');}
-function closeSubmit(){document.getElementById('subModal').classList.remove('open');}
+function openSubmit(){
+  const overlay=document.getElementById('subModal');submitReturnFocus=document.activeElement;
+  overlay.removeAttribute('inert');overlay.setAttribute('aria-hidden','false');overlay.classList.add('open');
+  document.getElementById('s_name').focus();
+}
+function closeSubmit(){
+  const overlay=document.getElementById('subModal');overlay.classList.remove('open');overlay.setAttribute('aria-hidden','true');overlay.setAttribute('inert','');
+  if(submitReturnFocus&&submitReturnFocus.isConnected)submitReturnFocus.focus();
+}
 document.getElementById('subModal').addEventListener('click',e=>{if(e.target===document.getElementById('subModal'))closeSubmit();});
 
 document.querySelectorAll('.ss-btn').forEach(b=>{
   b.addEventListener('click',()=>{
-    document.querySelectorAll('.ss-btn').forEach(x=>x.classList.remove('on'));
-    b.classList.add('on');selectedStyle=b.dataset.v;
+    document.querySelectorAll('.ss-btn').forEach(x=>{x.classList.remove('on');x.setAttribute('aria-pressed','false');});
+    b.classList.add('on');b.setAttribute('aria-pressed','true');selectedStyle=b.dataset.v;
   });
 });
 
@@ -475,20 +517,27 @@ function submitConfig(){
          yp:gn2('s_yp'),yi:gn2('s_yi'),yd:gn2('s_yd')},
     note:gv('s_note'),cli:gv('s_cli'),votes:0
   };
-  const user=JSON.parse(localStorage.getItem(UKEY)||'[]');
-  user.unshift(entry);localStorage.setItem(UKEY,JSON.stringify(user));
-  configs=[...SEED,...user];
+  const user=readStoredJSON(UKEY,[]);
+  const saved=Array.isArray(user)?user.slice(0,99):[];
+  saved.unshift(entry);
+  if(!writeStoredJSON(UKEY,saved))setStorageStatus('บันทึก config ในเบราว์เซอร์นี้ไม่ได้; รายการจะอยู่จนกว่าจะปิดหน้านี้');
+  configs=[...SEED,...saved];
   closeSubmit();renderTable();
 }
 
 document.querySelectorAll('.ftab').forEach(t=>{
   t.addEventListener('click',()=>{
-    document.querySelectorAll('.ftab').forEach(x=>x.classList.remove('on'));
-    t.classList.add('on');filter=t.dataset.f;renderTable();
+    document.querySelectorAll('.ftab').forEach(x=>{x.classList.remove('on');x.setAttribute('aria-pressed','false');});
+    t.classList.add('on');t.setAttribute('aria-pressed','true');filter=t.dataset.f;renderTable();
   });
 });
 
 function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+document.addEventListener('keydown',function(e){
+  const detail=document.getElementById('detailModal'),submit=document.getElementById('subModal');
+  if(detail.classList.contains('open')){if(e.key==='Escape'){closeDetail();return;}trapDialogTab(e,detail.querySelector('.detail-modal'));}
+  else if(submit.classList.contains('open')){if(e.key==='Escape'){closeSubmit();return;}trapDialogTab(e,submit.querySelector('.modal'));}
+});
 renderTable();
 </script>
 {% endblock %}
