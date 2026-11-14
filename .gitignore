@@ -1,0 +1,69 @@
+# OBIXConfig Doctor — .gitignore
+# ────────────────────────────────────────────────────────────────
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Environment & secrets (NEVER commit these)
+.env
+.env.*
+!.env.example
+*.secret
+
+# Logs
+*.log
+logs/
+
+# OS junk
+.DS_Store
+.DS_Store?
+._*
+Thumbs.db
+Desktop.ini
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Test / coverage
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# OSD exports (user-generated, not part of repo)
+static/downloads/osd/
+
+# SQLite community DB (runtime data, not committed — only data/.gitkeep is tracked)
+data/*.db
+data/*.db-wal
+data/*.db-shm
+
+# Upload temp
+uploads/
+tmp/
+
+# Vercel local project metadata
+.vercel/
+
+# Local databases and scratch exports
+*.sqlite
+*.sqlite3
+data/*.db
+data/*.db-wal
+data/*.db-shm

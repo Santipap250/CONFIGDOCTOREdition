@@ -1,0 +1,17 @@
+# Keep development-only files out of Vercel's upload context.
+.env
+.env.*
+!.env.example
+.venv/
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.coverage
+htmlcov/
+tests/
+requirements-dev.txt
+data/*.db
+data/*.db-wal
+data/*.db-shm
+.git/

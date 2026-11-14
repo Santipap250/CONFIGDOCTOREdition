@@ -1,0 +1,347 @@
+{% extends "base.html" %}
+
+{% block title %}OBIXCONFIGDOCTOR — FPV Drone Configuration Analyzer{% endblock %}
+
+{% block page_og_title %}OBIXCONFIGDOCTOR — FPV Drone Configuration Analyzer{% endblock %}
+{% block page_og_description %}Professional PID, Filter, Blackbox, and CLI analysis for FPV drones. Optimized for performance and reliability.{% endblock %}
+{% block page_og_path %}/landing{% endblock %}
+{% block page_nav_page %}landing{% endblock %}
+
+{% block extra_head %}
+<!-- Premium Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Sarabun:wght@300;400;500;600;700;800&family=Kanit:wght@400;500;600;700;800;900&display=swap&font-display=swap" rel="stylesheet">
+<!-- Premium CSS -->
+<link rel="stylesheet" href="{{ url_for('static', filename='css/landing-premium.css') }}">
+<!-- Icons -->
+<script src="https://unpkg.com/lucide@latest"></script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "OBIXCONFIGDOCTOR",
+  "alternateName": "ConfigDoctor",
+  "url": "{{ BASE_URL }}/landing",
+  "description": "Professional FPV drone diagnostic and tuning platform.",
+  "applicationCategory": "Utility",
+  "operatingSystem": "Web, iOS, Android",
+  "author": {
+    "@type": "Organization",
+    "name": "OBIXConfig Lab"
+  },
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  }
+}
+</script>
+{% endblock %}
+
+{% block body_attrs %}class="landing-page"{% endblock %}
+{% block show_shared_chrome %}false{% endblock %}
+{% block show_bottom_nav %}false{% endblock %}
+
+{% block content %}
+<div class="premium-bg"></div>
+
+<!-- Navigation -->
+<nav class="premium-nav">
+    <div class="wrap nav-inner">
+        <a href="/landing" class="nav-brand">
+            <img src="{{ url_for('static', filename='img/configdoctor-logo.png') }}" alt="Logo">
+            OBIXCONFIGDOCTOR
+        </a>
+        <div class="nav-actions">
+            <a href="/app" class="btn-premium btn-primary btn-sm">LAUNCH APP</a>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="hero-container">
+        <div class="hero-content">
+            <div style="display: inline-block; padding: 6px 12px; background: rgba(0,255,102,0.1); border: 1px solid var(--primary); border-radius: 20px; color: var(--primary); font-size: 0.8rem; font-weight: 700; margin-bottom: 20px; letter-spacing: 1px;">
+                V6.0 APEX PRO RELEASED
+            </div>
+            <h1 class="hero-brand-title">จูนลึกกว่าเดิม<br><span class="gradient-text">บินนิ่งกว่าที่เคย</span></h1>
+            <p>OBIXCONFIGDOCTOR — แพลตฟอร์มวิเคราะห์และปรับแต่งโดรน FPV ด้วยข้อมูลจริง ครบทั้ง PID, Filter, Blackbox, CLI, Battery และ Motor ในพื้นที่ทำงานเดียว</p>
+            <div class="cta-row" style="display: flex; gap: 15px; flex-direction: row; max-width: none;">
+                <a href="/app" class="btn-premium btn-primary">
+                    <i data-lucide="zap"></i> เริ่มใช้งานฟรี
+                </a>
+                <a href="#features" class="btn-premium btn-secondary">
+                    สำรวจฟีเจอร์
+                </a>
+            </div>
+        </div>
+        <div class="hero-image">
+            <img src="{{ url_for('static', filename='img/hero-drone-premium.webp') }}" alt="Premium FPV Drone" width="600" height="600" fetchpriority="high">
+        </div>
+    </div>
+</section>
+
+<!-- Preview Section (App UI Mockup) -->
+<section class="section-padding" style="background: rgba(0,0,0,0.3);">
+    <div class="wrap">
+        <div class="section-title">
+            <h2 class="gradient-text">Powerful Dashboard</h2>
+            <p style="color: var(--text-muted);">อินเตอร์เฟซที่ออกแบบมาเพื่อความเร็วและแม่นยำ</p>
+        </div>
+        <div class="mockup-outer">
+            <div class="mockup-inner">
+                <div class="mockup-grid">
+                    <div class="mockup-sidebar">
+                        <div class="mockup-item"></div>
+                        <div class="mockup-item active"></div>
+                        <div class="mockup-item"></div>
+                        <div class="mockup-item"></div>
+                    </div>
+                    <div class="mockup-main">
+                        <div class="mockup-stats">
+                            <div class="stat-card">
+                                <small class="p-term">P-TERM</small>
+                                <div class="stat-val">48.5</div>
+                            </div>
+                            <div class="stat-card">
+                                <small class="i-term">I-TERM</small>
+                                <div class="stat-val">85.0</div>
+                            </div>
+                            <div class="stat-card">
+                                <small class="d-term">D-TERM</small>
+                                <div class="stat-val">32.2</div>
+                            </div>
+                        </div>
+                        <div class="mockup-chart">
+                            <div class="bar" style="height: 30%; opacity: 0.5;"></div>
+                            <div class="bar" style="height: 60%; opacity: 0.7;"></div>
+                            <div class="bar" style="height: 45%; opacity: 0.6;"></div>
+                            <div class="bar" style="height: 80%;"></div>
+                            <div class="bar" style="height: 55%; opacity: 0.6;"></div>
+                            <div class="bar" style="height: 40%; opacity: 0.5;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section id="features" class="section-padding">
+    <div class="wrap">
+        <div class="section-title">
+            <h2>Core <span class="gradient-text">Features</span></h2>
+            <p style="color: var(--text-muted);">ทุกเครื่องมือที่คุณต้องการเพื่อประสิทธิภาพสูงสุด</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <i data-lucide="activity" class="feature-icon"></i>
+                <h3>PID Analyzer</h3>
+                <p>วิเคราะห์และแนะนำค่า PID ที่แม่นยำตามสไตล์การบินของคุณ</p>
+            </div>
+            <div class="feature-card">
+                <i data-lucide="database" class="feature-icon"></i>
+                <h3>Blackbox Pro</h3>
+                <p>อ่านไฟล์ Blackbox CSV และแสดงผลแบบ Visualized เข้าใจง่าย</p>
+            </div>
+            <div class="feature-card">
+                <i data-lucide="terminal" class="feature-icon"></i>
+                <h3>CLI Surgeon</h3>
+                <p>แก้ไขและปรับแต่ง CLI Dump ได้อย่างรวดเร็วและปลอดภัย</p>
+            </div>
+            <div class="feature-card">
+                <i data-lucide="battery-charging" class="feature-icon"></i>
+                <h3>Battery Health</h3>
+                <p>คำนวณและประเมินสุขภาพแบตเตอรี่เพื่อความปลอดภัยในการบิน</p>
+            </div>
+            <div class="feature-card">
+                <i data-lucide="cpu" class="feature-icon"></i>
+                <h3>RPM Filter</h3>
+                <p>เครื่องมือคำนวณ RPM Filter เพื่อลดสัญญาณรบกวน</p>
+            </div>
+            <div class="feature-card">
+                <i data-lucide="shield-check" class="feature-icon"></i>
+                <h3>ESC Checker</h3>
+                <p>ตรวจสอบความเข้ากันได้ของ ESC และมอเตอร์อย่างละเอียด</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Why Section -->
+<section class="section-padding why-section">
+    <div class="wrap">
+        <div class="hero-container">
+            <div class="hero-image">
+                <div class="glow-orb"></div>
+                <i data-lucide="shield-check" class="why-icon"></i>
+            </div>
+            <div class="hero-content">
+                <h2>Why <span class="gradient-text">OBIXCONFIGDOCTOR?</span></h2>
+                <ul class="why-list">
+                    <li>
+                        <i data-lucide="check-circle"></i>
+                        <div>
+                            <b>Data-Driven Insights</b>
+                            <span>วิเคราะห์จากข้อมูลจริง ไม่ใช่การคาดเดา</span>
+                        </div>
+                    </li>
+                    <li>
+                        <i data-lucide="check-circle"></i>
+                        <div>
+                            <b>Mobile Optimized</b>
+                            <span>ปรับจูนได้ที่สนามแข่งผ่านมือถือของคุณ</span>
+                        </div>
+                    </li>
+                    <li>
+                        <i data-lucide="check-circle"></i>
+                        <div>
+                            <b>100% Free to Use</b>
+                            <span>เข้าถึงเครื่องมือทั้งหมดได้ฟรี ไม่มีค่าใช้จ่ายแฝง</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ Section -->
+<section class="section-padding">
+    <div class="wrap">
+        <div class="section-title">
+            <h2>Common <span class="gradient-text">Questions</span></h2>
+        </div>
+        <div class="faq-container">
+            <div class="faq-item">
+                <button class="faq-question" aria-expanded="false" style="width: 100%; border: none; background: transparent; text-align: left; font-family: inherit; color: inherit;">
+                    ConfigDoctor ปลอดภัยกับโดรนของฉันไหม? <i data-lucide="chevron-down"></i>
+                </button>
+                <div class="faq-answer" role="region">ปลอดภัยแน่นอนครับ เครื่องมือของเราเน้นการวิเคราะห์ข้อมูลและให้คำแนะนำตามหลักการวิศวกรรมการบินและสถิติจากผู้ใช้งานจริง</div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question" aria-expanded="false" style="width: 100%; border: none; background: transparent; text-align: left; font-family: inherit; color: inherit;">
+                    รองรับ Betaflight เวอร์ชั่นไหนบ้าง? <i data-lucide="chevron-down"></i>
+                </button>
+                <div class="faq-answer" role="region">เรารองรับตั้งแต่เวอร์ชั่น 4.0 ขึ้นไปจนถึงเวอร์ชั่นล่าสุด 4.5+ รวมถึงรองรับ Quicksilver และ INAV ในบางเครื่องมือครับ</div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question" aria-expanded="false" style="width: 100%; border: none; background: transparent; text-align: left; font-family: inherit; color: inherit;">
+                    ต้องสมัครสมาชิกไหม? <i data-lucide="chevron-down"></i>
+                </button>
+                <div class="faq-answer" role="region">ไม่ต้องครับ คุณสามารถใช้งานเครื่องมือทั้งหมดได้ทันทีโดยไม่ต้องลงทะเบียน</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Support / PromptPay -->
+<section class="support-section section-padding" id="support" aria-labelledby="supportTitle">
+    <div class="wrap">
+        <div class="support-panel">
+            <div class="support-copy-col">
+                <span class="support-kicker">SUPPORT THE PROJECT</span>
+                <h2 id="supportTitle">ช่วยให้เครื่องมือ FPV นี้พัฒนาต่อไป</h2>
+                <p>OBIXCONFIGDOCTOR สร้างขึ้นเพื่อช่วยนักบิน FPV ให้ตรวจสอบ วิเคราะห์ และปรับแต่งโดรนได้ง่ายขึ้น ทุกเครื่องมือเปิดให้ใช้งานฟรี หากเห็นว่าโปรเจกต์นี้มีประโยชน์ สามารถร่วมสนับสนุนค่าพัฒนาและค่าเซิร์ฟเวอร์ได้ตามสะดวก</p>
+                <div class="support-points">
+                    <span>พัฒนาเครื่องมือใหม่</span>
+                    <span>ดูแลระบบและเซิร์ฟเวอร์</span>
+                    <span>สนับสนุนชุมชน FPV ไทย</span>
+                </div>
+                <small>การสนับสนุนเป็นไปตามความสมัครใจ และไม่มีผลต่อสิทธิ์การใช้งาน</small>
+            </div>
+            <div class="support-qr-card">
+                <img src="{{ url_for('static', filename='img/support-qr.png') }}" alt="Thai QR Payment PromptPay สำหรับสนับสนุน OBIXCONFIGDOCTOR" loading="lazy" width="420" height="465">
+                <strong>สแกน QR ผ่านแอปธนาคาร</strong>
+                <span>PromptPay · นาย สันติภาพ สงมรักษ์</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="premium-footer">
+    <div class="footer-content">
+        <div class="footer-logo">
+            OBIX<span class="gradient-text">CONFIGDOCTOR</span>
+        </div>
+        <p>OBIX Config Lab — The ultimate FPV tuning companion.</p>
+        <div class="footer-links">
+            <a href="/about">About</a>
+            <a href="/changelog">Changelog</a>
+            <a href="/fpv-gear">Gear Guide</a>
+            <a href="https://github.com/Santipap250/configdoctor">GitHub</a>
+            <a href="/team">Team</a>
+            <a href="#support">Support</a>
+        </div>
+        <div class="footer-copy">
+            &copy; 2026 OBIX Config Lab. All rights reserved.
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Initialize Lucide icons
+    lucide.createIcons();
+
+    // FAQ Toggle
+    document.querySelectorAll('.faq-question').forEach(q => {
+        q.addEventListener('click', () => {
+            const parent = q.parentElement;
+            const isActive = parent.classList.toggle('active');
+            q.setAttribute('aria-expanded', isActive);
+        });
+    });
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    });
+</script>
+{% endblock %}
+
+<!-- Back to Top -->
+<button id="backToTop" style="position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px; border-radius: 50%; background: var(--primary); border: none; color: #000; cursor: pointer; display: none; z-index: 1000; box-shadow: 0 0 20px var(--primary-glow); align-items: center; justify-content: center;">
+    <i data-lucide="arrow-up"></i>
+</button>
+
+<script>
+    const btt = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 500) {
+            btt.style.display = 'flex';
+        } else {
+            btt.style.display = 'none';
+        }
+    });
+    btt.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+</script>
+
+<script>
+    const observerOptions = {
+        threshold: 0.1
+    };
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('.feature-card, .section-title, .hero-content, .hero-image').forEach(el => {
+        el.classList.add('reveal');
+        observer.observe(el);
+    });
+</script>
