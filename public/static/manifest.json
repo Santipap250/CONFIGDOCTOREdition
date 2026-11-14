@@ -2,7 +2,9 @@
   "name": "OBIXCONFIGDOCTOR — FPV Drone Configuration Analyzer",
   "short_name": "OBIXCONFIGDOCTOR",
   "description": "Professional FPV drone diagnostic and tuning platform for PID, Filter, and Blackbox analysis.",
+  "id": "/",
   "start_url": "/landing",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#020403",
   "theme_color": "#00ff66",
@@ -14,19 +16,13 @@
       "purpose": "any"
     },
     {
-      "src": "/static/img/icon-512.png",
+      "src": "/static/favicon.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/static/android-chrome-192x192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "maskable"
-    },
-    {
-      "src": "/static/img/icon-512.png",
+      "src": "/static/img/pwa-maskable-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"

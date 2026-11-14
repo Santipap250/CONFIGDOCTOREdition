@@ -8,7 +8,7 @@
 # import them from here (see tests/test_analyzer_route_fixes.py).
 # ============================================================
 
-import os, io, re, time, json, hashlib, logging
+import os, io, re, time, json, hashlib, logging, math
 import sqlite3, threading as _threading, tempfile
 from datetime import datetime
 
@@ -134,7 +134,7 @@ def _get_db():
 
 # FIX C3: trust X-Forwarded-For only when TRUST_PROXY=1 in env
 #         ถ้าไม่ set จะใช้ remote_addr ตรงๆ ป้องกัน header spoofing bypass rate-limit/vote
-_TRUST_PROXY = os.environ.get("TRUST_PROXY", "0") in ("1", "true", "True")
+_TRUST_PROXY = os.environ.get("TRUST_PROXY", "0").strip().lower() in ("1", "true", "yes")
 
 def _ip_hash(request_obj):
     """SHA-256 of real client IP.
@@ -185,14 +185,12 @@ except Exception as e:
     def make_advanced_report(*args, **kwargs): return {"advanced": {}}
     ADV_ANALYSIS_AVAILABLE = False
 
-# ── FPV Affiliate Gear module — extension/UI layer, fully isolated from
-#    analyzer/ and logic/ (see affiliate/gear_recommender.py docstring).
-#    It never touches PID/motor-prop/blackbox math; it only reads the
-#    already-computed drone_class/style/size strings to pick catalog
-#    entries. Deleting affiliate/ + this try/except + the /fpv-gear route
-#    below removes the whole feature with zero impact on analysis. ──────
+# ── FPV Gear module — optional compatibility/catalog presentation layer.
+#    It reads already-computed class/style/size values and contains no
+#    payment, purchase or referral links. PID/motor/blackbox analysis is
+#    independent from this optional gear guide. ────────────────────────
 try:
-    from affiliate.gear_recommender import (
+    from gear.gear_recommender import (
         recommend as _gear_recommend,
         get_starter_kits as _gear_starter_kits,
         get_categories as _gear_categories,
@@ -209,7 +207,7 @@ except Exception as e:
     def _gear_categories(): return {}
     def _gear_disclaimer(): return {"th": "", "en": ""}
     def _gear_all_by_category(): return {}
-    logging.warning("affiliate.gear_recommender import failed: %s", e)
+    logging.warning("gear.gear_recommender import failed: %s", e)
 
 # ── Style normalizer ──────────────────────────────────────────────────────
 _STYLE_MAP = {
@@ -233,6 +231,15 @@ def _cells_from_str(s):
     if not is_valid_battery_string(s):
         return None
     return cells_from_battery_string(s, default=4, lo=1, hi=8)
+
+
+def _finite_float(value):
+    """Parse a finite float; reject NaN and infinities at request boundaries."""
+    try:
+        parsed = float(value)
+    except (TypeError, ValueError, OverflowError):
+        return None
+    return parsed if math.isfinite(parsed) else None
 
 # ── SHA-256 hash cache (avoid recomputing on every /downloads request) ────
 _HASH_CACHE: dict = {}
@@ -260,8 +267,15 @@ def _file_sha256(path: str) -> str:
 # ═════════════════════════════════════════════════════════════════════════
 def validate_input(size, weight, prop_size, pitch, blades, battery,
                     motor_kv=None, motor_count=None, battery_mAh=None,
-                    payload_g=None, esc_current_limit_a=None):
+                    payload_g=None, esc_current_limit_a=None, prop_thrust_g=None):
     warnings = []
+    for field, value in (
+        ("size", size), ("weight", weight), ("prop_size", prop_size), ("pitch", pitch),
+        ("motor_kv", motor_kv), ("battery_mAh", battery_mAh), ("payload_g", payload_g),
+        ("esc_current_limit_a", esc_current_limit_a), ("prop_thrust_g", prop_thrust_g),
+    ):
+        if value is not None and _finite_float(value) is None:
+            warnings.append(f"{field} ต้องเป็นตัวเลขจำกัด (ห้ามใช้ NaN/Infinity)")
     try:
         size = float(size)
     except Exception:
@@ -384,8 +398,8 @@ def analyze_drone(size, battery, style, prop_result, weight, detected_class=None
 
     # ── PID: use class+style lookup (accurate) ─────────────────────────
     if detected_class:
-        pid = get_pid_for_class_style(detected_class, style)
-        flt_raw = get_filter_for_class(detected_class)
+        pid = get_pid_for_class_style(detected_class, style, battery=battery)
+        flt_raw = get_filter_for_class(detected_class, battery=battery)
     else:
         # fallback style-only (should rarely happen)
         if style == "racing":
@@ -480,41 +494,59 @@ def analyze_drone(size, battery, style, prop_result, weight, detected_class=None
 # ═════════════════════════════════════════════════════════════════════════
 # ROUTES
 # ═════════════════════════════════════════════════════════════════════════
-# ── FPV Affiliate Gear Guide — extension/UI layer only. ───────────────────
-# Reads optional ?class=&style=&size= query params (set by links from the
-# analysis result page / FPV hub) and maps them onto a small affiliate
-# catalog (data/fpv_affiliate_products.json) via affiliate/gear_recommender.
+# ── FPV Gear Guide — informational compatibility catalog only. ────────────
+# Reads optional ?class=&style=&size= query params and maps them onto a
+# compatibility catalog (data/fpv_gear_products.json) via gear_recommender.
 # Does NOT read analyzer/PID/motor-prop/blackbox internals — only plain
 # strings already computed elsewhere are passed in. No context → falls
 # back to generic starter kits.
 # ── Analysis helper — extracted from index() for readability ─────────────
 def _parse_analysis_form():
     """Parse + validate form inputs. Returns (params_dict, warnings_list)."""
-    def safe_float(x, default=0.0):
-        try: return float(x)
-        except Exception: return default
-    def safe_int(x, default=0):
-        try: return int(x)
-        except Exception: return default
+    parse_warnings = []
+    def safe_float(x, default=0.0, label="value"):
+        if x in (None, "", "None"):
+            return default
+        parsed = _finite_float(x)
+        if parsed is None:
+            parse_warnings.append(f"{label} ต้องเป็นตัวเลขจำกัด (ห้ามใช้ NaN/Infinity)")
+            return default
+        return parsed
+    def safe_int(x, default=0, label="value"):
+        if x in (None, "", "None"):
+            return default
+        try:
+            return int(x)
+        except (TypeError, ValueError, OverflowError):
+            parse_warnings.append(f"{label} ต้องเป็นจำนวนเต็ม")
+            return default
 
     preset_key  = request.form.get("preset", "").strip()
-    size        = safe_float(request.form.get("size"), 5.0)
+    size        = safe_float(request.form.get("size"), 5.0, "size")
     battery     = request.form.get("battery", "4S")
     style_raw   = request.form.get("style", "freestyle")
-    weight      = safe_float(request.form.get("weight"), 1000.0)
-    prop_size   = safe_float(request.form.get("prop_size"), 5.0)
-    blade_count = safe_int(request.form.get("blades"), 3)
-    prop_pitch  = safe_float(request.form.get("pitch"), 4.0)
-    battery_mAh       = safe_int(request.form.get("battery_mAh"), None)
-    motor_count       = safe_int(request.form.get("motor_count"), 4)
-    motor_kv          = safe_int(request.form.get("motor_kv"), None)
+    weight      = safe_float(request.form.get("weight"), 1000.0, "weight")
+    prop_size   = safe_float(request.form.get("prop_size"), 5.0, "prop_size")
+    blade_count = safe_int(request.form.get("blades"), 3, "blades")
+    prop_pitch  = safe_float(request.form.get("pitch"), 4.0, "pitch")
+    battery_mAh = safe_int(request.form.get("battery_mAh"), None, "battery_mAh")
+    motor_count = safe_int(request.form.get("motor_count"), 4, "motor_count")
+    motor_kv    = safe_int(request.form.get("motor_kv"), None, "motor_kv")
+    if weight < 10:
+        parse_warnings.append("weight ต่ำกว่า 10 กรัม จึงใช้ค่าขั้นต่ำ 10 กรัมเพื่อคำนวณ")
+    if motor_count < 1:
+        parse_warnings.append("motor_count ต้องไม่น้อยกว่า 1 จึงใช้ค่าขั้นต่ำ 1")
     weight      = max(10.0, weight)
     motor_count = max(1, motor_count)
 
     def _optional_float(key):
         v = request.form.get(key)
-        try: return float(v) if v not in (None, "", "None") else None
-        except Exception: return None
+        if v in (None, "", "None"):
+            return None
+        parsed = _finite_float(v)
+        if parsed is None:
+            parse_warnings.append(f"{key} ต้องเป็นตัวเลขจำกัด (ห้ามใช้ NaN/Infinity)")
+        return parsed
 
     payload_g           = _optional_float("payload_g")
     prop_thrust_g       = _optional_float("prop_thrust_g")
@@ -539,36 +571,44 @@ def _parse_analysis_form():
         battery_mAh=battery_mAh, motor_count=motor_count, motor_kv=motor_kv,
         payload_g=payload_g, prop_thrust_g=prop_thrust_g,
         esc_current_limit_a=esc_current_limit_a,
+        input_warnings=parse_warnings,
     )
 
 
 def _handle_analysis_get_params():
     """Run analysis from GET query params (shared links).
     Maps ?size=5&battery=4S&style=freestyle&weight=700&... → same pipeline as POST."""
-    def safe_float(x, default=0.0):
-        try: return float(x)
-        except Exception: return default
+    parse_warnings = []
+    def safe_float(x, default=0.0, label="value"):
+        if x in (None, "", "None"):
+            return default
+        parsed = _finite_float(x)
+        if parsed is None:
+            parse_warnings.append(f"{label} ต้องเป็นตัวเลขจำกัด (ห้ามใช้ NaN/Infinity)")
+            return default
+        return parsed
     def safe_int(x, default=0):
         try: return int(x) if x not in (None, "", "None") else default
         except Exception: return default
 
     a = request.args
-    size        = safe_float(a.get("size"), 5.0)
+    size        = safe_float(a.get("size"), 5.0, "size")
     battery     = a.get("battery", "4S")
     style_raw   = a.get("style", "freestyle")
-    weight      = max(10.0, safe_float(a.get("weight"), 720.0))
-    prop_size   = safe_float(a.get("prop_size"), size)
+    weight      = max(10.0, safe_float(a.get("weight"), 720.0, "weight"))
+    prop_size   = safe_float(a.get("prop_size"), size, "prop_size")
     blade_count = safe_int(a.get("blades"), 3)
-    prop_pitch  = safe_float(a.get("pitch"), 4.0)
+    prop_pitch  = safe_float(a.get("pitch"), 4.0, "pitch")
     battery_mAh = safe_int(a.get("battery_mAh"), None) or None
     motor_count = max(1, safe_int(a.get("motor_count"), 4))
     motor_kv    = safe_int(a.get("motor_kv"), None) or None
 
     style = _normalize_style(style_raw)
 
-    warnings = validate_input(size, weight, prop_size, prop_pitch, blade_count, battery,
-                               motor_kv=motor_kv, motor_count=motor_count,
-                               battery_mAh=battery_mAh)
+    warnings = parse_warnings + validate_input(
+        size, weight, prop_size, prop_pitch, blade_count, battery,
+        motor_kv=motor_kv, motor_count=motor_count, battery_mAh=battery_mAh,
+    )
     try:
         cls_det = detect_class_from_size(size)
         detected_class, class_meta = (cls_det[0], cls_det[1]) if isinstance(cls_det, (tuple, list)) else (cls_det, {})
@@ -636,9 +676,11 @@ def _handle_analysis_post():
     esc_current_limit_a  = p["esc_current_limit_a"]
     preset_key           = p["preset_key"]
 
-    warnings = validate_input(size, weight, prop_size, prop_pitch, blade_count, battery,
+    warnings = list(p.get("input_warnings", [])) + validate_input(
+                               size, weight, prop_size, prop_pitch, blade_count, battery,
                                motor_kv=motor_kv, motor_count=motor_count, battery_mAh=battery_mAh,
-                               payload_g=payload_g, esc_current_limit_a=esc_current_limit_a)
+                               payload_g=payload_g, esc_current_limit_a=esc_current_limit_a,
+                               prop_thrust_g=prop_thrust_g)
 
     try:
         cls_det = detect_class_from_size(size)
@@ -688,7 +730,7 @@ def _handle_analysis_post():
             "pid": _fallback_pid, "filter": _fallback_filter, "extra_tips": [],
         }
 
-    baseline_ctrl  = get_baseline_for_class(detected_class) or {}
+    baseline_ctrl  = get_baseline_for_class(detected_class, battery=battery) or {}
     pid_axes       = baseline_ctrl.get("pid_axes", {})
     filter_baseline = baseline_ctrl.get("filter", {})
     r  = pid_axes.get("roll",  {"P": 48, "I": 90, "D": 38})
@@ -849,10 +891,7 @@ def _recommend_motor_prop(form):
         size = 5.0; weight_g = 900; battery = "4S"; battery_mAh = 1500
         prop_size = 5.0; blades = 3; pitch = 4.0; motor_count = 4; style = 'freestyle'
 
-    try:
-        cells = int(str(battery).upper().replace('S', ''))
-    except Exception:
-        cells = 4
+    cells = cells_from_battery_string(battery, default=4, lo=1, hi=12)
 
     target_twr = {'racing': 2.2, 'freestyle': 2.0}.get(style, 1.6)
     total_thrust_g  = max(1.0, weight_g * target_twr)
@@ -976,11 +1015,37 @@ def _timestamped_filename(prefix="obix_osd", ext="txt"):
 def _generate_osd_text_from_model(model):
     return json.dumps(model, ensure_ascii=False, indent=2)
 
+
+def _safe_osd_cli_text(value, limit=120):
+    text = str(value if value is not None else "")[:limit]
+    text = "".join(ch if ord(ch) >= 32 and ord(ch) != 127 else " " for ch in text)
+    return text.replace("\\", "\\\\").replace('"', '\\"')
+
+
+def _safe_osd_cli_number(value):
+    parsed = _finite_float(value)
+    if parsed is None or abs(parsed) > 10000:
+        return 0
+    return int(parsed) if parsed.is_integer() else round(parsed, 3)
+
+
 def _generate_cli_from_model(model):
     lines = ["# OBIXConfig pseudo CLI export"]
-    for i, it in enumerate(model.get('items', []), start=1):
-        lines.append(f"// {i}. {it.get('type')} '{it.get('label')}' @{it.get('x')},{it.get('y')} size={it.get('size')}")
-        lines.append(f"// command: osd_add {it.get('type')} {it.get('x')} {it.get('y')} \"{it.get('label')}\" size={it.get('size')}")
+    items = model.get("items", []) if isinstance(model, dict) else []
+    if not isinstance(items, list):
+        return "\n".join(lines)
+    for i, item in enumerate(items[:200], start=1):
+        if not isinstance(item, dict):
+            continue
+        kind = str(item.get("type", "unknown"))
+        if not re.fullmatch(r"[A-Za-z0-9_.-]{1,64}", kind):
+            kind = "unknown"
+        label = _safe_osd_cli_text(item.get("label"))
+        x = _safe_osd_cli_number(item.get("x"))
+        y = _safe_osd_cli_number(item.get("y"))
+        size = _safe_osd_cli_number(item.get("size"))
+        lines.append(f'// {i}. {kind} "{label}" @{x},{y} size={size}')
+        lines.append(f'// command: osd_add {kind} {x} {y} "{label}" size={size}')
     return "\n".join(lines)
 
 

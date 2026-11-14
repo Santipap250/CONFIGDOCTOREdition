@@ -1,14 +1,18 @@
-/* OBIXCONFIGDOCTOR — static-asset cache only.
+/* OBIXCONFIGDOCTOR — cache static assets and a standalone offline fallback only.
  * Never cache application HTML or API responses: pages include per-session CSRF tokens.
  */
-const CACHE_NAME = 'obixconfigdoctor-v6-static';
+const CACHE_NAME = 'obixconfigdoctor-v7-static';
 const STATIC_ASSETS = [
   '/static/css/landing-premium.css',
   '/static/img/hero-drone-premium.webp',
   '/static/img/configdoctor-logo.png',
   '/static/img/og-premium.webp',
   '/static/favicon.ico',
-  '/static/manifest.json'
+  '/static/favicon.png',
+  '/static/android-chrome-192x192.png',
+  '/static/img/pwa-maskable-512.png',
+  '/static/manifest.json',
+  '/static/offline.html'
 ];
 
 self.addEventListener('install', (event) => {
@@ -35,7 +39,27 @@ self.addEventListener('fetch', (event) => {
   if (request.method !== 'GET') return;
 
   const url = new URL(request.url);
-  if (url.origin !== self.location.origin || !url.pathname.startsWith('/static/')) return;
+  if (url.origin !== self.location.origin) return;
+
+  // HTML is always fetched from the network. If it fails, serve only the
+  // static offline notice; do not persist personalized pages or CSRF tokens.
+  if (request.mode === 'navigate') {
+    event.respondWith(
+      fetch(request).catch(async () => {
+        const cache = await caches.open(CACHE_NAME);
+        const offlinePage = await cache.match('/static/offline.html');
+        if (!offlinePage) return Response.error();
+        return new Response(await offlinePage.text(), {
+          status: 503,
+          statusText: 'Offline',
+          headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' }
+        });
+      })
+    );
+    return;
+  }
+
+  if (!url.pathname.startsWith('/static/')) return;
 
   event.respondWith(
     caches.open(CACHE_NAME).then(async (cache) => {

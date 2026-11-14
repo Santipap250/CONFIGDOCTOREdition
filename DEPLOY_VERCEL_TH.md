@@ -56,13 +56,12 @@ Deploy เป็น Preview ก่อน แล้วเปิด URL Preview �
 /robots.txt
 /static/css/landing-premium.css
 /static/img/configdoctor-logo.png
-/static/img/support-qr.png
 ```
 
 สิ่งที่ควรตรวจ:
 
 - `/healthz` ตอบ JSON `{"status":"ok"}`
-- หน้าเว็บไม่มี 404/500 และ CSS/โลโก้/รูป QR โหลดได้
+- หน้าเว็บไม่มี 404/500 และ CSS/โลโก้/Manifest/Service Worker โหลดได้
 - ทดลองส่งข้อมูลวิเคราะห์โดรนและตรวจผลลัพธ์
 - ทดลอง Rates Visualizer, CLI tools และ Blackbox ด้วยไฟล์ขนาดเล็ก
 - ทดลอง Export จาก OSD

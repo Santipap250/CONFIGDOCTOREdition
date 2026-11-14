@@ -73,14 +73,13 @@ After deployment, open each URL on the Preview domain:
 /sitemap.xml
 /robots.txt
 /static/img/configdoctor-logo.png
-/static/img/support-qr.png
 ```
 
 Expected checks:
 
 - `/healthz` returns JSON `{"status":"ok"}`.
 - Pages return HTML rather than a 404/500.
-- CSS, images, logo and QR code load without a 404.
+- CSS, icons, logo and PWA manifest/service worker load without a 404.
 - Analyzer form submits and renders a result.
 - CLI and Blackbox APIs return validation errors for empty input and results for valid input.
 - `/api/rating` returns counts. To verify persistent writes, configure PostgreSQL before testing POST endpoints.

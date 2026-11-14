@@ -83,9 +83,10 @@ body.lang-en .on-en{display:inline}
 :root{
   --on-green:#10c47a;--on-cyan:#00e5ff;--on-blue:#3a82f6;
   --on-gold:#f59e0b;--on-purple:#a855f7;--on-red:#f87171;
-  --on-muted:#4a6272;--on-muted2:#7a9ab4;--on-text:#c8dce8;
+  --on-muted:#8295a2;--on-muted2:#9bb4c5;--on-text:#c8dce8;
   --on-bg:rgba(4,9,14,0.92);--on-border:rgba(255,255,255,0.06);
 }
+body.light{--on-muted:#52616e;--on-muted2:#52616e;}
 /* ── TOP BAR ── */
 .on-bar{
   position:sticky;top:0;z-index:500;height:58px;
@@ -407,12 +408,12 @@ body.lang-en .on-en{display:inline}
 .on-search-inner:focus-within{border-color:rgba(16,196,122,.4);box-shadow:0 0 0 3px rgba(16,196,122,.08);}
 .on-search-icon{color:var(--on-muted);font-size:12px;flex-shrink:0;}
 .on-search-input{background:none;border:none;outline:none;color:var(--on-text);font-family:'Sarabun',sans-serif;font-size:14px;width:100%;}
-.on-search-input::placeholder{color:rgba(74,98,114,.7);}
+.on-search-input::placeholder{color:rgba(130,149,162,.85);}
 .on-dnav{flex:1;overflow-y:auto;overflow-x:hidden;padding:8px max(8px,env(safe-area-inset-left)) max(20px,env(safe-area-inset-bottom));scrollbar-width:thin;scrollbar-color:rgba(16,196,122,.15) transparent;max-width:640px;margin:0 auto;width:100%;}
 .on-dnav::-webkit-scrollbar{width:4px;}
 .on-dnav::-webkit-scrollbar-track{background:transparent;}
 .on-dnav::-webkit-scrollbar-thumb{background:rgba(16,196,122,.15);border-radius:4px;}
-.on-dgroup{font-family:'Orbitron',sans-serif;font-size:8px;font-weight:700;letter-spacing:.18em;color:rgba(74,98,114,.8);padding:10px 8px 4px;}
+.on-dgroup{font-family:'Orbitron',sans-serif;font-size:8px;font-weight:700;letter-spacing:.18em;color:var(--on-muted);padding:10px 8px 4px;}
 .on-ddiv{height:1px;background:rgba(255,255,255,.045);margin:6px 0;}
 .on-dlink{display:flex;align-items:center;gap:9px;padding:10px 9px;border-radius:8px;border:1px solid transparent;text-decoration:none;transition:background .14s,border-color .14s,padding-left .14s;margin-bottom:1px;}
 .on-dlink:hover{background:rgba(16,196,122,.05);border-color:rgba(16,196,122,.12);padding-left:11px;}
@@ -427,7 +428,7 @@ body.lang-en .on-en{display:inline}
 .on-ico.c{background:rgba(0,229,255,.06);border-color:rgba(0,229,255,.18);}
 .on-dbody{flex:1;min-width:0;}
 .on-dtitle{font-size:12.5px;font-weight:600;color:rgba(184,208,222,.9);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block;}
-.on-dmeta{font-size:10.5px;color:rgba(74,98,114,.9);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block;margin-top:1px;}
+.on-dmeta{font-size:10.5px;color:var(--on-muted2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block;margin-top:1px;}
 .on-dlink.on-act .on-dtitle{color:var(--on-green);}
 .on-dlink:hover .on-dtitle{color:#d8eaf6;}
 .on-pill{font-family:'Orbitron',sans-serif;font-size:7.5px;font-weight:700;letter-spacing:.06em;padding:2px 7px;border-radius:100px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);color:var(--on-muted);flex-shrink:0;}
@@ -484,12 +485,12 @@ body.light .on-drawer{background:#f8fafc;border-right-color:rgba(0,0,0,.08);}
 body.light .on-dh{border-bottom-color:rgba(0,0,0,.07);}
 body.light .on-dh-icon{background:rgba(5,150,105,.08);border-color:rgba(5,150,105,.2);}
 body.light .on-dh-name{color:#1e293b;}
-body.light .on-dh-sub{color:#94a3b8;}
-body.light .on-dclose{color:#94a3b8;border-color:rgba(0,0,0,.1);}
+body.light .on-dh-sub{color:#52616e;}
+body.light .on-dclose{color:#52616e;border-color:rgba(0,0,0,.1);}
 body.light .on-search-inner{background:rgba(0,0,0,.04);border-color:rgba(0,0,0,.1);}
 body.light .on-search-input{color:#1e293b;}
-body.light .on-search-input::placeholder{color:#94a3b8;}
-body.light .on-dgroup{color:#cbd5e1;}
+body.light .on-search-input::placeholder{color:#52616e;}
+body.light .on-dgroup{color:#52616e;}
 body.light .on-ddiv{background:rgba(0,0,0,.07);}
 body.light .on-dlink:hover{background:rgba(0,0,0,.03);border-color:rgba(0,0,0,.08);padding-left:11px;}
 body.light .on-dlink.on-act{background:rgba(5,150,105,.07);border-color:rgba(5,150,105,.22);}
@@ -500,14 +501,14 @@ body.light .on-ico.a{background:rgba(217,119,6,.07);border-color:rgba(217,119,6,
 body.light .on-ico.p{background:rgba(109,40,217,.07);border-color:rgba(109,40,217,.2);}
 body.light .on-ico.r{background:rgba(220,38,38,.07);border-color:rgba(220,38,38,.2);}
 body.light .on-dtitle{color:#334155;}
-body.light .on-dmeta{color:#94a3b8;}
+body.light .on-dmeta{color:#52616e;}
 body.light .on-dlink.on-act .on-dtitle{color:#059669;}
 body.light .on-dlink:hover .on-dtitle{color:#0f172a;}
-body.light .on-pill{background:rgba(0,0,0,.04);border-color:rgba(0,0,0,.08);color:#94a3b8;}
+body.light .on-pill{background:rgba(0,0,0,.04);border-color:rgba(0,0,0,.08);color:#52616e;}
 body.light .on-pill.nw{background:rgba(5,150,105,.07);border-color:rgba(5,150,105,.28);color:#059669;}
 body.light .on-pill.hot{background:rgba(220,38,38,.07);border-color:rgba(220,38,38,.28);color:#dc2626;}
-body.light .on-no-results{color:#94a3b8;}
-body.light .on-dfoot{border-top-color:rgba(0,0,0,.07);color:#94a3b8;}
+body.light .on-no-results{color:#52616e;}
+body.light .on-dfoot{border-top-color:rgba(0,0,0,.07);color:#52616e;}
 body.light .on-dfoot-ver{color:#059669;}
 
 /* ══════════════════════════════════════════════════════
@@ -588,7 +589,7 @@ body.light .on-dfoot-ver{color:#059669;}
   flex:1;background:transparent;border:none;outline:none;
   color:var(--on-text);font-family:var(--on-fn);font-size:13px;
 }
-.tp-search-input::placeholder{color:rgba(74,98,114,.6);}
+.tp-search-input::placeholder{color:rgba(130,149,162,.85);}
 .tp-search-count{
   font-family:var(--on-fm);font-size:9.5px;color:var(--on-muted);
   background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);
@@ -702,14 +703,14 @@ body.light .tp-overlay{background:rgba(0,0,0,.4);}
 body.light .tp-panel{background:#f8fafc;border-left-color:rgba(0,0,0,.09);}
 body.light .tp-header{border-bottom-color:rgba(0,0,0,.07);}
 body.light .tp-header-icon{background:rgba(5,150,105,.07);border-color:rgba(5,150,105,.22);}
-body.light .tp-header-title{color:#1e293b;}body.light .tp-header-sub{color:#94a3b8;}
+body.light .tp-header-title{color:#1e293b;}body.light .tp-header-sub{color:#52616e;}
 body.light .tp-close{color:#94a3b8;border-color:rgba(0,0,0,.1);}
 body.light .tp-close:hover{color:#dc2626;border-color:rgba(220,38,38,.3);background:rgba(220,38,38,.06);}
 body.light .tp-search-inner{background:rgba(0,0,0,.04);border-color:rgba(0,0,0,.1);}
 body.light .tp-search-input{color:#1e293b;}
 body.light .tp-cats{background:rgba(241,245,249,.8);border-right-color:rgba(0,0,0,.07);}
 body.light .tp-cat:hover{background:rgba(0,0,0,.04);}
-body.light .tp-item-name{color:#1e293b;}body.light .tp-item-desc{color:#94a3b8;}
+body.light .tp-item-name{color:#1e293b;}body.light .tp-item-desc{color:#52616e;}
 body.light .tp-item:hover{background:rgba(5,150,105,.05);border-color:rgba(5,150,105,.2);}
 body.light .tp-footer{border-top-color:rgba(0,0,0,.07);color:#94a3b8;}
 body.light .on-tools-btn{background:rgba(5,150,105,.09);border-color:rgba(5,150,105,.3);color:#059669;}
@@ -721,7 +722,7 @@ body.light .on-tools-btn:hover{background:rgba(5,150,105,.16);border-color:rgba(
 
 <!-- ═══ TOOL PANEL ═══ -->
 <div id="tpOverlay" class="tp-overlay" aria-hidden="true"></div>
-<aside id="tpPanel" class="tp-panel" role="dialog" aria-modal="true" aria-label="Tool Launcher">
+<aside id="tpPanel" class="tp-panel" role="dialog" aria-modal="true" aria-label="Tool Launcher" aria-hidden="true" inert>
 
   <div class="tp-header">
     <div class="tp-header-brand">
@@ -788,7 +789,7 @@ body.light .on-tools-btn:hover{background:rgba(5,150,105,.16);border-color:rgba(
 </aside>
 
 <!-- ═══ DRAWER ═══ -->
-<aside id="onDrawer" class="on-drawer" role="dialog" aria-modal="true" aria-label="เมนูหลัก">
+<aside id="onDrawer" class="on-drawer" role="dialog" aria-modal="true" aria-label="เมนูหลัก" aria-hidden="true" inert>
   <div class="on-dh">
     <div class="on-dh-brand">
       <div class="on-dh-icon">🚁</div>
@@ -923,7 +924,7 @@ body.light .on-tools-btn:hover{background:rgba(5,150,105,.16);border-color:rgba(
 
 <!-- ═══ TOP BAR ═══ -->
 <div class="on-bar" role="banner">
-  <button type="button" id="onHam" class="on-ham" aria-label="เปิด/ปิดเมนู" aria-expanded="false" aria-controls="onDrawer">
+  <button type="button" id="onHam" class="on-ham" aria-label="เปิดเมนูหลัก" aria-expanded="false" aria-controls="onDrawer">
     <span class="on-ham-bars" aria-hidden="true">
       <span class="on-ham-bar"></span>
       <span class="on-ham-bar"></span>
@@ -1010,11 +1011,11 @@ body.light .on-tools-btn:hover{background:rgba(5,150,105,.16);border-color:rgba(
     <span class="on-crumb" aria-current="page">
       <span class="on-crumb-dot"></span>{{ nav_label }}
     </span>
-    <button type="button" id="onSearchBtn" class="on-search-btn" aria-label="Open search (press /)">🔍<span class="on-search-hint">/</span></button>
-    <button type="button" id="tpBtn" class="on-tools-btn" aria-label="Open Tool Launcher" aria-haspopup="dialog">
+    <button type="button" id="onSearchBtn" class="on-search-btn" aria-label="ค้นหาเครื่องมือ (กด /)" aria-haspopup="dialog" aria-controls="tpPanel" aria-expanded="false">🔍<span class="on-search-hint">/</span></button>
+    <button type="button" id="tpBtn" class="on-tools-btn" aria-label="Open Tool Launcher" aria-haspopup="dialog" aria-controls="tpPanel" aria-expanded="false">
       <span class="tp-btn-ico">⊞</span> TOOLS <span class="tp-btn-key">T</span>
     </button>
-    <button type="button" class="on-icon-btn" id="onLang" title="Switch TH/EN" aria-label="Toggle language"><span id="onLangLabel">TH</span></button>
+    <button type="button" class="on-icon-btn" id="onLang" title="เปลี่ยนภาษาเมนู (เนื้อหาหลักยังเป็นภาษาไทย)" aria-label="เปลี่ยนภาษาเมนู" aria-pressed="false"><span id="onLangLabel">TH</span></button>
     <button type="button" class="on-icon-btn" id="onTheme" title="Toggle dark/light" aria-label="Toggle theme"><span id="onThemeIcon">🌙</span></button>
   </div>
 </div><!-- /on-bar -->
@@ -1026,6 +1027,16 @@ var ham=document.getElementById('onHam'),drawer=document.getElementById('onDrawe
     overlay=document.getElementById('onOverlay'),closeBtn=document.getElementById('onClose'),
     searchEl=document.getElementById('onSearch'),navEl=document.getElementById('onNav'),
     noRes=document.getElementById('onNoResults'),searchBtn=document.getElementById('onSearchBtn');
+var drawerReturnFocus=null;
+function trapTab(event,panel){
+  if(event.key!=='Tab'||!panel)return;
+  var items=Array.from(panel.querySelectorAll('a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])'))
+    .filter(function(el){return el.getClientRects().length>0&&!el.closest('[inert]');});
+  if(!items.length){event.preventDefault();return;}
+  var first=items[0],last=items[items.length-1],active=document.activeElement;
+  if(event.shiftKey&&(active===first||!panel.contains(active))){event.preventDefault();last.focus();}
+  else if(!event.shiftKey&&(active===last||!panel.contains(active))){event.preventDefault();first.focus();}
+}
 
 /* ── THEME ── */
 var theme=localStorage.getItem('obix-theme')||'dark';
@@ -1046,6 +1057,8 @@ function applyLang(l){
   document.body.classList.toggle('lang-en',l==='en');
   var lbl=document.getElementById('onLangLabel');
   if(lbl)lbl.textContent=l==='en'?'EN':'TH';
+  var langControl=document.getElementById('onLang');
+  if(langControl)langControl.setAttribute('aria-pressed',String(l==='en'));
   ['','Mobile'].forEach(function(s){
     var i=document.getElementById('langIcon'+s),t=document.getElementById('langLabel'+s),b=document.getElementById('langBtn'+s);
     if(i)i.textContent=l==='en'?'🇬🇧':'🇹🇭';
@@ -1061,38 +1074,32 @@ if(langBtn)langBtn.addEventListener('click',function(){window.toggleLang();});
 
 /* ── DRAWER ── */
 function openDrawer(){
-  if(ham){ham.setAttribute('aria-expanded','true');ham.classList.add('on-open');}
-  if(drawer)drawer.classList.add('on-open');
+  if(document.getElementById('tpPanel')&&document.getElementById('tpPanel').classList.contains('tp-open')&&window.closeTP)window.closeTP();
+  drawerReturnFocus=document.activeElement;
+  if(ham){ham.setAttribute('aria-expanded','true');ham.setAttribute('aria-label','ปิดเมนูหลัก');ham.classList.add('on-open');}
+  if(drawer){drawer.removeAttribute('inert');drawer.setAttribute('aria-hidden','false');drawer.classList.add('on-open');}
   if(overlay){overlay.classList.add('on-open');overlay.setAttribute('aria-hidden','false');}
   document.addEventListener('keydown',handleKey);
   if(window.innerWidth<960)document.body.style.overflow='hidden';
-  setTimeout(function(){if(searchEl)searchEl.focus();},80);
+  setTimeout(function(){if(searchEl&&drawer&&drawer.classList.contains('on-open'))searchEl.focus();},80);
 }
 function closeDrawer(){
-  if(ham){ham.setAttribute('aria-expanded','false');ham.classList.remove('on-open');}
-  if(drawer)drawer.classList.remove('on-open');
+  if(ham){ham.setAttribute('aria-expanded','false');ham.setAttribute('aria-label','เปิดเมนูหลัก');ham.classList.remove('on-open');}
+  if(drawer){drawer.classList.remove('on-open');drawer.setAttribute('aria-hidden','true');drawer.setAttribute('inert','');}
   if(overlay){overlay.classList.remove('on-open');overlay.setAttribute('aria-hidden','true');}
   document.removeEventListener('keydown',handleKey);
   document.body.style.overflow='';
   if(searchEl){searchEl.value='';filterLinks('');}
-  if(ham)ham.focus();
+  if(drawerReturnFocus&&drawerReturnFocus.isConnected&&!drawerReturnFocus.closest('[inert]')&&drawerReturnFocus!==document.body)drawerReturnFocus.focus();
+  else if(ham)ham.focus();
 }
 function handleKey(e){
   if(e.key==='Escape')closeDrawer();
+  trapTab(e,drawer);
   if(e.key==='/'&&document.activeElement!==searchEl){e.preventDefault();if(searchEl)searchEl.focus();}
 }
 window.onNavOpen=openDrawer;window.onNavClose=closeDrawer;
-/* sync ham button when tpPanel closes externally */
-document.addEventListener('tpClosed',function(){
-  if(ham){ham.setAttribute('aria-expanded','false');ham.classList.remove('on-open');}
-});
-if(ham)ham.addEventListener('click',function(){
-  if(window.openTP){
-    var open=document.getElementById('tpPanel')&&document.getElementById('tpPanel').classList.contains('tp-open');
-    if(open){window.closeTP&&window.closeTP();ham.setAttribute('aria-expanded','false');ham.classList.remove('on-open');}
-    else{window.openTP();ham.setAttribute('aria-expanded','true');ham.classList.add('on-open');}
-  } else { ham.getAttribute('aria-expanded')==='true'?closeDrawer():openDrawer(); }
-});
+if(ham)ham.addEventListener('click',function(){ham.getAttribute('aria-expanded')==='true'?closeDrawer():openDrawer();});
 if(overlay)overlay.addEventListener('click',closeDrawer);
 if(closeBtn)closeBtn.addEventListener('click',closeDrawer);
 if(searchBtn)searchBtn.addEventListener('click',function(){
@@ -1103,8 +1110,9 @@ if(navEl)navEl.querySelectorAll('.on-dlink').forEach(function(l){
   l.addEventListener('click',function(){if(window.innerWidth<960)closeDrawer();});
 });
 document.addEventListener('keydown',function(e){
-  var tag=document.activeElement?document.activeElement.tagName:'';
-  if(e.key==='/'||e.key==='t'||e.key==='T'){
+  var target=e.target,tag=target?target.tagName:'';
+  var editing=target&&(target.isContentEditable||/^(INPUT|TEXTAREA|SELECT)$/.test(tag));
+  if(!editing&&!e.altKey&&!e.ctrlKey&&!e.metaKey&&(e.key==='/'||e.key==='t'||e.key==='T')){
     e.preventDefault();
     if(window.openTP){window.openTP();setTimeout(function(){var s=document.getElementById('tpSearch');if(s)s.focus();},80);}
     else openDrawer();
@@ -1216,26 +1224,35 @@ var tpOv=document.getElementById('tpOverlay'),
     tpCats=document.getElementById('tpCats');
 
 var curCat='TUNE', curSel=-1, curItems=[];
+var tpReturnFocus=null;
 
 window.openTP=function openTP(){
   if(!tpOv||!tpPn)return;
+  if(drawer&&drawer.classList.contains('on-open'))closeDrawer();
+  tpReturnFocus=document.activeElement;
   tpOv.classList.add('tp-open');tpPn.classList.add('tp-open');
   tpOv.setAttribute('aria-hidden','false');
+  tpPn.removeAttribute('inert');tpPn.setAttribute('aria-hidden','false');
+  if(tpBtn)tpBtn.setAttribute('aria-expanded','true');
+  if(searchBtn)searchBtn.setAttribute('aria-expanded','true');
   document.body.style.overflow='hidden';
   document.addEventListener('keydown',tpKey);
-  setTimeout(function(){if(tpSearch)tpSearch.focus();},60);
+  setTimeout(function(){if(tpSearch&&tpPn.classList.contains('tp-open'))tpSearch.focus();},60);
   renderCat(curCat);
 }
 window.closeTP=function closeTP(){
-  document.dispatchEvent(new CustomEvent('tpClosed'));
   if(!tpOv||!tpPn)return;
   tpOv.classList.remove('tp-open');tpPn.classList.remove('tp-open');
   tpOv.setAttribute('aria-hidden','true');
+  tpPn.setAttribute('aria-hidden','true');tpPn.setAttribute('inert','');
+  if(tpBtn)tpBtn.setAttribute('aria-expanded','false');
+  if(searchBtn)searchBtn.setAttribute('aria-expanded','false');
   document.body.style.overflow='';
   document.removeEventListener('keydown',tpKey);
   if(tpSearch){tpSearch.value='';renderCat(curCat);}
   curSel=-1;
-  if(tpBtn)tpBtn.focus();
+  if(tpReturnFocus&&tpReturnFocus.isConnected&&!tpReturnFocus.closest('[inert]')&&tpReturnFocus!==document.body)tpReturnFocus.focus();
+  else if(tpBtn)tpBtn.focus();
 }
 window.openToolsPanel = window.openTP;
 window.closeToolsPanel = window.closeTP;
@@ -1248,6 +1265,7 @@ window.toggleToolsPanel = function(){
 };
 function tpKey(e){
   if(e.key==='Escape'){closeTP();return;}
+  trapTab(e,tpPn);
   if(e.key==='ArrowDown'){e.preventDefault();moveSel(1);}
   else if(e.key==='ArrowUp'){e.preventDefault();moveSel(-1);}
   else if(e.key==='Enter'&&curSel>=0&&curItems[curSel]){window.location.href=curItems[curSel].href;}

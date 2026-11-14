@@ -15,6 +15,9 @@
 <meta name="viewport" content="{% block page_viewport %}width=device-width,initial-scale=1.0{% endblock %}">
 <title>{% block title %}{{ self.page_og_title() | forceescape }}{% endblock %}</title>
 <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+<link rel="apple-touch-icon" href="{{ url_for('static', filename='apple-touch-icon.png') }}">
+<link rel="manifest" href="{{ url_for('meta.manifest_json') }}">
+<meta name="theme-color" content="#00ff66">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/components.css') }}">
 {% set _page_css = self.page_css() %}
 {% if _page_css %}<link rel="stylesheet" href="{{ url_for('static', filename='css/' ~ _page_css) }}">{% endif %}
@@ -35,7 +38,7 @@
 <script>
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js').then(reg => {
+    navigator.serviceWorker.register('/sw.js', {updateViaCache: 'none'}).then(reg => {
       console.log('SW registered:', reg);
     }).catch(err => {
       console.log('SW registration failed:', err);

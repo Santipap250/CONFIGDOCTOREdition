@@ -1,7 +1,7 @@
 # blueprints/tools_gear.py
-# ── FPV Affiliate Gear Guide — extension/UI layer only. Reads optional
-#    ?class=&style=&size= query params and maps them onto the affiliate
-#    catalog via affiliate/gear_recommender. Does NOT read analyzer/PID/
+# ── FPV Gear Guide — extension/UI layer only. Reads optional
+#    ?class=&style=&size= query params and maps them onto a compatibility
+#    catalog via the gear recommender. No purchasing/affiliate links. Does NOT read analyzer/PID/
 #    motor-prop/blackbox internals — only plain strings already computed
 #    elsewhere are passed in. No context → falls back to generic starter
 #    kits. Imports the gear-module wrappers and availability flag from
