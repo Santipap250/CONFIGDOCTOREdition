@@ -1051,6 +1051,11 @@ def _generate_cli_from_model(model):
 
 # ── BASE_URL & Sitemap Cache (Shared state) ──────────────────────────────────
 _VERCEL_HOST = os.environ.get("VERCEL_URL", "").strip()
-_DEFAULT_BASE_URL = (f"https://{_VERCEL_HOST}" if _VERCEL_HOST else "https://configdoctor.onrender.com")
+_VERCEL_ENV = os.environ.get("VERCEL_ENV", "").strip().lower()
+_PRODUCTION_BASE_URL = "https://configdoctor-edition-obixconfig.vercel.app"
+if _VERCEL_ENV == "production" or not _VERCEL_HOST:
+    _DEFAULT_BASE_URL = _PRODUCTION_BASE_URL
+else:
+    _DEFAULT_BASE_URL = f"https://{_VERCEL_HOST}"
 _BASE_URL = os.environ.get("BASE_URL", _DEFAULT_BASE_URL).rstrip("/")
 _SITEMAP_CACHE: dict = {}

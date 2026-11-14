@@ -223,15 +223,10 @@ body.light{--on-muted:#52616e;--on-muted2:#52616e;}
 .on-logo-link{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0;position:relative;}
 .on-logo-img{height:30px;width:auto;filter:drop-shadow(0 0 7px rgba(16,196,122,.35));transition:filter .2s,transform .2s;position:relative;z-index:1;}
 .on-logo-link:hover .on-logo-img{filter:drop-shadow(0 0 14px rgba(16,196,122,.75));transform:translateY(-1px);}
+.on-logo-wordmark{display:flex;flex-direction:column;gap:3px;color:var(--on-text);font-family:'Orbitron',sans-serif;font-size:8px;font-weight:800;letter-spacing:.055em;line-height:1;white-space:nowrap;}
+.on-logo-wordmark small{color:var(--on-green);font-family:'JetBrains Mono',monospace;font-size:7px;letter-spacing:.16em;}
+@media(max-width:700px){.on-logo-wordmark{display:none;}}
 @media(prefers-reduced-motion:reduce){.on-logo-link:hover .on-logo-img{transform:none;}}
-.on-logo-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;background:var(--on-green);box-shadow:0 0 5px var(--on-green);animation:onDot 2.5s ease-in-out infinite;position:relative;}
-.on-logo-dot::before{
-  content:'';position:absolute;inset:-4px;border-radius:50%;border:1px solid var(--on-green);
-  opacity:.55;animation:onPing 2.5s ease-out infinite;
-}
-@keyframes onDot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(.65)}}
-@keyframes onPing{0%{transform:scale(.6);opacity:.55}100%{transform:scale(1.9);opacity:0}}
-@media(prefers-reduced-motion:reduce){.on-logo-dot::before{animation:none;opacity:0;}}
 /* ── MEGA NAV ── */
 .on-mega{display:flex;align-items:center;gap:2px;flex:1;justify-content:center;}
 .on-mg{position:relative;}
@@ -390,7 +385,7 @@ body.light{--on-muted:#52616e;--on-muted2:#52616e;}
 }
 .on-dh{display:flex;align-items:center;justify-content:space-between;padding:16px max(16px,env(safe-area-inset-left)) 14px;border-bottom:1px solid rgba(255,255,255,.06);flex-shrink:0;position:relative;}
 .on-dh-brand{display:flex;align-items:center;gap:10px;}
-.on-dh-icon{width:34px;height:34px;border-radius:9px;background:rgba(16,196,122,.08);border:1px solid rgba(16,196,122,.2);display:grid;place-items:center;font-size:16px;flex-shrink:0;position:relative;}
+.on-dh-icon{width:34px;height:34px;border-radius:9px;background:rgba(16,196,122,.08);border:1px solid rgba(16,196,122,.2);display:grid;place-items:center;font-size:16px;flex-shrink:0;position:relative;color:var(--on-green);}
 .on-dh-icon::before{
   content:'';position:absolute;inset:-4px;border-radius:11px;
   background:conic-gradient(from 0deg,rgba(16,196,122,0) 0%,rgba(16,196,122,.5) 20%,rgba(0,229,255,.3) 40%,rgba(16,196,122,0) 65%,rgba(16,196,122,0) 100%);
@@ -461,7 +456,6 @@ body.light .on-ham-lbl{color:#059669;}
 body.light .on-ham-live{background:#059669;box-shadow:0 0 7px #059669;}
 body.light .on-ham.on-open .on-ham-live{background:#dc2626;box-shadow:0 0 7px #dc2626;}
 body.light .on-logo-link{background:rgba(4,9,14,.92);padding:5px 10px;border-radius:9px;}
-body.light .on-logo-dot{background:#059669;box-shadow:0 0 5px #059669;}
 body.light .on-crumb{color:#059669;background:rgba(5,150,105,.07);border-color:rgba(5,150,105,.25);}
 body.light .on-crumb-dot{background:#059669;}
 body.light .on-mg-btn{color:#64748b;}
@@ -792,10 +786,10 @@ body.light .on-tools-btn:hover{background:rgba(5,150,105,.16);border-color:rgba(
 <aside id="onDrawer" class="on-drawer" role="dialog" aria-modal="true" aria-label="เมนูหลัก" aria-hidden="true" inert>
   <div class="on-dh">
     <div class="on-dh-brand">
-      <div class="on-dh-icon">🚁</div>
+      <div class="on-dh-icon" aria-hidden="true"><svg viewBox="0 0 40 40" width="22" height="22" fill="none"><path d="M20 2.5 35.2 11v18L20 37.5 4.8 29V11L20 2.5Z" stroke="currentColor" stroke-width="1.7"/><path d="M24.8 13.5a8 8 0 1 0 0 13M15.2 13.5a8 8 0 0 1 0 13" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"/><circle cx="20" cy="20" r="2.2" fill="currentColor"/></svg></div>
       <div>
-        <div class="on-dh-name">OBIX CONFIG DOCTOR</div>
-        <div class="on-dh-sub">FPV Tuning Toolkit · v6.0 APEX PRO</div>
+        <div class="on-dh-name">CONFIGDOCTOR Edition</div>
+        <div class="on-dh-sub">FPV Flight Workspace</div>
       </div>
     </div>
     <button type="button" id="onClose" class="on-dclose" aria-label="ปิดเมนู">✕</button>
@@ -916,7 +910,7 @@ body.light .on-tools-btn:hover{background:rgba(5,150,105,.16);border-color:rgba(
     </a>
   </nav>
   <div class="on-dfoot">
-    OBIXConfig Doctor &nbsp;·&nbsp; <span class="on-dfoot-ver">v7.0</span><br>
+    CONFIGDOCTOR Edition &nbsp;·&nbsp; <span class="on-dfoot-ver">FPV WORKSPACE</span><br>
     <span class="on-th">พัฒนาสำหรับชุมชน FPV 🇹🇭</span>
     <span class="on-en">Built for the FPV community 🌏</span>
   </div>
@@ -933,9 +927,9 @@ body.light .on-tools-btn:hover{background:rgba(5,150,105,.16);border-color:rgba(
     <span class="on-ham-lbl">TOOLS</span>
     <span class="on-ham-live" title="System Online"></span>
   </button>
-  <a href="/" class="on-logo-link" aria-label="ConfigDoctor Home">
-    <img src="{{ url_for('static', filename='img/configdoctor-logo.png') }}" alt="ConfigDoctor — FPV Drone Diagnostic Platform" class="on-logo-img">
-    <div class="on-logo-dot" title="System Online"></div>
+  <a href="/landing" class="on-logo-link" aria-label="CONFIGDOCTOR Edition — หน้าหลัก">
+    <svg class="on-logo-img" viewBox="0 0 40 40" aria-hidden="true" focusable="false"><path d="M20 2.5 35.2 11v18L20 37.5 4.8 29V11L20 2.5Z" fill="currentColor" fill-opacity=".08" stroke="currentColor" stroke-width="1.7"/><path d="M24.8 13.5a8 8 0 1 0 0 13M15.2 13.5a8 8 0 0 1 0 13" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"/><circle cx="20" cy="20" r="2.2" fill="currentColor"/></svg>
+    <span class="on-logo-wordmark"><span>CONFIGDOCTOR</span><small>Edition</small></span>
   </a>
 
   <!-- MEGA NAV (desktop ≥ 960px) -->

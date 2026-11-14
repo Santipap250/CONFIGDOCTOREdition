@@ -2,11 +2,11 @@
 <html lang="th">
 <head>
 <meta charset="UTF-8">
-{% block page_og_title %}{% endblock %}
-{% block page_og_description %}{% endblock %}
-{% block page_og_path %}{% endblock %}
-{% block page_nav_page %}{% endblock %}
-{% block page_css %}{% endblock %}
+{% set _page_og_title %}{% block page_og_title %}{% endblock %}{% endset %}
+{% set _page_og_description %}{% block page_og_description %}{% endblock %}{% endset %}
+{% set _page_og_path %}{% block page_og_path %}{% endblock %}{% endset %}
+{% set _page_nav_page %}{% block page_nav_page %}{% endblock %}{% endset %}
+{% set _page_css_block %}{% block page_css %}{% endblock %}{% endset %}
 {% set og_robots %}{% block page_robots %}index, follow{% endblock %}{% endset %}
 {% set og_title = self.page_og_title() | forceescape %}
 {% set og_description = self.page_og_description() | forceescape %}
@@ -17,7 +17,7 @@
 <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
 <link rel="apple-touch-icon" href="{{ url_for('static', filename='apple-touch-icon.png') }}">
 <link rel="manifest" href="{{ url_for('meta.manifest_json') }}">
-<meta name="theme-color" content="#00ff66">
+<meta name="theme-color" content="#08110f">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/components.css') }}">
 {% set _page_css = self.page_css() %}
 {% if _page_css %}<link rel="stylesheet" href="{{ url_for('static', filename='css/' ~ _page_css) }}">{% endif %}

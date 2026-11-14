@@ -27,6 +27,10 @@ def test_manifest_has_installable_start_scope_and_required_icons(client):
     assert "max-age=3600" in response.headers.get("Cache-Control", "")
 
     manifest = json.loads(response.get_data(as_text=True))
+    assert manifest["name"] == "CONFIGDOCTOR Edition — FPV Flight Workspace"
+    assert manifest["short_name"] == "CONFIGDOCTOR"
+    assert manifest["theme_color"] == "#08110f"
+    assert manifest["background_color"] == "#08110f"
     assert manifest["start_url"] == "/landing"
     assert manifest["scope"] == "/"
     assert manifest["display"] == "standalone"
@@ -53,7 +57,7 @@ def test_service_worker_is_root_scoped_and_not_stale_cached(client):
     assert response.headers.get("Service-Worker-Allowed") == "/"
     assert "no-cache" in response.headers.get("Cache-Control", "")
     assert "static/offline.html" in response.get_data(as_text=True)
-    assert "obixconfigdoctor-v7-static" in response.get_data(as_text=True)
+    assert "obixconfigdoctor-v8-static" in response.get_data(as_text=True)
 
 
 def test_offline_fallback_is_a_static_self_contained_page(client):

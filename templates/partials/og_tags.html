@@ -12,11 +12,11 @@
     {% set jsonld_extra = ',"inLanguage":"th"' %}
 #}
 
-{% set _title = og_title       | default("OBIXConfig Doctor — FPV Drone Tuning & Blackbox Analyzer") %}
-{% set _desc  = og_description | default("วิเคราะห์ PID · Filter · Blackbox CSV · ESC · Motor สำหรับโดรน FPV ทุกขนาด — 23 เครื่องมือ ฟรี 100% 🇹🇭") %}
+{% set _title = og_title       | default("CONFIGDOCTOR Edition — FPV Flight Workspace") %}
+{% set _desc  = og_description | default("เครื่องมือวิเคราะห์โดรน FPV สำหรับ PID, Filter, Blackbox, CLI, แบตเตอรี่ และฮาร์ดแวร์") %}
 {% set _url   = og_url         | default(BASE_URL) %}
 {% set _img   = og_image       | default(BASE_URL ~ '/static/img/og-premium.webp') %}
-{% set _site  = "OBIXConfig Doctor" %}
+{% set _site  = "CONFIGDOCTOR Edition" %}
 {% set _robots = og_robots | default("index, follow") %}
 
 <!-- ══ Primary Meta ══════════════════════════════════════════════ -->
@@ -25,7 +25,7 @@
 <meta name="author"             content="OBIXConfig Lab">
 <meta name="keywords"           content="FPV, Betaflight, PID tuning, drone, โดรน, CLI, filter, RPM filter, rates, ESC, motor, prop, blackbox, blackbox analyzer, ไทย, FPV Thailand, propwash, oscillation, tuning">
 <meta name="robots"             content="{{ _robots }}">
-<meta name="theme-color"        content="#00ff44">
+<meta name="theme-color"        content="#08110f">
 
 <!-- ══ PWA / Home-screen icons ══════════════════════════════════ -->
 <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
