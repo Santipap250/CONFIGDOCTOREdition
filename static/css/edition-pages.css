@@ -1,0 +1,314 @@
+/* CONFIGDOCTOR Edition — unified application page system.
+   Loaded after each legacy page stylesheet so functional layouts remain intact
+   while shared surfaces, typography, navigation and controls use one visual language.
+   The landing page has its own carefully composed stylesheet and is intentionally scoped out.
+*/
+:root {
+  color-scheme: dark;
+  --cd-bg: #08110f !important;
+  --cd-bg-raised: #0c1715 !important;
+  --cd-surface: #111e1b !important;
+  --cd-surface-soft: rgba(18, 33, 29, .82) !important;
+  --cd-line: rgba(201, 232, 219, .10) !important;
+  --cd-line-strong: rgba(201, 232, 219, .17) !important;
+  --cd-text: #edf5f0 !important;
+  --cd-muted: #a0b2aa !important;
+  --cd-dim: #71857b !important;
+  --cd-accent: #75e3b4 !important;
+  --cd-accent-strong: #a0f2ce !important;
+  --cd-cyan: #7fd8df !important;
+  --cd-warm: #d7c6a4 !important;
+  --cd-heading: 'Manrope', 'Sarabun', system-ui, sans-serif !important;
+  --cd-body: 'Sarabun', system-ui, sans-serif !important;
+  --cd-mono: 'DM Mono', 'JetBrains Mono', ui-monospace, monospace !important;
+
+  /* Bridge the variable names used by the existing tool pages. */
+  --bg: #08110f !important;
+  --bg0: #08110f !important;
+  --bg1: #0c1715 !important;
+  --bg2: #0c1715 !important;
+  --bg3: #111e1b !important;
+  --bg-primary: #08110f !important;
+  --bg-secondary: #0c1715 !important;
+  --card: #111e1b !important;
+  --card-bg: #111e1b !important;
+  --card2: #14241f !important;
+  --surface: #111e1b !important;
+  --surface2: #14241f !important;
+  --surface3: #172a24 !important;
+  --panel: rgba(17, 30, 27, .96) !important;
+  --panel2: rgba(20, 36, 31, .94) !important;
+  --border: rgba(201, 232, 219, .10) !important;
+  --border2: rgba(201, 232, 219, .08) !important;
+  --border-hi: rgba(201, 232, 219, .18) !important;
+  --line: rgba(201, 232, 219, .10) !important;
+  --text: #edf5f0 !important;
+  --text1: #edf5f0 !important;
+  --text2: #a0b2aa !important;
+  --muted: #819389 !important;
+  --muted2: #71857b !important;
+  --green: #75e3b4 !important;
+  --green-lite: #a0f2ce !important;
+  --green-mid: #83e8bb !important;
+  --green-dim: rgba(117, 227, 180, .10) !important;
+  --green-glow: 0 0 20px rgba(117, 227, 180, .16) !important;
+  --teal: #75e3b4 !important;
+  --accent: #75e3b4 !important;
+  --accent-color: #75e3b4 !important;
+  --primary: #75e3b4 !important;
+  --cyan: #7fd8df !important;
+  --font-body: 'Sarabun', system-ui, sans-serif !important;
+  --font-head: 'Manrope', 'Sarabun', system-ui, sans-serif !important;
+  --font-mono: 'DM Mono', 'JetBrains Mono', ui-monospace, monospace !important;
+  --font-th: 'Sarabun', system-ui, sans-serif !important;
+  --font-en: 'Manrope', 'Sarabun', system-ui, sans-serif !important;
+  --font-d: 'Manrope', 'Sarabun', system-ui, sans-serif !important;
+  --font-t: 'Sarabun', system-ui, sans-serif !important;
+  --font-s: 'Sarabun', system-ui, sans-serif !important;
+  --fm: 'DM Mono', 'JetBrains Mono', ui-monospace, monospace !important;
+  --fd: 'Manrope', 'Sarabun', system-ui, sans-serif !important;
+  --fs: 'Sarabun', system-ui, sans-serif !important;
+  --ft: 'Sarabun', system-ui, sans-serif !important;
+}
+
+html { scroll-behavior: smooth; scroll-padding-top: 78px; }
+body:not(.landing-page) {
+  min-width: 320px;
+  overflow-x: hidden;
+  background: radial-gradient(ellipse 78% 38% at 46% -16%, rgba(52, 132, 102, .16), transparent 72%), #08110f !important;
+  color: #edf5f0 !important;
+  font-family: 'Sarabun', system-ui, sans-serif !important;
+  font-size: 15px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+body:not(.landing-page)::before {
+  z-index: -1 !important;
+  opacity: .65 !important;
+  background-image:
+    linear-gradient(rgba(117, 227, 180, .025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(117, 227, 180, .025) 1px, transparent 1px) !important;
+  background-size: 48px 48px !important;
+}
+body:not(.landing-page)::after { opacity: .12 !important; }
+body:not(.landing-page) :is(img, svg, video, canvas) { max-width: 100%; }
+body:not(.landing-page) a { -webkit-tap-highlight-color: transparent; }
+body:not(.landing-page) :is(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid rgba(117, 227, 180, .88) !important;
+  outline-offset: 3px;
+}
+
+/* Consistent content rail: keep each tool's own internal composition. */
+body:not(.landing-page) :is(.page-wrap, .page, .wrap, .shell, .page-width, .page-container) {
+  width: min(1120px, calc(100% - 32px)) !important;
+  max-width: 1120px !important;
+  margin-inline: auto !important;
+  padding: clamp(28px, 4vw, 48px) 0 clamp(86px, 8vw, 104px) !important;
+}
+body:not(.landing-page) :is(.hero, .page-hero, .page-header, .lab-header, .v5-hero) {
+  margin-bottom: clamp(22px, 3vw, 34px);
+}
+body:not(.landing-page) :is(.hero-eyebrow, .hero-eye, .hero-ey, .hero-eyebrow, .page-hero-eyebrow, .lab-eyebrow, .ph-eyebrow, .v5-hero-eyebrow, .about-eyebrow, .team-hero-eyebrow) {
+  color: var(--cd-accent) !important;
+  font-family: var(--cd-mono) !important;
+  font-size: 10px !important;
+  font-weight: 600 !important;
+  letter-spacing: .16em !important;
+  text-transform: uppercase;
+}
+body:not(.landing-page) :is(h1, .hero-title, .hero h1, .page-hero-title, .page-title, .lab-title, .vtx-hero-title, .pid-hero-title, .ph-title, .about-title, .team-hero-title) {
+  color: var(--cd-text) !important;
+  font-family: var(--cd-heading) !important;
+  font-size: clamp(28px, 4.8vw, 48px) !important;
+  font-weight: 800 !important;
+  letter-spacing: -.045em !important;
+  line-height: 1.12 !important;
+  text-wrap: pretty;
+}
+body:not(.landing-page) :is(.hero-title .hl, .hero-title .accent, .hero h1 span, .page-hero-title em, .page-title em, .lab-title em, .pid-hero h1 span, .vtx-hero-title em) {
+  color: var(--cd-accent) !important;
+  text-shadow: none !important;
+}
+body:not(.landing-page) :is(.hero-sub, .page-hero-desc, .page-sub, .lab-sub, .hero-description, .pid-hero-sub, .vtx-hero-sub, .ph-sub, .about-sub, .team-hero-sub) {
+  max-width: 680px;
+  color: var(--cd-muted) !important;
+  font-family: var(--cd-body) !important;
+  font-size: clamp(14px, 1.45vw, 16px) !important;
+  line-height: 1.8 !important;
+}
+
+/* App surfaces, panels and result cards share the home dashboard's quiet depth. */
+body:not(.landing-page) :is(
+  .card, .panel, .pcard, .scard, .form-card, .input-card, .result-card,
+  .fc-section, .vtx-panel, .sidebar-card, .shop-sidebar, .upload-zone,
+  .grade-card, .out-panel, .preview-pane, .studio-wrap, .workflow-card,
+  .about-logo-wrap, .cl-summary-card, .dev-card, .team-stat, .err-card, .tool-layout > *,
+  .adv-layout > *, .tool-panel, .form-panel, .output-panel
+) {
+  background-color: rgba(17, 30, 27, .82) !important;
+  border-color: var(--cd-line) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 18px 46px rgba(0, 0, 0, .14) !important;
+}
+body:not(.landing-page) :is(.card, .panel, .pcard, .scard, .form-card, .input-card, .result-card, .fc-section, .vtx-panel):hover {
+  border-color: rgba(117, 227, 180, .22) !important;
+}
+body:not(.landing-page) :is(.card-title, .panel-title, .panel-hd-title, .card-hd, .card-head, .section-title, .section-hd, .form-card-title, .fc-title, .page-section-title, .ctitle, .vtx-panel-title) {
+  color: var(--cd-text) !important;
+  font-family: var(--cd-heading) !important;
+  letter-spacing: -.015em;
+}
+body:not(.landing-page) :is(.card-title, .panel-hd, .panel-hd-title, .card-hd, .card-head, .section-hd, .form-card-title) {
+  border-color: var(--cd-line) !important;
+}
+body:not(.landing-page) :is(.tip, .hint, .help-text, .field-hint, .subtle, .muted, .meta, .microcopy, .page-note) {
+  color: var(--cd-muted) !important;
+}
+
+/* Inputs are calmer, legible and touch-friendly on phones. */
+body:not(.landing-page) :is(input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="file"]), select, textarea, .v5-input, .v5-select) {
+  border-color: rgba(201, 232, 219, .15) !important;
+  border-radius: 10px !important;
+  background-color: rgba(5, 13, 10, .72) !important;
+  color: var(--cd-text) !important;
+  font-family: 'Sarabun', system-ui, sans-serif !important;
+  box-shadow: none;
+}
+body:not(.landing-page) :is(input, select, textarea)::placeholder { color: #71857b !important; opacity: 1; }
+body:not(.landing-page) :is(input:not([type="checkbox"]):not([type="radio"]):not([type="range"]), select, textarea):focus {
+  border-color: rgba(117, 227, 180, .58) !important;
+  box-shadow: 0 0 0 3px rgba(117, 227, 180, .09) !important;
+  outline: none;
+}
+body:not(.landing-page) input[type="checkbox"], body:not(.landing-page) input[type="radio"] { accent-color: #75e3b4; }
+body:not(.landing-page) input[type="range"] { accent-color: #75e3b4; }
+body:not(.landing-page) select option { background: #111e1b; color: #edf5f0; }
+body:not(.landing-page) :is(pre, code, kbd, .code-block, .cli-editor, .v5-code) {
+  border-color: rgba(201, 232, 219, .12);
+  border-radius: 10px;
+}
+
+/* Unified action language; preserve semantic warning/danger colors. */
+body:not(.landing-page) :is(
+  .btn-analyze, .btn-run, .btn-primary, .primary, .gen-btn, .start-btn,
+  .submit-btn, .action-primary, .run-btn, .editor-run, .btn-main, .cta-button
+) {
+  border-color: rgba(117, 227, 180, .38) !important;
+  border-radius: 12px !important;
+  background: linear-gradient(135deg, #75e3b4, #a0f2ce) !important;
+  color: #082018 !important;
+  font-family: var(--cd-heading) !important;
+  font-weight: 750 !important;
+  box-shadow: 0 8px 26px rgba(76, 196, 143, .12) !important;
+  transition: transform .18s ease, box-shadow .18s ease, filter .18s ease;
+}
+body:not(.landing-page) :is(.btn-analyze, .btn-run, .btn-primary, .primary, .gen-btn, .start-btn, .submit-btn, .action-primary, .run-btn, .editor-run, .btn-main, .cta-button):hover {
+  filter: brightness(1.05);
+  box-shadow: 0 12px 30px rgba(76, 196, 143, .20) !important;
+  transform: translateY(-1px);
+}
+body:not(.landing-page) :is(.back-link, .back-btn, .btn-sec, .btn-secondary, .ghost, .editor-btn, .dl-btn, .export-all-btn, .reset-btn) {
+  border-color: var(--cd-line-strong) !important;
+  border-radius: 11px !important;
+  background: rgba(255, 255, 255, .025) !important;
+  color: var(--cd-muted) !important;
+}
+body:not(.landing-page) :is(.back-link, .back-btn, .btn-sec, .btn-secondary, .ghost, .editor-btn, .dl-btn, .export-all-btn, .reset-btn):hover {
+  border-color: rgba(117, 227, 180, .34) !important;
+  color: var(--cd-accent-strong) !important;
+  background: rgba(117, 227, 180, .07) !important;
+}
+body:not(.landing-page) button, body:not(.landing-page) [role="button"] { touch-action: manipulation; }
+
+/* Data tables and lists retain their information density without old neon rails. */
+body:not(.landing-page) :is(table, .lb-table, .v5-table) { border-color: var(--cd-line) !important; color: var(--cd-text); }
+body:not(.landing-page) :is(th, .table-head, .lb-head, .v5-table th) {
+  background: rgba(255, 255, 255, .035) !important;
+  border-color: var(--cd-line) !important;
+  color: var(--cd-muted) !important;
+  font-family: var(--cd-mono) !important;
+}
+body:not(.landing-page) :is(td, .v5-table td) { border-color: rgba(201, 232, 219, .075) !important; }
+body:not(.landing-page) tr:hover td { background: rgba(117, 227, 180, .035) !important; }
+body:not(.landing-page) :is(.hero-tag, .htag, .hchip, .badge, .page-badge, .lbadge, .v5-pill, .meta-chip, .feature-chips span) {
+  border-color: var(--cd-line) !important;
+  border-radius: 999px;
+  background-color: rgba(117, 227, 180, .055);
+}
+body:not(.landing-page) :is(.hero-tag, .htag, .hchip, .page-badge, .lbadge, .meta-chip) { color: var(--cd-accent-strong) !important; }
+
+/* Shared navigation: keep the same wordmark and use a single signature accent. */
+body:not(.landing-page) .on-bar {
+  background: rgba(8, 17, 15, .90) !important;
+  border-bottom-color: rgba(201, 232, 219, .09) !important;
+  box-shadow: 0 12px 34px rgba(0, 0, 0, .22) !important;
+}
+body:not(.landing-page) .on-bar::before,
+body:not(.landing-page) .on-bar::after {
+  background: linear-gradient(90deg, transparent, #75e3b4 35%, #7fd8df 65%, transparent) !important;
+  opacity: .42 !important;
+}
+body:not(.landing-page) .on-logo-img { color: #75e3b4 !important; filter: drop-shadow(0 0 11px rgba(117, 227, 180, .22)) !important; }
+body:not(.landing-page) .on-logo-wordmark { color: #edf5f0 !important; font-family: 'Manrope', 'Sarabun', sans-serif !important; letter-spacing: .035em !important; }
+body:not(.landing-page) .on-logo-wordmark small { color: #75e3b4 !important; font-family: 'DM Mono', 'JetBrains Mono', monospace !important; }
+body:not(.landing-page) :is(.on-ham, .on-crumb, .on-icon-btn:hover, .on-search-btn:hover, .on-dd-item.on-dd-act, .on-dlink.on-act) {
+  border-color: rgba(117, 227, 180, .24) !important;
+  color: #75e3b4 !important;
+  background-color: rgba(117, 227, 180, .07) !important;
+}
+body:not(.landing-page) .on-ham-bar,
+body:not(.landing-page) .on-ham-lbl,
+body:not(.landing-page) .on-ham-live,
+body:not(.landing-page) .on-crumb-dot { background-color: #75e3b4 !important; color: #75e3b4 !important; }
+body:not(.landing-page) .on-mg.on-mg-active .on-mg-btn { color: #75e3b4 !important; background: rgba(117, 227, 180, .07) !important; }
+body:not(.landing-page) .on-mg.on-mg-active .on-mg-btn::after { background: #75e3b4 !important; box-shadow: 0 0 8px rgba(117, 227, 180, .4) !important; }
+body:not(.landing-page) .on-dd { background: rgba(9, 19, 16, .98) !important; border-color: var(--cd-line) !important; }
+body:not(.landing-page) .on-dd::before { background: linear-gradient(90deg, transparent, #75e3b4, transparent) !important; }
+body:not(.landing-page) .on-overlay { background: rgba(0, 0, 0, .66) !important; }
+body:not(.landing-page) .on-drawer { background: radial-gradient(ellipse 80% 40% at 50% 0%, rgba(52, 132, 102, .15), transparent 72%), #08110f !important; }
+body:not(.landing-page) :is(.on-dh, .on-dfoot) { border-color: var(--cd-line) !important; }
+body:not(.landing-page) .on-dlink.on-act .on-dtitle { color: #75e3b4 !important; }
+body:not(.landing-page) .on-dfoot-ver { color: #75e3b4 !important; }
+body:not(.landing-page) .bnav {
+  background: rgba(8, 17, 15, .94) !important;
+  border-top-color: rgba(201, 232, 219, .11) !important;
+  box-shadow: 0 -10px 30px rgba(0, 0, 0, .28) !important;
+}
+body:not(.landing-page) .bnav-item.bnav-act { color: #75e3b4 !important; }
+body:not(.landing-page) :is(.footer-nav, .footer-nav a, .page-actions) { border-color: var(--cd-line) !important; }
+
+@media (max-width: 760px) {
+  html { scroll-padding-top: 68px; }
+  body:not(.landing-page) { font-size: 14px; }
+  body:not(.landing-page) :is(.page-wrap, .page, .wrap, .shell, .page-width, .page-container) {
+    width: calc(100% - 28px) !important;
+    padding-top: 24px !important;
+    padding-bottom: calc(84px + env(safe-area-inset-bottom)) !important;
+  }
+  body:not(.landing-page) :is(.hero, .page-hero, .page-header, .lab-header, .v5-hero) { margin-bottom: 22px; }
+  body:not(.landing-page) :is(h1, .hero-title, .hero h1, .page-hero-title, .page-title, .lab-title, .vtx-hero-title, .pid-hero-title, .ph-title, .about-title, .team-hero-title) {
+    font-size: clamp(27px, 8vw, 38px) !important;
+    line-height: 1.16 !important;
+  }
+  body:not(.landing-page) :is(.card, .panel, .pcard, .scard, .form-card, .input-card, .result-card, .fc-section, .vtx-panel, .upload-zone) {
+    border-radius: 14px !important;
+  }
+  body:not(.landing-page) :is(input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="file"]), select, textarea) { font-size: 16px !important; }
+  body:not(.landing-page) :is(.tool-layout, .lab-grid, .adv-layout, .main-grid, .cmp-page .input-split) {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+  body:not(.landing-page) :is(.tool-layout, .lab-grid, .adv-layout, .main-grid) { gap: 14px !important; }
+  body:not(.landing-page) .on-bar { min-height: 56px; padding-inline: 10px; }
+}
+@media (max-width: 390px) {
+  body:not(.landing-page) :is(.page-wrap, .page, .wrap, .shell, .page-width, .page-container) { width: calc(100% - 22px) !important; }
+  body:not(.landing-page) :is(.hero-sub, .page-hero-desc, .page-sub, .lab-sub, .hero-description, .pid-hero-sub, .vtx-hero-sub, .ph-sub) { font-size: 13px !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  body:not(.landing-page) *, body:not(.landing-page) *::before, body:not(.landing-page) *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}

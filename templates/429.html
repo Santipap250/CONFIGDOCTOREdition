@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>429 — Too Many Requests · OBIXConfig Doctor</title>
+  <title>429 — Too Many Requests · CONFIGDOCTOR Edition</title>
   <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Sarabun:wght@300;400;700&display=swap" rel="stylesheet">
   <style>
@@ -122,6 +122,7 @@ body {
       letter-spacing: .06em;
     }
   </style>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/edition-pages.css') }}">
 </head>
 <body>
   <div class="card">
@@ -146,11 +147,11 @@ body {
       <button class="btn btn-primary" id="retryBtn" disabled onclick="goBack()">
         ⟳ &nbsp;ลองใหม่
       </button>
-      <a href="/" class="btn btn-ghost">← กลับหน้าหลัก</a>
+      <a href="/landing" class="btn btn-ghost">← กลับหน้าหลัก</a>
     </div>
   </div>
 
-  <footer>OBIXConfig Doctor · configdoctor.onrender.com</footer>
+  <footer>CONFIGDOCTOR Edition · FPV Flight Workspace</footer>
 
   <script>
     var sec = 60;
@@ -171,7 +172,7 @@ body {
       if (window.history.length > 1) {
         window.history.back();
       } else {
-        window.location.href = '/';
+        window.location.href = '/landing';
       }
     }
   </script>

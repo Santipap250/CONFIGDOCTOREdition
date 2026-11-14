@@ -19,10 +19,14 @@
 <link rel="manifest" href="{{ url_for('meta.manifest_json') }}">
 <meta name="theme-color" content="#08110f">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/components.css') }}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 {% set _page_css = self.page_css() %}
 {% if _page_css %}<link rel="stylesheet" href="{{ url_for('static', filename='css/' ~ _page_css) }}">{% endif %}
 {% block extra_css_links %}{% endblock %}
 {% block extra_head %}{% endblock %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/edition-pages.css') }}">
 {% set nav_page = self.page_nav_page() %}
 </head>
 <body{% block body_attrs %}{% endblock %}>

@@ -158,11 +158,11 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
 
 <link rel="stylesheet" href="{{ url_for('static', filename='css/ui-enhance.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/edition-pages.css') }}">
 </head>
 <body>
 {% set nav_page = "fpv" %}
 {% include "partials/nav.html" %}
-{% include "partials/page_actions.html" %}
 {% include "partials/page_actions.html" %}
 
 {% set hero_badge = "📖 FPV KNOWLEDGE HUB" %}
@@ -174,12 +174,6 @@
 {% set hero_title = "FPV <span class=\"hl\">Knowledge</span> Hub" %}
 {% set hero_sub = "รวมบทความ เครื่องมือ และ Simulator สำหรับนักบิน FPV ชาวไทย" %}
 {% include "partials/page_hero.html" %}
-
-
-    <header class="hero">
-        <h1>FPV Knowledge Hub</h1>
-        <p>แหล่งรวมความรู้การประกอบโดรน จูนนิ่ง และเทคนิคเชิงลึก <br>เรียนรู้ให้เข้าใจ แล้วไปประกอบให้บินได้จริง</p>
-    </header>
 
     <div class="container">
         
@@ -230,7 +224,7 @@
             🎮 FPV Simulator NEO
         </a>
         <a href="/app" style="display: inline-block; background: #334155; color: white; padding: 0.8rem 2rem; border-radius: 30px; text-decoration: none; border: 1px solid #475569;">
-            🚀 Config Doctor
+            🚀 CONFIGDOCTOR Edition
         </a>
     </div>
 
