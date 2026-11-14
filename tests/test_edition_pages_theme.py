@@ -122,6 +122,13 @@ def test_core_tools_have_one_accessible_page_heading(client, route):
         assert "class=\"cd-sr-only\"" in html
 
 
+def test_mobile_simulator_height_accounts_for_shared_header(client):
+    response = client.get("/fpv-trainer")
+
+    assert response.status_code == 200
+    assert "height:calc(100dvh - 56px - env(safe-area-inset-top))" in response.get_data(as_text=True)
+
+
 @pytest.mark.parametrize(
     ("template_name", "status_class"),
     [("404.html", "error-page"), ("429.html", "error-429"), ("500.html", "error-500")],
