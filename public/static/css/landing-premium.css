@@ -1,24 +1,3 @@
-:root {
-  color-scheme: dark;
-  --cd-bg: #08110f;
-  --cd-bg-raised: #0c1715;
-  --cd-surface: #111e1b;
-  --cd-surface-soft: rgba(18, 33, 29, .82);
-  --cd-line: rgba(201, 232, 219, .10);
-  --cd-line-strong: rgba(201, 232, 219, .17);
-  --cd-text: #edf5f0;
-  --cd-muted: #a0b2aa;
-  --cd-dim: #71857b;
-  --cd-accent: #75e3b4;
-  --cd-accent-strong: #a0f2ce;
-  --cd-cyan: #7fd8df;
-  --cd-warm: #d7c6a4;
-  --cd-heading: 'Manrope', 'Sarabun', sans-serif;
-  --cd-body: 'Sarabun', system-ui, sans-serif;
-  --cd-mono: 'DM Mono', ui-monospace, monospace;
-  --cd-shadow: 0 22px 65px rgba(0, 0, 0, .28);
-}
-
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; scroll-padding-top: 88px; }
 body.landing-page {

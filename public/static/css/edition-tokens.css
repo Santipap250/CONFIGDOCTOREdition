@@ -1,0 +1,30 @@
+/* CONFIGDOCTOR Edition — canonical design tokens shared by the homepage and app pages. */
+:root {
+  color-scheme: dark;
+  --cd-bg: #08110f;
+  --cd-bg-raised: #0c1715;
+  --cd-surface: #111e1b;
+  --cd-surface-soft: rgba(18, 33, 29, .82);
+  --cd-line: rgba(201, 232, 219, .10);
+  --cd-line-strong: rgba(201, 232, 219, .17);
+  --cd-text: #edf5f0;
+  --cd-muted: #a0b2aa;
+  --cd-dim: #71857b;
+  --cd-accent: #75e3b4;
+  --cd-accent-strong: #a0f2ce;
+  --cd-cyan: #7fd8df;
+  --cd-warm: #d7c6a4;
+  --cd-success: #8fd8b1;
+  --cd-warning: #e1b978;
+  --cd-danger: #e58e8e;
+  --cd-heading: 'Manrope', 'Sarabun', system-ui, sans-serif;
+  --cd-body: 'Sarabun', system-ui, sans-serif;
+  --cd-mono: 'DM Mono', 'JetBrains Mono', ui-monospace, monospace;
+  --cd-shadow: 0 22px 65px rgba(0, 0, 0, .28);
+  --cd-shadow-soft: 0 14px 38px rgba(0, 0, 0, .18);
+  --cd-radius-sm: 8px;
+  --cd-radius-md: 14px;
+  --cd-radius-lg: 20px;
+  --cd-content-width: 1120px;
+  --cd-focus: 2px solid rgba(117, 227, 180, .9);
+}

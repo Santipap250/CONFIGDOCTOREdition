@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FPV Knowledge Hub — CONFIGDOCTOR Edition</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/edition-tokens.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700;800&family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
 {% set og_title       = "FPV Knowledge Hub — CONFIGDOCTOR Edition" %}
 {% set og_description = "รวมความรู้ FPV สำหรับนักบินโดรนไทย — PID, Filter, Motor, ESC, Rates และอื่นๆ" %}
 {% set og_url         = BASE_URL ~ "/fpv" %}
@@ -12,20 +16,21 @@
     
     <style>
         :root {
-            --bg-color: #0f172a;       /* สีพื้นหลัง Dark Slate */
-            --card-bg: #1e293b;        /* สีการ์ด */
-            --primary: #38bdf8;        /* สีฟ้า Tech */
-            --accent: #f43f5e;         /* สีแดงจุดเด่น */
-            --text-main: #f8fafc;      /* สีตัวหนังสือขาว */
-            --text-sub: #94a3b8;       /* สีตัวหนังสือเทา */
+            --bg-color: var(--cd-bg);
+            --card-bg: var(--cd-surface);
+            --primary: var(--cd-accent);
+            --accent: var(--cd-cyan);
+            --text-main: var(--cd-text);
+            --text-sub: var(--cd-muted);
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: var(--cd-body);
         }
+        h1, h2, h3, h4, h5, h6 { font-family: var(--cd-heading); }
 
         body {
             background-color: var(--bg-color);
@@ -39,8 +44,8 @@
             justify-content: space-between;
             align-items: center;
             padding: 1rem 1.5rem;
-            background: rgba(15, 23, 42, 0.95);
-            border-bottom: 1px solid #334155;
+            background: rgba(8, 17, 15, 0.94);
+            border-bottom: 1px solid var(--cd-line);
             position: sticky;
             top: 0;
             z-index: 100;;flex-wrap:wrap}
@@ -55,7 +60,7 @@
 
         .btn-tool {
             background: var(--primary);
-            color: #0f172a;
+            color: var(--cd-bg);
             padding: 0.5rem 1rem;
             border-radius: 6px;
             font-weight: 600;
@@ -63,19 +68,19 @@
             font-size: 0.9rem;
             transition: 0.3s;
         }
-        .btn-tool:hover { background: #7dd3fc; }
+        .btn-tool:hover { background: var(--cd-accent-strong); }
 
         /* --- Hero Section --- */
         .hero {
             text-align: center;
             padding: 3rem 1.5rem;
-            background: radial-gradient(circle at center, #1e293b 0%, #0f172a 70%);
+            background: radial-gradient(circle at center, rgba(17, 30, 27, .92) 0%, var(--cd-bg) 70%);
         }
 
         .hero h1 {
             font-size: 2rem;
             margin-bottom: 0.5rem;
-            background: linear-gradient(to right, #38bdf8, #818cf8);
+            background: linear-gradient(to right, var(--cd-accent), var(--cd-cyan));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -103,7 +108,7 @@
         /* --- Card Design --- */
         .card {
             background: var(--card-bg);
-            border: 1px solid #334155;
+            border: 1px solid var(--cd-line);
             border-radius: 12px;
             padding: 1.5rem;
             transition: transform 0.2s, border-color 0.2s;
@@ -150,8 +155,44 @@
             padding: 2rem;
             color: var(--text-sub);
             font-size: 0.8rem;
-            border-top: 1px solid #334155;
+            border-top: 1px solid var(--cd-line);
             margin-top: 3rem;
+        }
+
+        .hub-cta-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            margin: 3rem 1.5rem;
+        }
+        .hub-cta-row p {
+            flex: 0 0 100%;
+            margin: 0 0 .25rem;
+            color: var(--cd-muted);
+            text-align: center;
+        }
+        .hub-cta {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 44px;
+            padding: .7rem 1.35rem;
+            border: 1px solid var(--cd-line-strong);
+            border-radius: 12px;
+            color: var(--cd-text);
+            background: var(--cd-surface);
+            text-decoration: none;
+            font-weight: 650;
+            transition: background .18s ease, border-color .18s ease, transform .18s ease;
+        }
+        .hub-cta:hover { transform: translateY(-1px); border-color: var(--cd-accent); }
+        .hub-cta-primary { color: var(--cd-bg); background: var(--cd-accent); border-color: var(--cd-accent); }
+        .hub-cta-primary:hover { color: var(--cd-bg); background: var(--cd-accent-strong); }
+        .hub-cta:focus-visible { outline: var(--cd-focus); outline-offset: 3px; }
+        @media (max-width: 520px) {
+            .hub-cta-row { margin-inline: 1rem; }
+            .hub-cta { flex: 1 1 100%; }
         }
     </style>
 
@@ -218,12 +259,12 @@
         </div>
     </div>
 
-    <div style="text-align: center; margin: 3rem 1.5rem;">
-        <p style="color: var(--text-sub); margin-bottom: 1rem;">พร้อมจะคำนวณสเปกโดรนรึยัง?</p>
-        <a href="/fpv-trainer" style="display: inline-block; background: #0a2a1a; color: #10c47a; padding: 0.8rem 2rem; border-radius: 30px; text-decoration: none; border: 1px solid #10c47a; margin-right: 12px;">
+    <div class="hub-cta-row">
+        <p>พร้อมจะคำนวณสเปกโดรนรึยัง?</p>
+        <a href="/fpv-trainer" class="hub-cta hub-cta-primary">
             🎮 FPV Simulator NEO
         </a>
-        <a href="/app" style="display: inline-block; background: #334155; color: white; padding: 0.8rem 2rem; border-radius: 30px; text-decoration: none; border: 1px solid #475569;">
+        <a href="/app" class="hub-cta">
             🚀 CONFIGDOCTOR Edition
         </a>
     </div>

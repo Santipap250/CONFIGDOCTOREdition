@@ -1,5 +1,5 @@
 {#
-  templates/partials/page_hero.html — OBIXConfig Doctor
+  templates/partials/page_hero.html — CONFIGDOCTOR Edition
   ══════════════════════════════════════════════════════
   Standardised page hero with back-bar, eyebrow, title, sub.
   Include INSIDE .page-wrap, AFTER nav/page_actions.
@@ -21,24 +21,24 @@
 
 {%- set _badge_color = hero_badge_color | default('green') -%}
 {%- set _badge_bg_map = {
-  'green':  'rgba(16,196,122,.09)', 'gold':   'rgba(241,182,90,.09)',
+  'green':  'rgba(117,227,180,.09)', 'gold':   'rgba(215,198,164,.09)',
   'blue':   'rgba(88,166,255,.09)', 'red':    'rgba(248,81,73,.09)',
   'purple': 'rgba(167,139,250,.09)'
 } -%}
 {%- set _badge_border_map = {
-  'green':  'rgba(16,196,122,.28)', 'gold':   'rgba(241,182,90,.28)',
+  'green':  'rgba(117,227,180,.28)', 'gold':   'rgba(215,198,164,.28)',
   'blue':   'rgba(88,166,255,.28)', 'red':    'rgba(248,81,73,.28)',
   'purple': 'rgba(167,139,250,.28)'
 } -%}
 {%- set _badge_text_map = {
-  'green': '#10c47a', 'gold': '#f1b65a', 'blue': '#58a6ff',
+  'green': '#75e3b4', 'gold': '#d7c6a4', 'blue': '#7fd8df',
   'red': '#f85149', 'purple': '#c9a6ff'
 } -%}
 {%- set _accent_map = {
-  'green': '#10c47a', 'gold': '#f1b65a', 'blue': '#58a6ff',
+  'green': '#75e3b4', 'gold': '#d7c6a4', 'blue': '#7fd8df',
   'red': '#f85149', 'purple': '#c9a6ff'
 } -%}
-{%- set _acc = _accent_map.get(_badge_color, '#10c47a') -%}
+{%- set _acc = _accent_map.get(_badge_color, '#75e3b4') -%}
 
 <style>
 /* page_hero.html inline overrides — accent-color from badge_color */
@@ -48,7 +48,7 @@
 .page-badge {
   background: {{ _badge_bg_map.get(_badge_color, _badge_bg_map['green']) }} !important;
   border-color: {{ _badge_border_map.get(_badge_color, _badge_border_map['green']) }} !important;
-  color: {{ _badge_text_map.get(_badge_color, '#10c47a') }} !important;
+  color: {{ _badge_text_map.get(_badge_color, '#75e3b4') }} !important;
 }
 .card-title::before, .section-label::before { background: {{ _acc }} !important; }
 </style>

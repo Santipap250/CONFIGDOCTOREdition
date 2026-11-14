@@ -5,7 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>429 — Too Many Requests · CONFIGDOCTOR Edition</title>
   <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Sarabun:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/edition-tokens.css') }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700;800&family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg:     #060c14;
@@ -14,7 +17,7 @@
       --amber:  #ffb700;
       --muted:  rgba(200,215,255,0.45);
       --muted2: rgba(200,215,255,0.28);
-      --font-d: 'JetBrains Mono', monospace;
+      --font-d: var(--cd-mono);
       --font-s: 'Sarabun', sans-serif;
     }
 body {

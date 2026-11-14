@@ -978,7 +978,7 @@ function updateCLI(){
     byG[def.grp].push({el,def});
   });
   let h=`<span class="cc"># ═══════════════════════════════════════</span><br>
-<span class="cc"># OBIXConfig Doctor — OSD Studio v3</span><br>
+<span class="cc"># CONFIGDOCTOR Edition — OSD Studio</span><br>
 <span class="cc"># Mode: ${mode} Grid ${GRID.cols}×${GRID.rows} | ${els.length} elements</span><br>
 <span class="cc"># ═══════════════════════════════════════</span><br><br>
 <span class="cs">osd_profile 1</span><br><br>`;
@@ -997,7 +997,7 @@ function getCLIText(){
   const mode=document.querySelector('.mdbtn.active')?.dataset.mode==='hd'?'HD':'ANALOG';
   const lines=[
     '# ═══════════════════════════════════════',
-    '# OBIXConfig Doctor — OSD Studio v3',
+    '# CONFIGDOCTOR Edition — OSD Studio',
     `# Mode: ${mode} Grid ${GRID.cols}×${GRID.rows} | ${els.length} elements`,
     `# Generated: ${new Date().toLocaleString('th-TH')}`,
     '# ═══════════════════════════════════════',

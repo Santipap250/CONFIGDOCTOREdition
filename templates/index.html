@@ -648,6 +648,8 @@ pre::-webkit-scrollbar-thumb{background:rgba(0,255,68,.2);border-radius:2px}
 
 <div class="shell">
 
+<h1 class="cd-sr-only">Drone Analyzer — CONFIGDOCTOR Edition</h1>
+
 <!-- ════ LEFT: FORM ════ -->
 <aside class="panel">
   <div class="ph">
@@ -976,7 +978,7 @@ pre::-webkit-scrollbar-thumb{background:rgba(0,255,68,.2);border-radius:2px}
     <button type="button" class="cli-copy" onclick="cpEl('fullcli');toast('✓ คัดลอกแล้ว!')">📋 คัดลอกทั้งหมด</button>
   </div>
   <pre class="cli" id="fullcli"><span class="cli-comment"># ════════════════════════════════════════
-# ConfigDoctor — {{ _sz }}" {{ _cls|capitalize }} · {{ _cells }}S{{ _vnom|round(1) }}V
+# CONFIGDOCTOR Edition — {{ _sz }}" {{ _cls|capitalize }} · {{ _cells }}S{{ _vnom|round(1) }}V
 # {{ _kv or '—' }}KV · {{ _wt|int }}g · {{ _sy|capitalize }} · TWR {{ _twr|round(2) }}:1
 # ════════════════════════════════════════
 
@@ -1089,7 +1091,7 @@ save</pre>
 
 <!-- ── SHARE PANEL ───────────────────────────────────────────────── -->
 {%- set _share_url = (BASE_URL ~ '/app?size=' ~ _sz ~ '&battery=' ~ analysis.battery|default('4S') ~ '&style=' ~ _sy ~ '&weight=' ~ _wt|int ~ '&prop_size=' ~ analysis.prop_size|default(_sz) ~ '&pitch=' ~ analysis.prop_pitch|default(4.0)|round(1) ~ '&blades=' ~ analysis.blade_count|default(3) ~ ('&motor_kv=' ~ _kv if _kv > 0 else '') ~ ('&battery_mAh=' ~ _mah if _mah > 0 else '') ~ '&motor_count=' ~ analysis.motor_count|default(4)) -%}
-{%- set _share_text = '🚁 ConfigDoctor วิเคราะห์โดรนฉัน\n' ~ _sz|string ~ '" · ' ~ analysis.battery|default('4S') ~ ' · ' ~ _sy|capitalize ~ ' · TWR ' ~ _twr|round(2)|string ~ ':1\nดูผลได้ที่: ' -%}
+{%- set _share_text = '🚁 CONFIGDOCTOR Edition วิเคราะห์โดรนฉัน\n' ~ _sz|string ~ '" · ' ~ analysis.battery|default('4S') ~ ' · ' ~ _sy|capitalize ~ ' · TWR ' ~ _twr|round(2)|string ~ ':1\nดูผลได้ที่: ' -%}
 <div class="share-panel" id="sharePanel">
   <div class="share-head">
     <span class="share-title">📤 แชร์ผลวิเคราะห์</span>
@@ -1127,7 +1129,7 @@ save</pre>
 (function(){
   const SHARE_URL = {{ _share_url | tojson }};
   const SHARE_TEXT = {{ (_share_text ~ _share_url) | tojson }};
-  const SHARE_TITLE = {{ ('ConfigDoctor — ' ~ _sz|string ~ '" ' ~ _sy|capitalize ~ ' TWR ' ~ _twr|round(2)|string ~ ':1') | tojson }};
+  const SHARE_TITLE = {{ ('CONFIGDOCTOR Edition — ' ~ _sz|string ~ '" ' ~ _sy|capitalize ~ ' TWR ' ~ _twr|round(2)|string ~ ':1') | tojson }};
 
   // Show native share button if supported
   if (navigator.share) {

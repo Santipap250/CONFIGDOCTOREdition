@@ -1,5 +1,5 @@
 {#
-  templates/partials/page_actions.html — OBIXConfig Doctor
+  templates/partials/page_actions.html — CONFIGDOCTOR Edition
   ──────────────────────────────────────────────────────────────────────
   Universal breadcrumb + Home / Back / Dashboard action bar.
   Self-contained on purpose: it only reads `nav_page` (already set on
@@ -32,22 +32,22 @@
 {% set _pa_current = _pa_titles.get(nav_page, 'หน้านี้') %}
 <style>
 .pa-bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;
-  padding:9px 16px;background:rgba(6,9,14,0.85);border-bottom:1px solid rgba(255,255,255,0.06);
-  font-family:'Sarabun',sans-serif;position:relative;z-index:60;}
-.pa-crumb{display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-size:12.5px;color:rgba(200,215,255,0.55);min-width:0;}
-.pa-crumb a{color:rgba(200,215,255,0.7);text-decoration:none;transition:.15s;}
-.pa-crumb a:hover{color:#10c47a;}
+  padding:9px 16px;background:var(--cd-bg-raised,#0c1715);border-bottom:1px solid var(--cd-line,rgba(201,232,219,.1));
+  font-family:var(--cd-body,'Sarabun',sans-serif);position:relative;z-index:60;}
+.pa-crumb{display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-size:12.5px;color:var(--cd-muted,rgba(200,215,255,.55));min-width:0;}
+.pa-crumb a{color:var(--cd-muted,#a0b2aa);text-decoration:none;transition:.15s;}
+.pa-crumb a:hover{color:var(--cd-accent,#75e3b4);}
 .pa-sep{opacity:.4;}
 .pa-cat{color:rgba(200,215,255,0.45);}
-.pa-current{color:#10c47a;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.pa-current{color:var(--cd-accent,#75e3b4);font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .pa-actions{display:flex;gap:6px;flex-shrink:0;}
-.pa-btn{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:600;letter-spacing:.02em;
-  padding:6px 12px;border-radius:7px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.03);
-  color:rgba(220,230,255,0.8);text-decoration:none;cursor:pointer;transition:.15s;font-family:inherit;}
-.pa-btn:hover{border-color:rgba(16,196,122,0.4);color:#10c47a;background:rgba(16,196,122,0.06);}
-.pa-btn.pa-primary{border-color:rgba(16,196,122,0.35);background:rgba(16,196,122,0.08);color:#10c47a;}
-.pa-btn.pa-tools{border-color:rgba(58,130,246,0.28);background:rgba(58,130,246,0.07);color:#8bc7ff;}
-.pa-btn.pa-tools:hover{border-color:rgba(58,130,246,0.5);color:#bfe0ff;background:rgba(58,130,246,0.12);}
+.pa-btn{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:650;letter-spacing:.02em;
+  padding:6px 12px;border-radius:9px;border:1px solid var(--cd-line-strong,rgba(201,232,219,.17));background:rgba(255,255,255,.025);
+  color:var(--cd-text,#edf5f0);text-decoration:none;cursor:pointer;transition:.15s;font-family:inherit;}
+.pa-btn:hover{border-color:rgba(117,227,180,.4);color:var(--cd-accent,#75e3b4);background:rgba(117,227,180,.06);}
+.pa-btn.pa-primary{border-color:rgba(117,227,180,.3);background:rgba(117,227,180,.09);color:var(--cd-accent,#75e3b4);}
+.pa-btn.pa-tools{border-color:var(--cd-line-strong,rgba(201,232,219,.17));background:rgba(255,255,255,.025);color:var(--cd-muted,#a0b2aa);}
+.pa-btn.pa-tools:hover{border-color:rgba(117,227,180,.4);color:var(--cd-accent,#75e3b4);background:rgba(117,227,180,.06);}
 .pa-btn.pa-disabled{opacity:.4;pointer-events:none;}
 @media(max-width:640px){
   .pa-bar{padding:8px 12px;}
@@ -65,36 +65,39 @@
   .on-bar{display:none !important}
   .pa-mbar{
     display:flex;align-items:center;justify-content:space-between;gap:8px;
-    padding:14px 14px;background:rgba(4,8,8,0.9);
-    border-bottom:1px solid rgba(16,196,122,0.14);
+    padding:calc(10px + env(safe-area-inset-top)) 14px 10px;background:rgba(8,17,15,.94);
+    border-bottom:1px solid var(--cd-line,rgba(201,232,219,.1));
     position:sticky;top:0;z-index:55;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
   }
   .pa-mbtn{
     display:flex;align-items:center;justify-content:center;width:34px;height:34px;flex-shrink:0;
     border-radius:9px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.03);
-    color:#10c47a;cursor:pointer;text-decoration:none;transition:.15s;
+    color:var(--cd-accent,#75e3b4);cursor:pointer;text-decoration:none;transition:.15s;
   }
-  .pa-mbtn:hover, .pa-mbtn:active{background:rgba(16,196,122,0.08);border-color:rgba(16,196,122,0.3)}
+  .pa-mbtn:hover, .pa-mbtn:active{background:rgba(117,227,180,.08);border-color:rgba(117,227,180,.3)}
   .pa-mbtn svg{width:19px;height:19px}
-  .pa-mtitle{
-    flex:1;min-width:0;text-align:center;font-family:'Orbitron',sans-serif;font-weight:800;
-    font-size:15.5px;color:#eafff3;letter-spacing:.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-  }
+  .pa-mtitle{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;gap:1px;text-align:center;}
+  .pa-mbrand{font-family:var(--cd-mono,'DM Mono',monospace);font-size:9px;font-weight:500;letter-spacing:.12em;color:var(--cd-muted,#a0b2aa);line-height:1.2;white-space:nowrap;}
+  .pa-mbrand small{font-size:9px;color:var(--cd-accent,#75e3b4);}
+  .pa-page-title{max-width:100%;font-family:var(--cd-heading,'Manrope',sans-serif);font-weight:750;font-size:14px;color:var(--cd-text,#edf5f0);letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
   body.light .pa-mbar{background:rgba(248,250,252,0.95);border-bottom:1px solid rgba(0,0,0,0.08);}
   body.light .pa-mbtn{border-color:rgba(0,0,0,0.1);background:rgba(0,0,0,0.02);color:#059669;}
   body.light .pa-mbtn:hover, body.light .pa-mbtn:active{background:rgba(5,150,105,0.08);border-color:rgba(5,150,105,0.25);}
   body.light .pa-mtitle{color:#0f2a22;}
 }
 </style>
-<div class="pa-mbar" role="navigation" aria-label="Page header">
+<header class="pa-mbar" aria-label="CONFIGDOCTOR Edition page header">
   <button type="button" class="pa-mbtn" aria-label="ย้อนกลับ" onclick="if(window.history.length>1){history.back()}else{location.href='/'}">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
   </button>
-  <div class="pa-mtitle">{% if nav_page == 'home' %}Drone Analyzer{% else %}{{ _pa_current }}{% endif %}</div>
+  <div class="pa-mtitle">
+    <span class="pa-mbrand">CONFIGDOCTOR <small>Edition</small></span>
+    <span class="pa-page-title" aria-current="page">{% if nav_page == 'home' %}Drone Analyzer{% else %}{{ _pa_current }}{% endif %}</span>
+  </div>
   <button type="button" class="pa-mbtn" aria-label="เครื่องมือ" onclick="if(window.openToolsPanel){window.openToolsPanel()}else{var h=document.getElementById('onHam');if(h){h.click()}else{location.href='/app'}}">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/></svg>
   </button>
-</div>
+</header>
 <div class="pa-bar" role="navigation" aria-label="Breadcrumb and page actions">
   <nav class="pa-crumb" aria-label="Breadcrumb">
     <a href="/">🏠 Home</a>
