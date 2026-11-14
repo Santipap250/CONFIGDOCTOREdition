@@ -30,4 +30,4 @@
 - [x] PWA manifest, offline fallback, safe service-worker cache policy และ static source/public mirrors ยังคงถูกต้อง; เปลี่ยน cache key เมื่อจำเป็นเพื่อเผยแพร่ asset รุ่นใหม่.
 - [x] ทุก page route ที่มี UI ใช้ธีมร่วม, ไม่มี horizontal overflow ที่ไม่ตั้งใจบนมือถือ, wide data/workbench ยังคงใช้งานได้.
 - [ ] ยังไม่ได้ทำ manual JavaScript console/runtime-error sweep สำหรับทุก interaction หลัง visual update; full automated test suite ผ่าน.
-- [ ] Follow-up mobile Simulator height fix (56px header clearance) ต้องตรวจบน Vercel Preview ล่าสุดก่อน; ห้าม merge/deploy follow-up จนผู้ใช้ตรวจและอนุมัติ.
+- [x] Follow-up mobile Simulator height fix (56px header clearance) ผ่าน Vercel Preview ที่ 390×844; game area จบที่ y=843.89px และไม่มี horizontal overflow. PR #10 ยังเปิดอยู่และรอผู้ใช้ตรวจ/อนุมัติก่อน merge/deploy.
