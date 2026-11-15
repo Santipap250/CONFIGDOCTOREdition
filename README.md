@@ -1,10 +1,10 @@
-# OBIXCONFIGDOCTOR
-## FPV Drone Configuration Analyzer
+# CONFIGDOCTOR Edition
+## FPV Drone Flight Workspace
 
-OBIXCONFIGDOCTOR is a Flask-based FPV drone configuration and analysis platform. It brings build checks, tuning guidance, configuration analysis, calculators, and pilot tools into one responsive web application.
+CONFIGDOCTOR Edition is a Flask-based FPV drone configuration and analysis workspace. It brings build checks, tuning guidance, configuration analysis, calculators, and pilot tools into one responsive web application.
 
 **Live application:** https://configdoctor.onrender.com/landing  
-**GitHub:** https://github.com/Santipap250/OBIXCONFIGDOCTOR---Vercel-Ready-Edition
+**GitHub:** https://github.com/Santipap250/CONFIGDOCTOREdition
 
 > The application provides engineering-oriented estimates and checks. Recommendations are starting points, not guarantees; validate every configuration on the bench and in a safe test flight.
 

@@ -24,8 +24,11 @@ def test_landing_uses_optimized_background_video_and_poster(client):
     response = client.get("/landing")
     assert response.status_code == 200
     html = response.get_data(as_text=True)
-    assert 'class="hero-bg-video" autoplay muted loop playsinline' in html
-    assert '/static/video/landing-background.mp4' in html
+    assert 'class="hero-bg-video" id="hero-background-video" muted loop playsinline preload="none"' in html
+    assert 'data-src="/static/video/landing-background.mp4"' in html
+    assert 'autoplay' not in html
+    assert "prefers-reduced-motion: reduce" in html
+    assert "navigator.connection" in html
     assert '/static/img/landing-background-poster.webp' in html
 
     video = client.get("/static/video/landing-background.mp4")
@@ -73,8 +76,22 @@ def test_service_worker_is_root_scoped_and_not_stale_cached(client):
     assert response.headers.get("Service-Worker-Allowed") == "/"
     assert "no-cache" in response.headers.get("Cache-Control", "")
     assert "static/offline.html" in response.get_data(as_text=True)
-    assert "obixconfigdoctor-v11-static" in response.get_data(as_text=True)
+    assert "obixconfigdoctor-v12-workspace" in response.get_data(as_text=True)
+    assert "STATIC_ALLOWLIST" in response.get_data(as_text=True)
+    assert "MAX_ASSET_BYTES" in response.get_data(as_text=True)
     assert "hero-drone-premium.webp" not in response.get_data(as_text=True)
+    assert "/static/video/landing-background.mp4" not in response.get_data(as_text=True)
+
+
+def test_service_worker_static_cache_is_an_explicit_bounded_allowlist():
+    source = (PROJECT_ROOT / "static" / "sw.js").read_text(encoding="utf-8")
+    assert "new Set(STATIC_ASSETS)" in source
+    assert "if (!STATIC_ALLOWLIST.has(url.pathname) || url.search) return;" in source
+    assert "const MAX_ASSET_BYTES = 512 * 1024;" in source
+    assert "rawContentLength !== null" in source
+    assert "contentLength !== null && contentLength <= MAX_ASSET_BYTES" in source
+    assert "cache.put(request, response.clone())" in source
+    assert "landing-background.mp4" not in source
 
 
 def test_vercel_service_worker_mirror_matches_source():
@@ -82,6 +99,13 @@ def test_vercel_service_worker_mirror_matches_source():
     vercel_public = (PROJECT_ROOT / "public" / "static" / "sw.js").read_bytes()
 
     assert source == vercel_public
+
+
+def test_workspace_styles_are_mirrored_to_vercel_public():
+    for name in ("workspace-nav.css", "landing-premium.css"):
+        source = (PROJECT_ROOT / "static" / "css" / name).read_bytes()
+        mirror = (PROJECT_ROOT / "public" / "static" / "css" / name).read_bytes()
+        assert source == mirror, name
 
 
 def test_offline_fallback_is_a_static_self_contained_page(client):

@@ -5,7 +5,7 @@
 {% block page_og_path %}/flight-quiz{% endblock %}
 {% block page_nav_page %}flight_quiz{% endblock %}
 {% block page_css %}style.css{% endblock %}
-{% block page_viewport %}width=device-width, initial-scale=1.0, maximum-scale=1.0{% endblock %}
+{% block page_viewport %}width=device-width, initial-scale=1.0{% endblock %}
 {% block extra_css_links %}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=JetBrains+Mono:wght@400;600;700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -267,6 +267,7 @@ body::after {
   cursor:pointer; transition:all .18s cubic-bezier(.4,0,.2,1);
   display:flex; align-items:flex-start; gap:11px;
   position:relative; overflow:hidden; user-select:none;
+  width:100%; text-align:left; color:inherit; font:inherit;
 }
 .choice-card::before {
   content:''; position:absolute; inset:0;
@@ -634,6 +635,9 @@ body::after {
   .rates-table td, .rates-table th { padding:7px 7px; }
   .q-footer { flex-direction:row; }
 }
+@media(prefers-reduced-motion:reduce) {
+  *, *::before, *::after { scroll-behavior:auto !important; animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; }
+}
 </style>
 {% endblock %}
 {% block content %}
@@ -959,21 +963,22 @@ function renderQuestion(idx) {
     <div class="q-head">
       <span class="q-num">คำถาม ${idx+1} / ${QUESTIONS.length}</span>
       <div>
-        <div class="q-title">${q.label}</div>
+        <div class="q-title" id="question-label">${q.label}</div>
         <div class="q-sub">${q.sub}</div>
       </div>
     </div>
-    <div class="choices-grid">
+    <div class="choices-grid" role="radiogroup" aria-labelledby="question-label">
       ${q.choices.map((c, ci) => `
-      <div class="choice-card ${state.answers[idx]===ci?'selected':''}"
-           id="choice${ci}" onclick="selectChoice(${ci})">
-        <div class="choice-icon-wrap">${c.icon}</div>
+      <button type="button" class="choice-card ${state.answers[idx]===ci?'selected':''}"
+           id="choice${ci}" role="radio" aria-checked="${state.answers[idx]===ci}" tabindex="${state.answers[idx]===ci || (state.answers[idx]===null && ci===0) ? 0 : -1}"
+           onclick="selectChoice(${ci})" onkeydown="handleChoiceKey(event, ${ci})">
+        <span class="choice-icon-wrap" aria-hidden="true">${c.icon}</span>
         <div class="choice-body">
           <span class="choice-label">${c.label}</span>
           <span class="choice-desc">${c.desc}</span>
         </div>
-        <div class="choice-check"><div class="choice-check-inner"></div></div>
-      </div>`).join('')}
+        <span class="choice-check" aria-hidden="true"><span class="choice-check-inner"></span></span>
+      </button>`).join('')}
     </div>
     <div class="q-footer">
       <button class="q-back" ${idx===0?'disabled':''} onclick="goBack()">← ย้อนกลับ</button>
@@ -992,6 +997,8 @@ function selectChoice(ci) {
   // Update visual
   document.querySelectorAll('.choice-card').forEach((c, i) => {
     c.classList.toggle('selected', i === ci);
+    c.setAttribute('aria-checked', String(i === ci));
+    c.tabIndex = i === ci ? 0 : -1;
   });
   // Enable next
   const nb = el('nextBtn');
@@ -1001,7 +1008,16 @@ function selectChoice(ci) {
     setTimeout(() => goNext(), 380);
   }
 }
-
+function handleChoiceKey(event, choiceIndex) {
+  const count = QUESTIONS[state.step].choices.length;
+  let next = choiceIndex;
+  if (event.key === 'ArrowRight' || event.key === 'ArrowDown') next = (choiceIndex + 1) % count;
+  else if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') next = (choiceIndex - 1 + count) % count;
+  else return;
+  event.preventDefault();
+  selectChoice(next);
+  document.getElementById(`choice${next}`)?.focus();
+}
 /* Guard: auto-advance (after selecting a choice) and the Next button must not both advance a step. */
 let navBusy = false;
 function goNext() {

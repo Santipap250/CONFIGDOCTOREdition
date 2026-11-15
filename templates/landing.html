@@ -20,7 +20,7 @@
 
 {% block body_attrs %}class="landing-page"{% endblock %}
 {% block show_shared_chrome %}false{% endblock %}
-{% block show_bottom_nav %}false{% endblock %}
+{% block show_bottom_nav %}true{% endblock %}
 
 {% block content %}
 <header class="cd-header">
@@ -35,19 +35,19 @@
     </a>
 
     <nav class="cd-top-nav" aria-label="เมนูหน้าแรก">
-      <a href="#overview">ภาพรวม</a>
-      <a href="#tools">เครื่องมือ</a>
-      <a href="#resources">แหล่งข้อมูล</a>
+      <a href="#overview" data-label-th="ภาพรวม" data-label-en="Overview">ภาพรวม</a>
+      <a href="#tools" data-label-th="เครื่องมือ" data-label-en="Tools">เครื่องมือ</a>
+      <a href="#resources" data-label-th="แหล่งข้อมูล" data-label-en="Resources">แหล่งข้อมูล</a>
     </nav>
 
-    <a class="cd-header-cta" href="{{ url_for('tools_analysis.index') }}">เปิด Analyzer <span aria-hidden="true">↗</span></a>
+    <a class="cd-header-cta" href="{{ url_for('tools_analysis.index') }}"><span data-label-th="เปิด Analyzer" data-label-en="Open Analyzer">เปิด Analyzer</span> <span aria-hidden="true">↗</span></a>
   </div>
 </header>
 
 <main id="main-content">
   <section class="cd-hero page-width" id="overview" aria-labelledby="hero-title">
-    <video class="hero-bg-video" autoplay muted loop playsinline preload="metadata" poster="{{ url_for('static', filename='img/landing-background-poster.webp') }}" aria-hidden="true" tabindex="-1">
-      <source src="{{ url_for('static', filename='video/landing-background.mp4') }}" type="video/mp4">
+    <video class="hero-bg-video" id="hero-background-video" muted loop playsinline preload="none" poster="{{ url_for('static', filename='img/landing-background-poster.webp') }}" aria-hidden="true" tabindex="-1">
+      <source data-src="{{ url_for('static', filename='video/landing-background.mp4') }}" type="video/mp4">
     </video>
     <div class="cd-hero-copy">
       <p class="eyebrow"><span class="eyebrow-line"></span> FPV FLIGHT WORKSPACE</p>
@@ -137,11 +137,15 @@
           <div class="group-heading"><h3 id="group-{{ group.id }}">{{ group.title }}</h3><span class="group-count">{{ '%02d'|format(group.tools|length) }}</span></div>
           <div class="tool-grid">
             {% for tool in group.tools %}
-            <a class="tool-card" href="{{ url_for(tool.endpoint) }}" data-tool-card data-category="{{ group.id }}" data-search="{{ (tool.title ~ ' ' ~ tool.summary ~ ' ' ~ tool.keywords)|lower }}">
+            <article class="tool-card-shell" data-tool-card data-category="{{ group.id }}" data-search="{{ (group.title ~ ' ' ~ tool.title ~ ' ' ~ tool.summary ~ ' ' ~ tool.keywords)|lower }}" data-tool-href="{{ url_for(tool.endpoint) }}">
+            <a class="tool-card" href="{{ url_for(tool.endpoint) }}">
               <span class="tool-glyph" aria-hidden="true">{{ tool.glyph }}</span>
               <span class="tool-content"><strong>{{ tool.title }}</strong><small>{{ tool.summary }}</small></span>
-              <span class="tool-open" aria-hidden="true">↗</span>
             </a>
+            <button type="button" class="tool-save" data-save-tool="{{ url_for(tool.endpoint) }}" aria-pressed="false" aria-label="บันทึก {{ tool.title }} ไว้ใน Saved" title="บันทึกเครื่องมือนี้">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12a1 1 0 0 1 1 1v17l-7-4-7 4V4a1 1 0 0 1 1-1Z"/></svg>
+            </button>
+            </article>
             {% endfor %}
           </div>
         </section>
@@ -151,12 +155,24 @@
     </div>
   </section>
 
+  <section class="saved-section page-width" id="saved" aria-labelledby="saved-title">
+    <div class="section-heading compact-heading"><div><p class="eyebrow">YOUR SHORTLIST</p><h2 id="saved-title">Saved tools</h2><p class="section-description">รายการนี้บันทึกไว้ใน browser บนอุปกรณ์นี้เท่านั้น ไม่ซิงก์ข้ามอุปกรณ์</p></div></div>
+    <p id="saved-status" class="catalog-status" role="status" aria-live="polite">ยังไม่มีเครื่องมือที่บันทึกไว้</p>
+    <div id="saved-tools" class="tool-grid saved-tool-grid"></div>
+    <p id="saved-storage-error" class="saved-storage-error" role="alert" hidden>Browser นี้ไม่อนุญาตให้บันทึกข้อมูล รายการ Saved จึงไม่สามารถเก็บไว้ได้</p>
+    <p id="saved-empty" class="catalog-empty">กดไอคอนบันทึกบนการ์ดเครื่องมือเพื่อเพิ่มรายการไว้ที่นี่</p>
+  </section>
+
   <section class="resource-section page-width" id="resources" aria-labelledby="resources-title">
     <div class="section-heading compact-heading"><div><p class="eyebrow">KEEP EXPLORING</p><h2 id="resources-title">คู่มือและแหล่งข้อมูล</h2></div></div>
     <div class="resource-row">
       <a href="{{ url_for('tools_static.fpv_hub') }}"><span class="resource-code">01 / LEARN</span><strong>FPV Knowledge Hub</strong><small>บทความและความรู้พื้นฐาน</small><span class="resource-arrow" aria-hidden="true">↗</span></a>
       <a href="{{ url_for('tools_gear.fpv_gear') }}"><span class="resource-code">02 / GEAR</span><strong>FPV Gear Guide</strong><small>แนวทางเลือกอุปกรณ์ตาม build</small><span class="resource-arrow" aria-hidden="true">↗</span></a>
       <a href="{{ url_for('downloads.downloads_index') }}"><span class="resource-code">03 / FILES</span><strong>CLI Downloads</strong><small>ไฟล์ DIFF และ DUMP</small><span class="resource-arrow" aria-hidden="true">↗</span></a>
+    </div>
+    <div class="landing-pref-controls" role="group" aria-label="ตั้งค่าการแสดงผล">
+      <button type="button" class="workspace-pref-button" data-theme-toggle aria-pressed="false">ธีม: มืด</button>
+      <button type="button" class="workspace-pref-button" data-language-toggle aria-pressed="false">ภาษาเมนู: ไทย</button>
     </div>
   </section>
 </main>
@@ -170,13 +186,6 @@
   <nav aria-label="ลิงก์ท้ายหน้า"><a href="{{ url_for('content_pages.about') }}">เกี่ยวกับ</a><a href="{{ url_for('content_pages.changelog') }}">อัปเดต</a><a href="https://github.com/Santipap250/CONFIGDOCTOREdition" target="_blank" rel="noopener noreferrer">GitHub ↗</a></nav>
 </footer>
 
-<nav class="mobile-dock" aria-label="ทางลัด">
-  <a class="dock-active" href="{{ url_for('tools_static.landing') }}" aria-current="page"><span aria-hidden="true">⌂</span><small>หน้าหลัก</small></a>
-  <a href="{{ url_for('tools_analysis.index') }}"><span aria-hidden="true">AN</span><small>Analyzer</small></a>
-  <a href="#tools"><span aria-hidden="true">▦</span><small>เครื่องมือ</small></a>
-  <a href="#resources"><span aria-hidden="true">◫</span><small>คู่มือ</small></a>
-</nav>
-
 <script>
 (() => {
   const cards = Array.from(document.querySelectorAll('[data-tool-card]'));
@@ -185,7 +194,56 @@
   const search = document.getElementById('tool-search');
   const status = document.getElementById('catalog-status');
   const empty = document.getElementById('catalog-empty');
+  const savedList = document.getElementById('saved-tools');
+  const savedStatus = document.getElementById('saved-status');
+  const savedEmpty = document.getElementById('saved-empty');
+  const savedError = document.getElementById('saved-storage-error');
   let activeFilter = 'all';
+  let savedHrefs = [];
+
+  try {
+    const parsed = JSON.parse(window.localStorage.getItem('configdoctor.saved-tools.v1') || '[]');
+    if (Array.isArray(parsed)) savedHrefs = parsed.filter((href) => typeof href === 'string');
+  } catch (_) {
+    if (savedError) savedError.hidden = false;
+  }
+
+  function renderSaved() {
+    if (!savedList) return;
+    savedList.replaceChildren();
+    const matches = savedHrefs.map((href) => cards.find((card) => card.dataset.toolHref === href)).filter(Boolean);
+    matches.forEach((source) => {
+      const clone = source.cloneNode(true);
+      clone.hidden = false;
+      clone.removeAttribute('hidden');
+      const saveButton = clone.querySelector('.tool-save');
+      if (saveButton) saveButton.remove();
+      savedList.appendChild(clone);
+    });
+    if (savedEmpty) savedEmpty.hidden = matches.length > 0;
+    if (savedStatus) savedStatus.textContent = matches.length ? `${matches.length} รายการ · เก็บไว้บนอุปกรณ์นี้` : 'ยังไม่มีเครื่องมือที่บันทึกไว้';
+    document.querySelectorAll('.tool-save').forEach((button) => {
+      const selected = savedHrefs.includes(button.dataset.saveTool);
+      button.setAttribute('aria-pressed', String(selected));
+      button.classList.toggle('is-saved', selected);
+      button.setAttribute('aria-label', (selected ? 'นำออกจาก Saved: ' : 'บันทึกไว้ใน Saved: ') + (button.closest('[data-tool-card]')?.querySelector('.tool-content strong')?.textContent || 'เครื่องมือนี้'));
+    });
+  }
+
+  document.addEventListener('click', (event) => {
+    const button = event.target.closest('.tool-save');
+    if (!button) return;
+    const href = button.dataset.saveTool;
+    const next = savedHrefs.includes(href) ? savedHrefs.filter((item) => item !== href) : [...savedHrefs, href];
+    try {
+      window.localStorage.setItem('configdoctor.saved-tools.v1', JSON.stringify(next));
+      savedHrefs = next;
+      if (savedError) savedError.hidden = true;
+      renderSaved();
+    } catch (_) {
+      if (savedError) savedError.hidden = false;
+    }
+  });
 
   function updateCatalog() {
     const query = (search.value || '').trim().toLocaleLowerCase();
@@ -227,6 +285,34 @@
       updateCatalog();
     }
   });
+  renderSaved();
+  updateCatalog();
+})();
+</script>
+<script>
+(() => {
+  const video = document.getElementById('hero-background-video');
+  if (!video) return;
+  const source = video.querySelector('source[data-src]');
+  const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const smallScreen = window.matchMedia('(max-width: 760px)');
+  const constrained = connection && (connection.saveData || /(^|-)2g$|(^|-)3g$/.test(connection.effectiveType || ''));
+  if (reducedMotion.matches || smallScreen.matches || constrained || !source) return;
+  const start = () => {
+    if (!source.dataset.src || reducedMotion.matches || smallScreen.matches || (connection && connection.saveData)) return;
+    source.src = source.dataset.src;
+    video.load();
+    video.play().catch(() => {});
+  };
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries) => {
+      if (entries.some((entry) => entry.isIntersecting)) { observer.disconnect(); start(); }
+    }, { threshold: 0.1 });
+    observer.observe(video);
+  } else {
+    start();
+  }
 })();
 </script>
 {% endblock %}

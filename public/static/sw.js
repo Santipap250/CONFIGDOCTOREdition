@@ -1,18 +1,24 @@
-/* CONFIGDOCTOR Edition — cache static assets and a standalone offline fallback only.
- * Never cache application HTML or API responses: pages include per-session CSRF tokens.
+/* CONFIGDOCTOR Edition — bounded allowlist cache + network-first HTML.
+ * Never cache application HTML, API responses, video, or arbitrary static files.
  */
-const CACHE_NAME = 'obixconfigdoctor-v11-static';
+const CACHE_NAME = 'obixconfigdoctor-v12-workspace';
 const STATIC_ASSETS = [
+  '/static/css/edition-tokens.css',
+  '/static/css/components.css',
+  '/static/css/edition-pages.css',
+  '/static/css/workspace-nav.css',
   '/static/css/landing-premium.css',
+  '/static/css/responsive.css',
+  '/static/css/ui-enhance.css',
   '/static/img/configdoctor-logo.png',
-  '/static/img/og-premium.webp',
   '/static/favicon.ico',
-  '/static/favicon.png',
   '/static/android-chrome-192x192.png',
   '/static/img/pwa-maskable-512.png',
   '/static/manifest.json',
   '/static/offline.html'
 ];
+const STATIC_ALLOWLIST = new Set(STATIC_ASSETS);
+const MAX_ASSET_BYTES = 512 * 1024;
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
@@ -40,8 +46,6 @@ self.addEventListener('fetch', (event) => {
   const url = new URL(request.url);
   if (url.origin !== self.location.origin) return;
 
-  // HTML is always fetched from the network. If it fails, serve only the
-  // static offline notice; do not persist personalized pages or CSRF tokens.
   if (request.mode === 'navigate') {
     event.respondWith(
       fetch(request).catch(async () => {
@@ -58,7 +62,7 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  if (!url.pathname.startsWith('/static/')) return;
+  if (!STATIC_ALLOWLIST.has(url.pathname) || url.search) return;
 
   event.respondWith(
     caches.open(CACHE_NAME).then(async (cache) => {
@@ -66,8 +70,13 @@ self.addEventListener('fetch', (event) => {
       if (cached) return cached;
 
       const response = await fetch(request);
-      if (response && response.ok && response.type === 'basic') {
-        cache.put(request, response.clone()).catch(() => {});
+      const rawContentLength = response.headers.get('Content-Length');
+      const contentLength = rawContentLength !== null && /^\d+$/.test(rawContentLength)
+        ? Number(rawContentLength)
+        : null;
+      if (response && response.ok && response.type === 'basic' &&
+          contentLength !== null && contentLength <= MAX_ASSET_BYTES) {
+        await cache.put(request, response.clone());
       }
       return response;
     })
