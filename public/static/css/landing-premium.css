@@ -49,8 +49,10 @@ body.landing-page {
 .cd-header-cta { display: inline-flex; align-items: center; gap: 10px; min-height: 40px; padding: 0 15px; border: 1px solid rgba(117, 227, 180, .28); border-radius: 12px; background: rgba(117, 227, 180, .09); color: var(--cd-accent-strong) !important; font-size: 12px; font-weight: 700; text-decoration: none; white-space: nowrap; transition: background .18s ease, transform .18s ease; }
 .cd-header-cta:hover { background: rgba(117, 227, 180, .15); transform: translateY(-1px); }
 
-.cd-hero { display: grid; grid-template-columns: minmax(0, 1.16fr) minmax(330px, .84fr); align-items: center; gap: clamp(28px, 6vw, 82px); padding-top: clamp(52px, 8vw, 105px); padding-bottom: clamp(48px, 7vw, 86px); }
-.cd-hero-copy { max-width: 640px; }
+.cd-hero { position: relative; isolation: isolate; display: grid; grid-template-columns: minmax(0, 1.16fr) minmax(330px, .84fr); align-items: center; gap: clamp(28px, 6vw, 82px); padding-top: clamp(52px, 8vw, 105px); padding-bottom: clamp(48px, 7vw, 86px); }
+.hero-bg-video { position: absolute; z-index: -2; inset: 0 auto 0 50%; width: 100vw; height: 100%; transform: translateX(-50%); object-fit: cover; object-position: center 62%; filter: brightness(.38) saturate(.82); pointer-events: none; }
+.cd-hero::before { content: ''; position: absolute; z-index: -1; inset: 0; background: linear-gradient(90deg, rgba(8, 17, 15, .78), rgba(8, 17, 15, .52) 58%, rgba(8, 17, 15, .69)), linear-gradient(0deg, rgba(8, 17, 15, .44), transparent 55%); pointer-events: none; }
+.cd-hero-copy, .cd-hero > .workflow-card { position: relative; z-index: 1; }
 .eyebrow { display: flex; align-items: center; gap: 9px; margin: 0 0 16px; color: var(--cd-accent); font: 500 10px/1.2 var(--cd-mono); letter-spacing: .18em; text-transform: uppercase; }
 .eyebrow-line { width: 22px; height: 1px; background: var(--cd-accent); box-shadow: 0 0 12px rgba(117, 227, 180, .5); }
 .cd-hero h1 { margin: 0; font: 800 clamp(38px, 5.8vw, 70px)/1.13 var(--cd-heading); letter-spacing: -.055em; }
@@ -154,6 +156,11 @@ body.landing-page {
 .resource-row strong { margin-top: 12px; font-size: 13px; }
 .resource-row small { margin-top: 4px; color: var(--cd-muted); font-size: 11px; }
 .resource-arrow { position: absolute; top: 13px; right: 15px; color: var(--cd-dim); }
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-bg-video { display: none; }
+  .cd-hero::before { background: linear-gradient(90deg, rgba(8, 17, 15, .82), rgba(8, 17, 15, .62)), url('/static/img/landing-background-poster.webp') center 62% / cover no-repeat; }
+}
 
 .cd-footer { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 25px; padding-top: 20px; padding-bottom: 26px; border-top: 1px solid var(--cd-line); }
 .footer-brand .cd-mark { width: 30px; height: 30px; }

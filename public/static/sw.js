@@ -1,10 +1,9 @@
 /* CONFIGDOCTOR Edition — cache static assets and a standalone offline fallback only.
  * Never cache application HTML or API responses: pages include per-session CSRF tokens.
  */
-const CACHE_NAME = 'obixconfigdoctor-v10-static';
+const CACHE_NAME = 'obixconfigdoctor-v11-static';
 const STATIC_ASSETS = [
   '/static/css/landing-premium.css',
-  '/static/img/hero-drone-premium.webp',
   '/static/img/configdoctor-logo.png',
   '/static/img/og-premium.webp',
   '/static/favicon.ico',
