@@ -17,6 +17,7 @@ Note: These are estimates. Always verify with blackbox + RPM filter graph.
 """
 
 from __future__ import annotations
+import math
 from typing import Dict, Any, List
 
 _NOMINAL_CELL_V = 3.7    # V (nominal for energy calcs)
@@ -57,6 +58,21 @@ def calculate_rpm_filter(kv: int, battery: str, prop_size: float = 5.0) -> Dict[
         warnings:       list of warning strings
         notes:          contextual notes
     """
+    try:
+        kv_value = float(kv)
+        kv_int = int(kv_value)
+    except (TypeError, ValueError, OverflowError) as exc:
+        raise ValueError("kv must be a positive integer") from exc
+    if not math.isfinite(kv_value) or kv_value != kv_int or kv_int <= 0:
+        raise ValueError("kv must be a positive integer")
+    try:
+        prop_size = float(prop_size)
+    except (TypeError, ValueError, OverflowError) as exc:
+        raise ValueError("prop_size must be a finite positive number") from exc
+    if not math.isfinite(prop_size) or prop_size <= 0:
+        raise ValueError("prop_size must be a finite positive number")
+    kv = kv_int
+
     cells = cells_from_battery_string(battery, default=4, lo=1, hi=12)
     v_max = cells * _FLIGHT_VOLTAGE_PER_CELL  # FIX v5.1: ใช้ avg flight voltage
 

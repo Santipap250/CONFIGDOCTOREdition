@@ -134,6 +134,10 @@ def analyze_propeller(prop_size, prop_pitch, blade_count, style,
                       motor_kv=None, cells=4):
     p_in    = float(prop_size)
     p_pitch = float(prop_pitch)
+    if not math.isfinite(p_in) or p_in <= 0:
+        raise ValueError("prop_size must be a finite positive number")
+    if not math.isfinite(p_pitch) or p_pitch <= 0:
+        raise ValueError("prop_pitch must be a finite positive number")
     blades  = _blade_clamp(int(blade_count))
     cells_i = max(1, min(int(cells), 12))
 

@@ -132,6 +132,16 @@ def _get_db():
     conn.commit()
     return conn
 
+
+def _lock_community_vote(conn, ip_hash):
+    """Serialize one-vote-per-IP checks across workers sharing the database."""
+    if isinstance(conn, _PostgresCompatConnection):
+        # Transaction-scoped lock; hash collisions only serialize unrelated IPs.
+        conn.execute("SELECT pg_advisory_xact_lock(hashtext(?))", (ip_hash,))
+    else:
+        # Acquire SQLite's write reservation before the SELECT/INSERT sequence.
+        conn.execute("BEGIN IMMEDIATE")
+
 # FIX C3: trust X-Forwarded-For only when TRUST_PROXY=1 in env
 #         ถ้าไม่ set จะใช้ remote_addr ตรงๆ ป้องกัน header spoofing bypass rate-limit/vote
 _TRUST_PROXY = os.environ.get("TRUST_PROXY", "0").strip().lower() in ("1", "true", "yes")
@@ -290,7 +300,9 @@ def validate_input(size, weight, prop_size, pitch, blades, battery,
         warnings.append("น้ำหนัก (weight) ต้องเป็นตัวเลข")
     try:
         prop_size = float(prop_size)
-        if prop_size > (size + 4):
+        if prop_size <= 0:
+            warnings.append("ขนาดใบพัดต้องมากกว่า 0 นิ้ว")
+        elif prop_size > (size + 4):
             warnings.append("ขนาดใบพัดดูใหญ่กว่าปกติสำหรับเฟรมที่ระบุ")
     except Exception:
         logger.debug("suppressed exception", exc_info=True)

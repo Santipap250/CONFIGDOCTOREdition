@@ -17,7 +17,7 @@ except ImportError:
 from flask import (Flask, render_template, request, send_from_directory,
                    abort, send_file, jsonify, url_for)
 from werkzeug.middleware.proxy_fix import ProxyFix
-import os, time, logging, hashlib
+import os, logging, hashlib
 from datetime import datetime
 
 from core import (
@@ -145,9 +145,6 @@ app.config['MAX_CONTENT_LENGTH'] = (4 * 1024 * 1024 if IS_VERCEL else 10 * 1024 
 # ── sitemap.xml daily cache (was referenced but never declared — caused a 500) ──
 from core import _SITEMAP_CACHE, _BASE_URL
 
-# ── App start timestamp — ใช้ทำ ETag ให้ lightweight (เปลี่ยนทุก redeploy) ──
-_APP_START_TIME: str = str(int(time.time()))
-
 # ── Enable gzip/brotli compression ───────────────────────────────────────
 if COMPRESS_AVAILABLE:
     Compress(app)
@@ -229,23 +226,11 @@ def set_security_headers(response):
     # Static assets use a bounded cache because most filenames are not fingerprinted.
     if request.path.startswith('/static/'):
         response.headers['Cache-Control'] = 'public, max-age=86400, stale-while-revalidate=604800'
-    # FIX SEC-1: HTML pages — MUST be private because every page contains a
-    # per-user CSRF token via og_tags.html meta tag.
-    # Using 'public' or 's-maxage' would allow CDN/proxy to cache one user's
-    # CSRF token and serve it to another user → token leak.
-    # ETag is computed from request.path + template mtime (not response body)
-    # to avoid loading the full HTML into memory on every request.
+    # HTML pages may contain session-bound CSRF tokens. Keep them private and
+    # require revalidation; a path-only ETag cannot validate rendered content.
     elif request.method == 'GET' and response.status_code == 200:
         if 'text/html' in response.content_type:
-            response.headers['Cache-Control'] = 'private, max-age=300'
-            # Lightweight ETag: hash of path + app start time (changes on redeploy)
-            etag_src = f"{request.path}:{_APP_START_TIME}"
-            etag_val = hashlib.md5(etag_src.encode()).hexdigest()[:16]
-            response.headers['ETag'] = f'"{etag_val}"'
-            if_none_match = request.headers.get('If-None-Match', '').strip('"')
-            if if_none_match and if_none_match == etag_val:
-                response.status_code = 304
-                response.set_data(b'')
+            response.headers['Cache-Control'] = 'private, no-cache'
     return response
 # ── Error handlers ─────────────────────────────────────────────────────────
 @app.errorhandler(404)
