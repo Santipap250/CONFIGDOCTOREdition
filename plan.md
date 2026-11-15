@@ -1,52 +1,50 @@
-# CONFIGDOCTOR Edition — Unified Application Design Plan
+# CONFIGDOCTOR Edition — FPV Drone Workspace Implementation Plan
 
-## เป้าหมาย
+## เป้าหมายและข้อกำหนดการทำงาน
 
-ทำให้ทุกหน้าที่ผู้ใช้เห็นใน Flask application เชื่อมโยงกับ CONFIGDOCTOR Edition homepage ผ่าน visual system และ shared components ชุดเดียวกัน โดยคง routes, data contracts, calculations, validation, accessibility behavior และเครื่องมือเดิมไว้ การปรับจะอยู่ใน feature branch `feature/edition-full-app-design`; ไม่ merge หรือ deploy Production โดยอัตโนมัติ
+เปลี่ยนแอปปัจจุบันให้เป็น FPV Drone Workspace ที่หาง่าย ใช้สะดวกบนมือถือ มีโครงนำทางแบบแอปพรีเมียม และคงเครื่องมือ/API/ข้อมูลเดิมทั้งหมด งานเริ่มจาก `origin/main` SHA `f6b39ba2bada48d8c570b1784575c72abfb43521` บน branch `feature/premium-app-transformation` เท่านั้น; PR #12–#14 รวมอยู่ในฐานนี้แล้ว. ห้าม merge PR หรือ deploy Production ก่อนเจ้าของตรวจและยอมรับ Preview.
 
-## ขอบเขตจาก source
+ลำดับความสำคัญคือ correctness, simplicity, stability, accessibility, speed แล้วจึงค่อย visual effects. การเปลี่ยน backend, storage, secrets หรือบริการ production ต้องมีหลักฐานและการอนุญาตแยกต่างหาก. ห้ามเปลี่ยนสูตร FPV หากไม่มีหลักฐานความผิดพลาดและ regression test. ห้ามลบ route/API/capability ที่ยังใช้งานได้.
 
-มี 34 user-facing page templates (ไม่นับ `base.html`) ครอบคลุม 30+ tools, หน้าเนื้อหา, standalone FPV hub และหน้า error 404/429/500. Homepage คือ `templates/landing.html` และใช้ `static/css/landing-premium.css`; หน้าแอปส่วนใหญ่สืบทอด `templates/base.html`, ใช้ `templates/partials/` และ `static/css/edition-pages.css`. Asset ของเว็บไซต์มี source/public mirrors ซึ่งต้องคงความตรงกัน. Production เดิมใช้ Service Worker cache `obixconfigdoctor-v9-static` แบบ cache-first สำหรับ static assets และ network-first สำหรับหน้า navigation; design batch นี้ใช้ v10 เพื่อให้ผู้ใช้เดิมรับ CSS รุ่นใหม่.
+## สถาปัตยกรรมและวิธีดำเนินงาน
 
-## แนวทาง implementation
+1. รักษา Flask/Python 3.12, Jinja templates, static assets, 13 blueprints, database helpers, APIs และ frontend scripts ที่มีอยู่; ใช้ shared shell กับ page-scoped CSS/markup แทนการเขียนระบบใหม่. ก่อนแก้ backend ต้องมี defect ที่ทำซ้ำได้และ regression test.
+2. รวมทางเข้าผู้ใช้ไว้ใน navigation ที่ชัดเจน: mobile bottom navigation มีปลายทาง Home, Tools, Analyze, Saved, More; desktop ใช้ navigation ที่มี hierarchy และไม่ซ้ำซ้อน. ทุกลิงก์ชี้ไป route ที่มีจริงหรือ state ที่ทดสอบแล้ว. ห้ามทำให้ link/API เดิมหายไปจากระบบ.
+3. Tool Center ใช้ route/template ที่เข้ากับ app structure ปัจจุบัน; มีการค้นหาและกรอง รวมกลุ่ม Analyze, Tune, Build, Learn; แสดงชื่อและคำอธิบายสั้นของแต่ละ tool, empty state และ keyboard operation. กลุ่มเป็นชั้นจัดหมวด UI ไม่ใช่การลบหรือเปลี่ยน route เดิม. Saved ต้องระบุอย่างตรงไปตรงมาว่าข้อมูลอยู่ใน browser/device เท่านั้นถ้าใช้ client storage; ห้ามทำให้เข้าใจว่าซิงก์บัญชีหรือ durable cloud storage.
+4. ใช้ design system ร่วม Dark Premium Futuristic: graphite/deep-navy/forest surfaces, emerald/cyan/electric-blue accents, restrained gradients/glass, consistent icons, Thai/English typography และ technical data hierarchy. รักษา brand identity ปัจจุบันและ semantics ของสีเตือน/ข้อมูล. เน้น contrast, visible focus, touch targets, forms/data readability; ใช้ micro-interactions ที่ไม่รบกวนและเคารพ `prefers-reduced-motion`.
+5. ปรับ mobile-first ที่ 320/360/390/430 px, tablet และ desktop. ป้องกัน accidental horizontal overflow, overlap และ tiny controls; จัด forms/charts/tables ให้ใช้งานด้วย touch และมือเดียว; data กว้างให้เลื่อนภายใน component แทนการบีบ/ตัด. Landing video/poster ต้องมี fallback, ไม่เสียข้อมูลมือถือหรือ battery โดยไม่จำเป็น.
+6. รักษา PWA install/offline behavior, manifest, SW update/cache safety และ network behavior; ห้าม cache HTML/API/session/CSRF data. เปลี่ยน cache version เฉพาะเมื่อ asset caching เปลี่ยน. คง parity ของ `static/` กับ `public/static/`.
+7. ตรวจ SECURITY: `SECRET_KEY`, CSRF, secure cookie attributes, trusted proxy, input validation, security headers, rate limiter semantics, error responses และ logging. ห้ามเปิดเผย secrets. ถ้าไม่มี `DATABASE_URL` ชุมชนใช้ SQLite `/tmp` บน Vercel ซึ่งไม่ durable; ถ้าไม่มี `REDIS_URL` rate limiter เป็น per-instance memory. ห้ามอ้างว่ามี persistence หรือ shared rate limit จนได้ตั้งค่าและพิสูจน์จริง.
+8. ไม่สร้างหรือเลือก paid resources, ไม่สร้าง provider resources/credentials, ไม่แก้ production secrets/services. ทางเลือก free-tier ถูกบันทึกไว้ใน `FREE_TIER_OPTIONS.md`; ทดลองได้เฉพาะเมื่อเจ้าของอนุญาต และเริ่มจาก Preview.
+9. ใช้ Vercel Preview เพื่อพิสูจน์ PR deployment และ runtime ที่จำเป็น; ห้าม promote/merge/deploy Production. หากการเชื่อมต่อ Vercel หรือ external service ยังไม่ได้รับอนุญาต ให้รายงาน blocker แทนการอ้างว่า Preview สำเร็จ.
 
-1. ใช้ homepage เป็น design source of truth: dark forest background `#08110f`, raised surfaces, mint/teal accent, Manrope headings, Sarabun body, DM Mono technical labels, restrained borders, accessible focus, quiet card depth และ mobile-first spacing.
-2. ใช้ `static/css/edition-tokens.css` เป็น canonical token layer ให้ homepage และหน้าภายในใช้ค่าชุดเดียวกัน; legacy variable names เป็น compatibility aliases ใน theme layer เพื่อไม่เปลี่ยน page calculations หรือ component behavior.
-3. ปรับ shared shell และ shared components (navigation, page actions/hero, content rails, cards, fields, action buttons, result panels, code/table surfaces, footer และ mobile bottom navigation) ให้มี hierarchy, spacing, typography, touch targets และ state semantics ที่สม่ำเสมอ. Mobile page bar แสดง wordmark กับหน้าปัจจุบันอย่างเข้าถึงได้.
-4. ใช้ page-scoped enhancements สำหรับโครงหน้าที่แตกต่างกัน แทน global overrides ที่ทำให้ workbench, charts, wide tables, uploaders, editor หรือ interactive canvas ถูกบีบ/ซ่อน. แก้ duplicate hero/title ที่ยืนยันจาก source โดยเก็บข้อมูลและลิงก์ที่มีประโยชน์ไว้.
-5. ทำงานเป็น batches ตามกลุ่มหน้า: (A) tokens/shared shell/error/standalone; (B) core analysis — Drone Analyzer, PID Advisor, Blackbox, CLI Surgeon, Rates Visualizer; (C) tuning/config tools; (D) hardware/power and VTX tools; (E) FPV/training/discovery/community/resources/content pages. Batch A เริ่มแล้ว; ทุก batch ใช้ shared theme และคง route/template association เดิม.
-6. รักษา Dark/teal brand, non-commercial production UI, PWA manifest/offline behavior, accessible keyboard/focus/reduced-motion, safe-area padding และ navigation consistency. หากเปลี่ยน CSS URL/cache behavior ให้ปรับ Service Worker version และ source/public mirrors ให้ถูกต้อง.
+## โครงสร้างโปรเจกต์ปัจจุบันและขอบเขตการเปลี่ยน
 
-## สิ่งที่ห้ามเปลี่ยนโดยงานออกแบบนี้
+- `app.py`, `core.py`, `blueprints/`: Flask configuration, security middleware, calculations, persistence และ route/API handlers; ตรวจและแก้เฉพาะข้อผิดพลาดที่ยืนยันได้พร้อม tests.
+- `templates/base.html`, `templates/partials/`: global document shell, navigation, page headers/footer และ shared UI; เป็นจุดหลักของ information architecture.
+- `templates/landing.html`, templates ของเครื่องมือ, `templates/fpv/`, error pages: คง page associations และ JavaScript hooks; ปรับ markup เฉพาะ UI ที่ต้องการ.
+- `static/css/`, `static/js/`: design tokens, shared theme/responsive behavior และ interactions. จำกัด selector ให้ชัด; หลีกเลี่ยง global overrides ที่ทำลาย editor/canvas/charts/tables.
+- `static/sw.js`, `static/manifest.json`, `static/video/`, `static/img/`: PWA, assets, landing media และ performance.
+- `public/static/`: deployable asset mirror บน Vercel; ต้องเทียบกับ `static/` ตามข้อตกลงเดิม.
+- `tests/`: pytest regression tests สำหรับ routing, APIs, security, calculations, PWA/assets, frontend source behavior; รักษาและรัน suite เดิมก่อน/หลังเปลี่ยน.
+- `vercel.json`, `VERCEL_DEPLOYMENT.md`: serverless limits, environment variables, preview process และ setup documentation.
+- `plan.md`, `TODO.md`, `FREE_TIER_OPTIONS.md`: implementation decisions, outcome criteria/status และ provider free-tier evidence/limitations.
 
-- Flask route names/paths/methods, API request/response contracts, CSRF, rate limits, validation, backend analysis logic, persistence, authentication/security configuration, environment variables, database behavior, uploads constraints, copyright/legal notices, monetization policy.
-- Control IDs, form names/values, JavaScript hooks, accessible labels, chart/canvas IDs, upload selectors, clipboard/share/export/import behavior, query-string/deep-link behavior, downloadable files, CLI text/data semantics หรือ PWA offline safety.
-- ห้าม cache HTML/API responses หรือข้อมูลมี CSRF/session; ห้ามนำ secrets หรือข้อมูลส่วนตัวเข้า repository.
+## ภาษาการออกแบบ
 
-## โครงสร้างไฟล์และความรับผิดชอบ
+- **Design movement:** Premium FPV instrument workspace — ความแม่นยำของเครื่องมือช่าง ผสาน editorial hierarchy ที่อ่านง่าย แทน dashboard ทั่วไปหรือ neon HUD.
+- **Core principles:** (1) หาเครื่องมือได้ทันที; (2) ข้อมูลและผลวิเคราะห์อ่านง่ายก่อนความสวย; (3) responsive/accessibility เป็นส่วนหนึ่งของ UI; (4) motion และ effects ต้องไม่รบกวนการควบคุม.
+- **Color philosophy:** graphite/deep-navy/forest เป็นพื้นกลางที่ลดสิ่งรบกวน; emerald/mint แสดง action/selection; cyan/electric blue ใช้กับ telemetry/links; amber/red ใช้เฉพาะสถานะเตือน/อันตราย.
+- **Layout paradigm:** shared navigation แบ่งพื้นที่หลัก Home/Tools/Analyze/Saved/More; Tool Center เป็น directory ค้นหาได้; แต่ละเครื่องมือรักษา workbench/layout ที่เหมาะกับงานของตน ไม่บังคับให้ทุกหน้ากลายเป็น card grid.
+- **Signature elements:** compact technical eyebrow; cards ที่แบ่งหน้าที่ด้วยเส้นขอบละเอียดและ spacing สม่ำเสมอ; active navigation/accent ที่ชัดแต่ไม่เรืองแสงเกิน.
+- **Interaction philosophy:** keyboard/touch ใช้งานได้; focus/selected/loading/empty/error states ชัด; actions ไม่แสดง affordance ปลอม; Saved เปิดเผยขอบเขตการจัดเก็บ; routes/API เดิมยังเรียกได้.
+- **Animation:** transitions สั้นและไม่ทำให้ layout กระโดด; ไม่มี flash, autoplay motion ที่ไม่จำเป็น หรือ animation ขัดขวาง charts; ปิด/ลด motion ตาม `prefers-reduced-motion`.
+- **Typography:** คง Thai/English fonts ที่โปรเจกต์มีและทดสอบจริง; Sarabun/body สำหรับภาษาไทย, headings ชัด, monospace สำหรับ CLI/telemetry. ห้ามโหลด font/dependency ใหม่โดยไม่จำเป็น; รักษาตัวเลขและหน่วยให้อ่านง่าย.
+- **Brand essence:** พื้นที่ทำงานสำหรับ FPV pilots/builders ที่ช่วยค้นหา ตรวจ และปรับ config ได้อย่างแม่นยำ — สงบ, ชัดเจน, เชื่อถือได้.
+- **Brand voice:** concise, helpful, direct. ตัวอย่าง: “เลือกเครื่องมือจากงานที่ต้องทำ” และ “บันทึกไว้บนอุปกรณ์นี้ — ไม่ซิงก์ข้ามอุปกรณ์”.
+- **Wordmark & logo:** รักษา CONFIGDOCTOR Edition wordmark และ assets เดิม; ไม่สร้าง identity ซ้ำหรือเปลี่ยนชื่อผลิตภัณฑ์.
+- **Signature brand color:** emerald-mint เป็นสี action ที่จดจำได้ บนพื้น graphite/deep-navy; ใช้ตาม contrast/accessibility.
 
-- `templates/base.html`: document frame, metadata, shared assets, navigation/footer, body class, PWA registration.
-- `templates/partials/`: shared navigation, page hero/actions, footer, bottom navigation, Open Graph metadata.
-- `templates/landing.html` + `static/css/landing-premium.css`: homepage reference and catalog.
-- `templates/*.html`, `templates/fpv/index.html`: page markup and page-specific interactions; preserve business logic and existing JS hooks.
-- `static/css/edition-tokens.css`: canonical Edition palette/type/spacing/radius/shadow tokens used by homepage and app pages.
-- `static/css/edition-pages.css`: shared application chrome and safe compatibility bridge for legacy page selectors.
-- `static/css/responsive.css`, `components.css`, per-page CSS and inline styles: retain only as needed, with explicit cascade/scope decisions.
-- `static/sw.js`, `public/sw.js`, `static/css/*`, `public/static/css/*`: PWA cache version v10 and deployable asset mirrors.
-- `tests/`: theme, route rendering, PWA and existing functionality regression tests.
-- `blueprints/`, `core.py`, `app.py`: read-only for this visual redesign unless an independent verified UI blocker requires a user-approved change.
+## ข้อจำกัดและแนวทาง rollback
 
-## Design language
-
-- **Design movement:** premium technical instrument console, softened into a calm editorial FPV workspace rather than aggressive neon HUD.
-- **Core principles:** (1) hierarchy before decoration; (2) controls and results remain immediately understandable; (3) shared surfaces feel consistent while tool-specific data visualizations remain purpose-built; (4) mobile-first clarity and accessible interaction states.
-- **Color philosophy:** deep green-black backgrounds communicate focus; layered charcoal-green cards separate functional zones; mint/teal marks primary actions and active states; cyan/warm/amber/red are reserved for data meaning and status.
-- **Layout paradigm:** a consistent content rail and clear page introduction lead into tool-specific workspaces; forms and outputs collapse into a deliberate single-column sequence on phones while wide workbenches keep intentional horizontal room.
-- **Signature elements:** compact mono eyebrow with small mint indicator; restrained surface cards with fine green-gray borders; mint action/active treatment with a subtle, non-flashing glow.
-- **Interaction philosophy:** every action preserves existing behavior, exposes hover/focus/disabled/loading/empty/error states, supports keyboard/touch, and avoids visual affordances that imply unavailable features.
-- **Animation:** short low-amplitude transitions only; no layout-shifting motion; honor `prefers-reduced-motion`; do not introduce animation into charts/controls where it can impair precision.
-- **Typography:** Manrope for headings/UI hierarchy, Sarabun for Thai reading/body, DM Mono for technical labels, values and code. Keep code/data legible and horizontally scrollable rather than clipped.
-- **Brand essence:** CONFIGDOCTOR Edition is a precise, practical FPV configuration workspace for pilots and builders; personality: calm, technical, dependable.
-- **Brand voice:** concise, helpful, direct. Examples: “เริ่มจากค่าที่คุณมี แล้วค่อยไล่ดูผลทีละส่วน” and “คำสั่งพร้อมคัดลอก — ตรวจค่าให้ตรงกับรุ่นก่อนนำไปใช้”.
-- **Wordmark & logo:** preserve the existing CONFIGDOCTOR Edition mark/wordmark from the homepage; use it consistently in shared chrome, not an alternate legacy wordmark.
-- **Signature brand color:** mint `#75e3b4` on forest-black `#08110f`.
+ทุกการเปลี่ยนต้องแยก review ได้ใน branch/PR และสามารถ revert เป็น commit ได้. ไม่ใช้ rewrite ที่เสี่ยงสูง, ไม่เพิ่ม dependency หากทำด้วย existing stack ได้, ไม่แก้ default configuration/credentials ของ production. ยืนยัน route/API contract และ test เดิมก่อน push. Preview verification เป็นคนละขั้นกับ production publish; ไม่มี merge/promotion อัตโนมัติ.

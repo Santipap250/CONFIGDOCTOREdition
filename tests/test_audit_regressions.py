@@ -95,6 +95,14 @@ def test_community_rating_and_like_endpoints_handle_duplicate_submissions(client
     assert duplicate_like.status_code == 409
 
 
+def test_csrf_rejection_for_api_uses_json_error_contract(client, monkeypatch):
+    monkeypatch.setitem(client.application.config, "WTF_CSRF_ENABLED", True)
+    response = client.post("/api/rating", json={})
+    assert response.status_code == 400
+    assert response.is_json
+    assert "ความปลอดภัย" in response.json["error"]
+
+
 def test_main_analysis_warns_and_avoids_invalid_propeller_math(client):
     payload = {
         "size": "5", "weight": "650", "prop_size": "-1", "pitch": "4.5",

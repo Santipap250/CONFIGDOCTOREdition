@@ -81,6 +81,22 @@ def test_flight_quiz_navigation_is_guarded_against_double_advance():
     assert "state.step >= QUESTIONS.length - 1" in s
 
 
+def test_flight_quiz_choices_are_keyboard_operable_and_zoom_is_allowed():
+    s = _read(ROOT / "templates" / "flight_quiz.html")
+    assert "maximum-scale=1.0" not in s
+    assert 'role="radiogroup" aria-labelledby="question-label"' in s
+    assert 'role="radio" aria-checked=' in s
+    assert "handleChoiceKey(event" in s and "event.key === 'ArrowRight'" in s
+    assert "prefers-reduced-motion:reduce" in s
+
+
+def test_legacy_custom_buttons_support_enter_and_space():
+    s = _read(ROOT / "templates" / "base.html")
+    assert "event.key === 'Enter'" in s
+    assert "event.key === ' '" in s
+    assert "control.click()" in s
+
+
 def test_osd_and_wizard_grids_can_shrink_on_mobile():
     osd = _read(ROOT / "templates" / "osd.html")
     assert "grid-template-columns:minmax(0,1fr)" in osd

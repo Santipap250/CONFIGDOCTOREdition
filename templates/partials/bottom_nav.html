@@ -1,55 +1,43 @@
-{# templates/partials/bottom_nav.html — app-style bottom tab bar (mobile only).
-   Mirrors the CONFIGDOCTOR Edition mobile app reference: Home / Tools / Log / Profile.
-   Include once in base.html. Relies on `nav_page` (set in base.html) for active state. #}
-{% set _bn_tools = ['home','pid_advisor','blackbox','motor_prop','vtx','vtx_range','vtx_smartaudio',
-  'battery_health','rpm_filter','cli_surgeon','comparator','osd','bf_wizard','esc_checker',
-  'motor_thermal','loop_analyzer','rates','quick_tune','military_uas','flight_quiz','fpv_trainer',
-  'build_card','fpv_gear','downloads'] %}
-{% set _bn_active =
-  'home' if nav_page == 'landing'
-  else 'log' if nav_page == 'tuning_log'
-  else 'profile' if nav_page in ['team','about','changelog','leaderboard']
-  else 'tools' if nav_page in _bn_tools
-  else '' %}
+{# Mobile workspace navigation. Saved items are local to this browser/device. #}
+{% set _bn_tool_pages = ['pid_advisor','blackbox','motor_prop','vtx','vtx_range','vtx_smartaudio','battery_health','rpm_filter','cli_surgeon','comparator','osd','bf_wizard','esc_checker','motor_thermal','loop_analyzer','rates','quick_tune','military_uas','flight_quiz','fpv_trainer','build_card','fpv_gear','downloads','tuning_log','leaderboard','fpv'] %}
+{% set _bn_more_pages = ['about','team','changelog','downloads','fpv','fpv_gear'] %}
+{% set _bn_active = 'home' if nav_page == 'landing' else 'analyze' if nav_page == 'analyze' else 'more' if nav_page in _bn_more_pages else 'tools' if nav_page in _bn_tool_pages else '' %}
 <nav class="bnav" aria-label="เมนูหลัก">
-  <a href="/" class="bnav-item {% if _bn_active=='home' %}bnav-act{% endif %}">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v9a1 1 0 0 0 1 1H9.5a1 1 0 0 0 1-1v-4.5h3V19a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-9"/>
-    </svg>
+  <a data-workspace-tab="home" href="{{ url_for('tools_static.landing') }}" class="bnav-item{% if _bn_active == 'home' %} bnav-act{% endif %}"{% if _bn_active == 'home' %} aria-current="page"{% endif %}>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v9a1 1 0 0 0 1 1H9.5a1 1 0 0 0 1-1v-4.5h3V19a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-9"/></svg>
     <span>Home</span>
   </a>
-  <a href="/app" class="bnav-item {% if _bn_active=='tools' %}bnav-act{% endif %} js-bottom-tools" data-tools-launcher>
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M14.7 6.3a4 4 0 0 1-5.4 5.4L4 17l3 3 5.3-5.3a4 4 0 0 1 5.4-5.4L21 6l-3-3-3.3 3.3Z"/>
-    </svg>
+  <a data-workspace-tab="tools" href="{{ url_for('tools_static.landing') }}#tools" class="bnav-item{% if _bn_active == 'tools' %} bnav-act{% endif %}"{% if _bn_active == 'tools' %} aria-current="page"{% endif %}>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
     <span>Tools</span>
   </a>
-  <a href="/tuning-log" class="bnav-item {% if _bn_active=='log' %}bnav-act{% endif %}">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <rect width="8" height="4" x="8" y="2" rx="1" ry="1"/>
-      <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/>
-      <path d="M9 12h6M9 16h6"/>
-    </svg>
-    <span>Log</span>
+  <a data-workspace-tab="analyze" href="{{ url_for('tools_analysis.index') }}" class="bnav-item{% if _bn_active == 'analyze' %} bnav-act{% endif %}"{% if _bn_active == 'analyze' %} aria-current="page"{% endif %}>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="M18 17V9M13 17V5M8 17v-3"/></svg>
+    <span>Analyze</span>
   </a>
-  <a href="/team" class="bnav-item {% if _bn_active=='profile' %}bnav-act{% endif %}">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <circle cx="12" cy="8" r="3.6"/>
-      <path d="M4.5 19.5c0-3.9 3.4-7 7.5-7s7.5 3.1 7.5 7"/>
-    </svg>
-    <span>Profile</span>
+  <a data-workspace-tab="saved" href="{{ url_for('tools_static.landing') }}#saved" class="bnav-item">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12a1 1 0 0 1 1 1v17l-7-4-7 4V4a1 1 0 0 1 1-1Z"/></svg>
+    <span>Saved</span>
+  </a>
+  <a data-workspace-tab="more" href="{{ url_for('tools_static.landing') }}#resources" class="bnav-item{% if _bn_active == 'more' %} bnav-act{% endif %}"{% if _bn_active == 'more' %} aria-current="page"{% endif %}>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><path d="M5 19h14"/></svg>
+    <span>More</span>
   </a>
 </nav>
-
 <script>
-(function(){
-  var toolsBtn = document.querySelector('.js-bottom-tools[data-tools-launcher]');
-  if(!toolsBtn) return;
-  toolsBtn.addEventListener('click', function(e){
-    if(typeof window.openTP === 'function'){
-      e.preventDefault();
-      window.openTP();
-    }
-  });
-}());
+(function () {
+  var tabs = document.querySelectorAll('[data-workspace-tab]');
+  function syncWorkspaceTab() {
+    if (window.location.pathname !== '/landing' && window.location.pathname !== '/') return;
+    var key = ({'#tools':'tools','#saved':'saved','#resources':'more'})[window.location.hash] || 'home';
+    tabs.forEach(function (tab) {
+      var current = tab.getAttribute('data-workspace-tab') === key;
+      tab.classList.toggle('bnav-act', current);
+      if (current) tab.setAttribute('aria-current', 'page');
+      else tab.removeAttribute('aria-current');
+    });
+  }
+  window.addEventListener('hashchange', syncWorkspaceTab);
+  syncWorkspaceTab();
+})();
 </script>

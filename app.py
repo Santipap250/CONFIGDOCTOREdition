@@ -52,7 +52,7 @@ from core import (
 
 # ── CSRF Protection ───────────────────────────────────────────────────────
 try:
-    from flask_wtf.csrf import CSRFProtect, generate_csrf
+    from flask_wtf.csrf import CSRFProtect, CSRFError, generate_csrf
     CSRF_AVAILABLE = True
 except ImportError:
     CSRF_AVAILABLE = False
@@ -154,6 +154,12 @@ if CSRF_AVAILABLE:
     csrf = CSRFProtect(app)
     app.config['WTF_CSRF_TIME_LIMIT'] = 3600
     app.config['WTF_CSRF_HEADERS']    = ['X-CSRFToken', 'X-CSRF-Token']
+
+    @app.errorhandler(CSRFError)
+    def csrf_error_response(error):
+        if request.is_json or request.path.startswith('/api'):
+            return jsonify({"error": "คำขอไม่ผ่านการตรวจสอบความปลอดภัย กรุณาโหลดหน้าใหม่แล้วลองอีกครั้ง"}), 400
+        return error.description, 400
 
     @app.after_request
     def inject_csrf_cookie(response):

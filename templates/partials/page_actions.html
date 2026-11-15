@@ -14,14 +14,14 @@
   ──────────────────────────────────────────────────────────────────────
 #}
 {% set _pa_group_map = {
-  'home':'tune','pid_advisor':'tune','quick_tune':'tune','rpm_filter':'tune','rates':'tune','bf_wizard':'tune',
+  'home':'tune','analyze':'analysis','pid_advisor':'tune','quick_tune':'tune','rpm_filter':'tune','rates':'tune','bf_wizard':'tune',
   'motor_prop':'hw','esc_checker':'hw','battery_health':'hw','motor_thermal':'hw','loop_analyzer':'hw',
   'blackbox':'analysis','cli_surgeon':'analysis','comparator':'analysis','build_card':'analysis','tuning_log':'analysis','osd':'analysis',
   'vtx':'video','vtx_range':'video','vtx_smartaudio':'video'
 } %}
 {% set _pa_group_labels = {'tune':'PID &amp; Tuning','hw':'Hardware','analysis':'Analysis &amp; Logs','video':'VTX &amp; Signal','explore':'Explore'} %}
 {% set _pa_titles = {
-  'home':'Drone Analyzer','pid_advisor':'PID Advisor','quick_tune':'Quick Tune','rpm_filter':'RPM Filter','bf_wizard':'BF Wizard',
+  'home':'Drone Analyzer','analyze':'Drone Analyzer','pid_advisor':'PID Advisor','quick_tune':'Quick Tune','rpm_filter':'RPM Filter','bf_wizard':'BF Wizard',
   'motor_prop':'Motor×Prop','esc_checker':'ESC Checker','battery_health':'Battery Health','motor_thermal':'Motor Thermal','loop_analyzer':'Loop Analyzer',
   'blackbox':'Blackbox','cli_surgeon':'CLI Surgeon','comparator':'CLI Comparator','build_card':'Build Card','tuning_log':'Tuning Log','osd':'OSD Designer',
   'vtx':'VTX Bands','vtx_range':'VTX Range','vtx_smartaudio':'VTX SmartAudio','rates':'Rates Visualizer',
@@ -94,14 +94,14 @@
     <span class="pa-mbrand">CONFIGDOCTOR <small>Edition</small></span>
     <span class="pa-page-title" aria-current="page">{% if nav_page == 'home' %}Drone Analyzer{% else %}{{ _pa_current }}{% endif %}</span>
   </div>
-  <button type="button" class="pa-mbtn" aria-label="เครื่องมือ" onclick="if(window.openToolsPanel){window.openToolsPanel()}else{var h=document.getElementById('onHam');if(h){h.click()}else{location.href='/app'}}">
+  <a class="pa-mbtn" aria-label="ค้นหาเครื่องมือทั้งหมด" href="/landing#tools">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/></svg>
-  </button>
+  </a>
 </header>
 <div class="pa-bar" role="navigation" aria-label="Breadcrumb and page actions">
   <nav class="pa-crumb" aria-label="Breadcrumb">
-    <a href="/">🏠 Home</a>
-    {% if nav_page == 'home' %}
+    <a href="/landing">🏠 Home</a>
+    {% if nav_page == 'analyze' %}
       <span class="pa-sep">/</span><span class="pa-current" aria-current="page">📊 Dashboard</span>
     {% elif nav_page == 'landing' %}
     {% else %}
@@ -111,32 +111,11 @@
   </nav>
   <div class="pa-actions">
     <button type="button" class="pa-btn" onclick="if(window.history.length>1){history.back()}else{location.href='/'}">↩ <span class="pa-label">Back</span></button>
-    <a class="pa-btn {% if nav_page=='landing' %}pa-disabled{% endif %}" href="/">🏠 <span class="pa-label">Home</span></a>
-    <button type="button" class="pa-btn pa-tools" onclick="if(window.openToolsPanel){window.openToolsPanel()}else if(location.pathname!='/app'){location.href='/app'}">🛠 <span class="pa-label">Tools</span></button>
-    <a class="pa-btn pa-primary {% if nav_page=='home' %}pa-disabled{% endif %}" href="/app">📊 <span class="pa-label">Dashboard</span></a>
+    <a class="pa-btn pa-primary" href="/landing#tools">🧰 <span class="pa-label">Tool Center</span></a>
   </div>
 
 <script>
-(function(){
-  function openTools(){
-    if(typeof window.openTP === 'function'){
-      window.openTP();
-      setTimeout(function(){
-        var s = document.getElementById('tpSearch');
-        if(s) s.focus();
-      }, 80);
-      return true;
-    }
-    var ham = document.getElementById('onHam');
-    if(ham){
-      ham.click();
-      return true;
-    }
-    if(location.pathname !== '/app') location.href = '/app';
-    return false;
-  }
-  window.openToolsPanel = openTools;
-}());
+// Tool Center is the single search/filter destination: /landing#tools.
 </script>
 
 </div>

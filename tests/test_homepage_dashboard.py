@@ -73,6 +73,53 @@ def test_landing_catalog_contains_every_existing_page_endpoint(client, app):
             assert f'href="{path}"' in html, f"Missing landing link for {endpoint}"
 
 
+def test_workspace_navigation_has_five_destinations_and_four_tool_groups(client):
+    html = client.get("/landing").get_data(as_text=True)
+    for label in ("Home", "Tools", "Analyze", "Saved", "More"):
+        assert f">{label}</span>" in html
+    assert html.count('class="bnav-item') == 5
+    for group in ("analyze", "tune", "build", "learn"):
+        assert f'data-tool-group="{group}"' in html
+        assert f'data-filter="{group}"' in html
+    assert 'href="/landing#tools"' in html
+    assert 'href="/app"' in html
+    assert 'id="saved"' in html
+    assert "ไม่ซิงก์ข้ามอุปกรณ์" in html
+
+
+def test_desktop_more_pages_do_not_mark_tools_and_more_as_current_together(client):
+    html = client.get("/fpv-gear").get_data(as_text=True)
+    tools_link = re.search(r'<a data-workspace-link="tools"[^>]*>', html)
+    more_menu = re.search(r'<details class="workspace-more"[^>]*>', html)
+    assert tools_link and 'aria-current="page"' not in tools_link.group(0)
+    assert more_menu and 'data-current="true"' in more_menu.group(0)
+
+
+def test_legacy_theme_and_menu_language_controls_remain_available(client):
+    landing = client.get("/landing").get_data(as_text=True)
+    tool_page = client.get("/fpv-gear").get_data(as_text=True)
+
+    for html in (landing, tool_page):
+        assert 'data-theme-toggle' in html
+        assert 'data-language-toggle' in html
+        assert "obix-theme" in html
+        assert "obix-lang" in html
+        assert "localStorage.setItem" in html
+    assert 'data-label-th="เครื่องมือ" data-label-en="Tools"' in landing
+    assert 'data-label-th="ภาพรวม" data-label-en="Overview"' in landing
+    assert landing.count('class="bnav-item') == 5
+
+
+def test_analyzer_uses_shared_tool_center_without_duplicate_modal(client):
+    html = client.get("/app").get_data(as_text=True)
+    assert 'data-workspace-tab="analyze"' in html
+    assert 'id="toolsModal"' not in html
+    assert "var TOOLS = [" not in html
+    assert "openToolsModal" not in html
+    assert 'id="aForm"' in html
+    assert "window.liveCalc=function()" in html
+
+
 def test_fpv_hub_canonical_uses_the_shared_base_url(client):
     response = client.get("/fpv")
     assert response.status_code == 200
