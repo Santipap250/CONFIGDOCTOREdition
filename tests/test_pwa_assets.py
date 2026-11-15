@@ -20,6 +20,22 @@ def test_manifest_is_linked_from_shared_page_head(client):
     assert "navigator.serviceWorker.register('/sw.js'" in html
 
 
+def test_landing_uses_optimized_background_video_and_poster(client):
+    response = client.get("/landing")
+    assert response.status_code == 200
+    html = response.get_data(as_text=True)
+    assert 'class="hero-bg-video" autoplay muted loop playsinline' in html
+    assert '/static/video/landing-background.mp4' in html
+    assert '/static/img/landing-background-poster.webp' in html
+
+    video = client.get("/static/video/landing-background.mp4")
+    poster = client.get("/static/img/landing-background-poster.webp")
+    assert video.status_code == 200
+    assert video.mimetype == "video/mp4"
+    assert poster.status_code == 200
+    assert poster.mimetype == "image/webp"
+
+
 def test_manifest_has_installable_start_scope_and_required_icons(client):
     response = client.get("/manifest.json")
     assert response.status_code == 200
@@ -57,7 +73,8 @@ def test_service_worker_is_root_scoped_and_not_stale_cached(client):
     assert response.headers.get("Service-Worker-Allowed") == "/"
     assert "no-cache" in response.headers.get("Cache-Control", "")
     assert "static/offline.html" in response.get_data(as_text=True)
-    assert "obixconfigdoctor-v10-static" in response.get_data(as_text=True)
+    assert "obixconfigdoctor-v11-static" in response.get_data(as_text=True)
+    assert "hero-drone-premium.webp" not in response.get_data(as_text=True)
 
 
 def test_vercel_service_worker_mirror_matches_source():

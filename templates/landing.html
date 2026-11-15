@@ -46,6 +46,9 @@
 
 <main id="main-content">
   <section class="cd-hero page-width" id="overview" aria-labelledby="hero-title">
+    <video class="hero-bg-video" autoplay muted loop playsinline preload="metadata" poster="{{ url_for('static', filename='img/landing-background-poster.webp') }}" aria-hidden="true" tabindex="-1">
+      <source src="{{ url_for('static', filename='video/landing-background.mp4') }}" type="video/mp4">
+    </video>
     <div class="cd-hero-copy">
       <p class="eyebrow"><span class="eyebrow-line"></span> FPV FLIGHT WORKSPACE</p>
       <h1 id="hero-title">ทุกการตั้งค่า<br><span>เริ่มจากข้อมูล</span></h1>
