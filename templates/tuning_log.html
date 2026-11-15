@@ -229,13 +229,13 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-t);min-height
       <button class="modal-close" onclick="closeModal()">✕</button>
     </div>
     <div class="form-grid">
-      <div class="mfield"><label>Build Name</label>
+      <div class="mfield"><label for="m_name">Build Name</label>
         <input type="text" id="m_name" placeholder='5" Freestyle Build A' maxlength="50"></div>
-      <div class="mfield"><label>วันที่บิน</label>
+      <div class="mfield"><label for="m_date">วันที่บิน</label>
         <input type="date" id="m_date"></div>
-      <div class="mfield"><label>สนาม / สถานที่</label>
+      <div class="mfield"><label for="m_loc">สนาม / สถานที่</label>
         <input type="text" id="m_loc" placeholder="สนาม X · สวน Y · หน้าบ้าน" maxlength="50"></div>
-      <div class="mfield"><label>อากาศ</label>
+      <div class="mfield"><label for="m_weather">อากาศ</label>
         <select id="m_weather">
           <option>☀️ แดดจัด ลมน้อย</option><option>⛅ มีเมฆบ้าง</option>
           <option>💨 ลมแรง</option><option>🌧️ ฝนตก</option><option>🌙 กลางคืน</option>
@@ -249,27 +249,27 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-t);min-height
             <div class="pid-col-lbl r">ROLL</div>
             <div class="pid-row-labels"><span>P</span><span>I</span><span>D</span></div>
             <div class="pid-row-m">
-              <input type="number" id="m_rp" placeholder="48" min="0" max="200">
-              <input type="number" id="m_ri" placeholder="90" min="0" max="200">
-              <input type="number" id="m_rd" placeholder="38" min="0" max="200">
+              <input type="number" id="m_rp" placeholder="48" min="0" max="200" aria-label="Roll P gain">
+              <input type="number" id="m_ri" placeholder="90" min="0" max="200" aria-label="Roll I gain">
+              <input type="number" id="m_rd" placeholder="38" min="0" max="200" aria-label="Roll D gain">
             </div>
           </div>
           <div>
             <div class="pid-col-lbl p">PITCH</div>
             <div class="pid-row-labels"><span>P</span><span>I</span><span>D</span></div>
             <div class="pid-row-m">
-              <input type="number" id="m_pp" placeholder="52" min="0" max="200">
-              <input type="number" id="m_pi" placeholder="90" min="0" max="200">
-              <input type="number" id="m_pd" placeholder="40" min="0" max="200">
+              <input type="number" id="m_pp" placeholder="52" min="0" max="200" aria-label="Pitch P gain">
+              <input type="number" id="m_pi" placeholder="90" min="0" max="200" aria-label="Pitch I gain">
+              <input type="number" id="m_pd" placeholder="40" min="0" max="200" aria-label="Pitch D gain">
             </div>
           </div>
           <div>
             <div class="pid-col-lbl y">YAW</div>
             <div class="pid-row-labels"><span>P</span><span>I</span><span>D</span></div>
             <div class="pid-row-m">
-              <input type="number" id="m_yp" placeholder="40" min="0" max="200">
-              <input type="number" id="m_yi" placeholder="90" min="0" max="200">
-              <input type="number" id="m_yd" placeholder="0" min="0" max="40">
+              <input type="number" id="m_yp" placeholder="40" min="0" max="200" aria-label="Yaw P gain">
+              <input type="number" id="m_yi" placeholder="90" min="0" max="200" aria-label="Yaw I gain">
+              <input type="number" id="m_yd" placeholder="0" min="0" max="40" aria-label="Yaw D gain">
             </div>
           </div>
         </div>
@@ -294,7 +294,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-t);min-height
           <span class="rpill" data-v="locked">Locked-in ✅</span>
         </div>
       </div>
-      <div class="mfield mfield-full"><label>Note / สิ่งที่เปลี่ยน / สิ่งที่สังเกตได้</label>
+      <div class="mfield mfield-full"><label for="m_note">Note / สิ่งที่เปลี่ยน / สิ่งที่สังเกตได้</label>
         <textarea id="m_note" placeholder="เพิ่ม D-term 5 จุด, เปลี่ยนใบ HQ 5x4.3x3 → DAL 5x4.3x3, กรองลมแรง 15 km/h..."></textarea>
       </div>
     </div>

@@ -1,4 +1,7 @@
 {% extends "base.html" %}
+{# This page already provides its own <main> landmark, so suppress base.html's default wrapper. #}
+{% block main_open %}{% endblock %}
+{% block main_close %}{% endblock %}
 {% block title %}FPV Gear Guide — CONFIGDOCTOR Edition{% endblock %}
 {% block page_og_title %}FPV Gear Guide — CONFIGDOCTOR Edition{% endblock %}
 {% block page_og_description %}คำแนะนำอุปกรณ์ FPV โดย CONFIGDOCTOR Edition — มอเตอร์ เฟรม ใบพัด ESC แบต goggles คัดจากความเข้ากันได้ทางวิศวกรรม{% endblock %}

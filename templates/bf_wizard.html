@@ -75,7 +75,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   display:grid;grid-template-columns:1fr 360px;
   max-width:min(1320px, 100%);margin:0 auto;
   min-height:calc(100vh - 180px)}
-@media(max-width: min(980px, 100%)){.wiz-outer{grid-template-columns:1fr}}
+@media(max-width:980px){.wiz-outer{grid-template-columns:1fr}}
 
 /* ── STEP INDICATOR ── */
 .step-bar{
@@ -105,7 +105,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 .si.act .si-lbl{color:var(--green)}
 .si.done .si-lbl{color:var(--green2)}
 .si-sep{width:16px;height:1.5px;background:var(--border);flex-shrink:0;margin:0 1px}
-@media(max-width: min(600px, 100%)){.si-lbl{display:none}.si{padding:6px 8px}}
+@media(max-width:600px){.si-lbl{display:none}.si{padding:6px 8px}}
 
 /* ── PROGRESS BAR ── */
 .prog-bar{height:2px;background:rgba(0,255,136,.08);
@@ -197,7 +197,7 @@ input[type=range].ws.r::-webkit-slider-thumb{background:var(--red)}
 
 /* ── PID GRID ── */
 .pid-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:clamp(7px,2vw,10px)}
-@media(max-width: min(640px, 100%)){.pid-grid{grid-template-columns:1fr}}
+@media(max-width:640px){.pid-grid{grid-template-columns:1fr}}
 .pid-axis{background:var(--panel);border:1px solid var(--border);
   border-radius:var(--r);padding:clamp(10px,2.5vw,14px)}
 .pid-axis-lbl{font-family:var(--font-d);font-size:clamp(8px,1.5vw,9px);
@@ -227,7 +227,7 @@ input[type=range].ws.r::-webkit-slider-thumb{background:var(--red)}
   font-family:var(--font-m);font-size:clamp(9px,1.8vw,10px)}
 .c-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
 .rates-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:clamp(7px,2vw,10px)}
-@media(max-width: min(640px, 100%)){.rates-grid{grid-template-columns:1fr}}
+@media(max-width:640px){.rates-grid{grid-template-columns:1fr}}
 .rates-ax{background:var(--panel);border:1px solid var(--border);
   border-radius:var(--r);padding:clamp(9px,2vw,12px)}
 .rates-ax-lbl{font-family:var(--font-d);font-size:clamp(8px,1.5vw,9px);
@@ -301,7 +301,7 @@ select.wsel:focus{border-color:rgba(0,255,136,.35)}
 .cli-panel{background:var(--bg2);border-left:1px solid var(--border);
   display:flex;flex-direction:column;position:sticky;top:var(--nav-h);
   height:calc(100vh - var(--nav-h))}
-@media(max-width: min(980px, 100%)){
+@media(max-width:980px){
   .cli-panel{position:fixed;bottom:0;left:0;right:0;top:auto;
     height:auto;max-height:50vh;border-left:none;border-top:1px solid var(--border);
     z-index:200;transform:translateY(100%);transition:transform .3s cubic-bezier(.4,0,.2,1)}
@@ -406,7 +406,7 @@ pre#cliOut .cs{color:var(--green);font-weight:700;text-shadow:0 0 10px rgba(0,25
 #toast.show{transform:translateX(-50%) translateY(0);opacity:1}
 
 /* ── MOBILE FOOTER SPACER ── */
-@media(max-width: min(980px, 100%)){
+@media(max-width:980px){
   .wiz-outer{padding-bottom:80px}
 }
 </style>

@@ -38,6 +38,7 @@ body {
       padding: 40px 36px;
       max-width: 460px;
       width: 100%;
+      box-sizing: border-box; min-width: 0; overflow-wrap: anywhere;
       text-align: center;
       backdrop-filter: blur(12px);
       box-shadow: 0 0 60px rgba(255,183,0,0.06);
@@ -128,7 +129,7 @@ body {
   <link rel="stylesheet" href="{{ url_for('static', filename='css/edition-pages.css') }}">
 </head>
 <body class="error-429">
-  <div class="card">
+  <div class="card" role="main">
     <div class="icon">⏳</div>
     <div class="code">HTTP 429 — TOO MANY REQUESTS</div>
     <h1>Slow down, pilot</h1>

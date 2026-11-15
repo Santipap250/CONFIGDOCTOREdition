@@ -32,7 +32,7 @@ body{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;paddi
 .err-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;border-radius:20px 20px 0 0;background:linear-gradient(90deg,transparent,var(--green),var(--cyan),transparent)}
 @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
 .err-code{font-family:var(--font-head);font-size:80px;font-weight:900;line-height:1;color:var(--green);letter-spacing:-.04em;text-shadow:0 0 40px rgba(16,196,122,.4);margin-bottom:8px}
-.err-title{font-family:var(--font-head);font-size:15px;font-weight:700;letter-spacing:.1em;color:var(--text);margin-bottom:12px}
+.err-title{font-family:var(--font-head);font-size:15px;font-weight:700;letter-spacing:.1em;color:var(--text);margin-bottom:12px;margin-top:0}
 .err-desc{font-size:14px;color:var(--text2);line-height:1.7;margin-bottom:28px;max-width:300px;margin-left:auto;margin-right:auto}
 .err-tag{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:100px;border:1px solid rgba(248,113,113,0.3);background:var(--red-dim);color:var(--red);font-family:var(--font-head);font-size:10px;letter-spacing:.1em;margin-bottom:28px}
 .err-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
@@ -55,10 +55,10 @@ body{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;paddi
   <div class="err-ring"></div>
   <div class="err-ring"></div>
 </div>
-<div class="err-card">
+<div class="err-card" role="main">
   <div class="err-tag">⚠️ ERROR 404</div>
   <div class="err-code">404</div>
-  <div class="err-title">ไม่พบหน้านี้</div>
+  <h1 class="err-title">ไม่พบหน้านี้</h1>
   <div class="err-desc">URL อาจผิด หรือหน้านี้ถูกย้าย/ลบไปแล้ว<br>ลองกลับหน้าหลักแล้วลองใหม่</div>
   <div class="err-actions">
     <a href="/app" class="v5-btn v5-btn-primary">🏠 Drone Analyzer</a>
