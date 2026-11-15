@@ -118,3 +118,15 @@ class TestValidateInputTightening:
                                      battery_mAh=1500, payload_g=0,
                                      esc_current_limit_a=40)
         assert warnings == []
+
+
+class TestMalformedSharedLinkIntegers:
+    @pytest.mark.parametrize(("query", "warning"), [
+        ("blades=abc", "จำนวนใบพัด ต้องเป็นจำนวนเต็ม"),
+        ("motor_kv=abc", "Motor KV ต้องเป็นจำนวนเต็ม"),
+        ("battery_mAh=1.5", "ความจุแบตเตอรี่ mAh ต้องเป็นจำนวนเต็ม"),
+    ])
+    def test_invalid_integer_query_parameters_are_reported(self, query, warning):
+        with A.app.test_request_context(f"/app?{query}"):
+            analysis = C._handle_analysis_get_params()
+        assert warning in analysis["warnings"]

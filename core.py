@@ -599,9 +599,14 @@ def _handle_analysis_get_params():
             parse_warnings.append(f"{label} ต้องเป็นตัวเลขจำกัด (ห้ามใช้ NaN/Infinity)")
             return default
         return parsed
-    def safe_int(x, default=0):
-        try: return int(x) if x not in (None, "", "None") else default
-        except Exception: return default
+    def safe_int(x, default=0, label="value"):
+        if x in (None, "", "None"):
+            return default
+        try:
+            return int(x)
+        except (TypeError, ValueError):
+            parse_warnings.append(f"{label} ต้องเป็นจำนวนเต็ม")
+            return default
 
     a = request.args
     size        = safe_float(a.get("size"), 5.0, "size")
@@ -609,11 +614,11 @@ def _handle_analysis_get_params():
     style_raw   = a.get("style", "freestyle")
     weight      = max(10.0, safe_float(a.get("weight"), 720.0, "weight"))
     prop_size   = safe_float(a.get("prop_size"), size, "prop_size")
-    blade_count = safe_int(a.get("blades"), 3)
+    blade_count = safe_int(a.get("blades"), 3, "จำนวนใบพัด")
     prop_pitch  = safe_float(a.get("pitch"), 4.0, "pitch")
-    battery_mAh = safe_int(a.get("battery_mAh"), None) or None
-    motor_count = max(1, safe_int(a.get("motor_count"), 4))
-    motor_kv    = safe_int(a.get("motor_kv"), None) or None
+    battery_mAh = safe_int(a.get("battery_mAh"), None, "ความจุแบตเตอรี่ mAh") or None
+    motor_count = max(1, safe_int(a.get("motor_count"), 4, "จำนวนมอเตอร์"))
+    motor_kv    = safe_int(a.get("motor_kv"), None, "Motor KV") or None
 
     style = _normalize_style(style_raw)
 

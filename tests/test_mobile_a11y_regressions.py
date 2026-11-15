@@ -79,6 +79,15 @@ def test_flight_quiz_navigation_is_guarded_against_double_advance():
     assert "let navBusy = false;" in s
     assert s.count("if (navBusy) return;") >= 2
     assert "state.step >= QUESTIONS.length - 1" in s
+    assert "let autoAdvanceTimer = null;" in s
+    assert "clearTimeout(autoAdvanceTimer);" in s
+
+
+def test_rates_visualizer_range_controls_have_accessible_names():
+    s = _read(ROOT / "templates" / "rates_visualizer.html")
+    ranges = re.findall(r"<input\b(?=[^>]*\btype=[\"']range[\"'])([^>]*)>", s)
+    assert ranges
+    assert all(re.search(r"\baria-label=[\"'][^\"']+[\"']", attrs) for attrs in ranges)
 
 
 def test_flight_quiz_choices_are_keyboard_operable_and_zoom_is_allowed():

@@ -1,0 +1,52 @@
+<script>
+/* Restore shared workspace theme/language preferences; denied storage is non-fatal. */
+(function () {
+  'use strict';
+  var theme = 'dark', language = 'th';
+  try {
+    theme = localStorage.getItem('obix-theme') === 'light' ? 'light' : 'dark';
+    language = localStorage.getItem('obix-lang') === 'en' ? 'en' : 'th';
+  } catch (_) { /* Keep defaults for this view. */ }
+  function save(key, value) { try { localStorage.setItem(key, value); } catch (_) { /* Non-fatal. */ } }
+  function render() {
+    document.body.classList.toggle('light', theme === 'light');
+    document.querySelectorAll('[data-label-th][data-label-en]').forEach(function (el) {
+      el.textContent = el.getAttribute(language === 'en' ? 'data-label-en' : 'data-label-th');
+    });
+    document.querySelectorAll('[data-theme-toggle]').forEach(function (button) {
+      button.textContent = theme === 'light' ? 'ธีม: สว่าง' : 'ธีม: มืด';
+      button.setAttribute('aria-pressed', String(theme === 'light'));
+      button.setAttribute('aria-label', theme === 'light' ? 'เปลี่ยนเป็นธีมมืด' : 'เปลี่ยนเป็นธีมสว่าง');
+    });
+    document.querySelectorAll('[data-language-toggle]').forEach(function (button) {
+      button.textContent = language === 'en' ? 'Menu language: English' : 'ภาษาเมนู: ไทย';
+      button.setAttribute('aria-pressed', String(language === 'en'));
+      button.setAttribute('aria-label', language === 'en' ? 'Switch menu language to Thai' : 'Switch menu language to English');
+    });
+  }
+  document.addEventListener('click', function (event) {
+    var target = event.target.closest && event.target.closest('[data-theme-toggle], [data-language-toggle]');
+    if (!target) return;
+    if (target.hasAttribute('data-theme-toggle')) {
+      theme = theme === 'light' ? 'dark' : 'light';
+      save('obix-theme', theme);
+    } else {
+      language = language === 'en' ? 'th' : 'en';
+      save('obix-lang', language);
+    }
+    render();
+  });
+  render();
+})();
+</script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js', {updateViaCache: 'none'}).then(reg => {
+      console.log('SW registered:', reg);
+    }).catch(err => {
+      console.log('SW registration failed:', err);
+    });
+  });
+}
+</script>
