@@ -1005,7 +1005,11 @@ function selectChoice(ci) {
   if (nb) nb.classList.add('ready');
   // Auto-advance after short delay (except last question)
   if (state.step < QUESTIONS.length - 1) {
-    setTimeout(() => goNext(), 380);
+    clearTimeout(autoAdvanceTimer);
+    autoAdvanceTimer = setTimeout(() => {
+      autoAdvanceTimer = null;
+      goNext();
+    }, 380);
   }
 }
 function handleChoiceKey(event, choiceIndex) {
@@ -1020,7 +1024,10 @@ function handleChoiceKey(event, choiceIndex) {
 }
 /* Guard: auto-advance (after selecting a choice) and the Next button must not both advance a step. */
 let navBusy = false;
+let autoAdvanceTimer = null;
 function goNext() {
+  clearTimeout(autoAdvanceTimer);
+  autoAdvanceTimer = null;
   if (navBusy) return;
   if (state.answers[state.step] === null) return;
   if (state.step >= QUESTIONS.length - 1) return;
@@ -1039,6 +1046,8 @@ function goNext() {
 }
 
 function goBack() {
+  clearTimeout(autoAdvanceTimer);
+  autoAdvanceTimer = null;
   if (navBusy) return;
   if (state.step === 0) return;
   const card = el('qCard');

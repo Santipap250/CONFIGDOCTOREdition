@@ -27,6 +27,7 @@
 <script>
 (function () {
   var tabs = document.querySelectorAll('[data-workspace-tab]');
+  var sectionLinks = document.querySelectorAll('.cd-top-nav a[href^="#"]');
   function syncWorkspaceTab() {
     if (window.location.pathname !== '/landing' && window.location.pathname !== '/') return;
     var key = ({'#tools':'tools','#saved':'saved','#resources':'more'})[window.location.hash] || 'home';
@@ -35,6 +36,11 @@
       tab.classList.toggle('bnav-act', current);
       if (current) tab.setAttribute('aria-current', 'page');
       else tab.removeAttribute('aria-current');
+    });
+    sectionLinks.forEach(function (link) {
+      var current = link.getAttribute('href') === (window.location.hash || '#overview');
+      if (current) link.setAttribute('aria-current', 'location');
+      else link.removeAttribute('aria-current');
     });
   }
   window.addEventListener('hashchange', syncWorkspaceTab);

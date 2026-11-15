@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FPV Knowledge Hub — CONFIGDOCTOR Edition</title>
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='apple-touch-icon.png') }}">
+    <link rel="manifest" href="{{ url_for('meta.manifest_json') }}">
+    <meta name="theme-color" content="#08110f">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/edition-tokens.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,6 +27,27 @@
             --text-main: var(--cd-text);
             --text-sub: var(--cd-muted);
         }
+
+        body.light {
+            color-scheme: light;
+            --cd-bg: #f4f7f6;
+            --cd-bg-raised: #ffffff;
+            --cd-surface: #ffffff;
+            --cd-line: rgba(22, 48, 39, .12);
+            --cd-line-strong: rgba(22, 48, 39, .2);
+            --cd-text: #17231f;
+            --cd-muted: #53665e;
+            --cd-accent: #087f5b;
+            --cd-accent-strong: #056747;
+            --cd-cyan: #087c8a;
+            --bg-color: var(--cd-bg);
+            --card-bg: var(--cd-surface);
+            --primary: var(--cd-accent);
+            --accent: var(--cd-cyan);
+            --text-main: var(--cd-text);
+            --text-sub: var(--cd-muted);
+        }
+        body.light .navbar { background: rgba(248, 250, 249, .96); }
 
         * {
             box-sizing: border-box;
@@ -100,7 +125,7 @@
 
         .category-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
             gap: 1.5rem;
             margin-top: 1rem;
         }
@@ -199,6 +224,7 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
 
 <link rel="stylesheet" href="{{ url_for('static', filename='css/ui-enhance.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/workspace-nav.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/edition-pages.css') }}">
 </head>
 <body>
@@ -274,6 +300,7 @@
     </footer>
 
 {% include "partials/footer_nav.html" %}
+{% include "partials/bottom_nav.html" %}
 
 <!-- Global toast -->
 <div id="uiToast" role="status" aria-live="polite"></div>
@@ -297,5 +324,6 @@ document.addEventListener('DOMContentLoaded', function() {
 })();
 });
 </script>
+{% include "partials/workspace_runtime.html" %}
 </body>
 </html>
