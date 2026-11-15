@@ -146,7 +146,7 @@ select option{background:#111820}
       <div class="card">
         <div class="card-title">Flight Controller</div>
         <div class="field">
-          <label>FC Processor</label>
+          <label for="fcChip">FC Processor</label>
           <select id="fcChip">
             <option value="f405">F405 (STM32F405 — 168MHz)</option>
             <option value="f7" selected>F7xx (STM32F7 — 216MHz)</option>
@@ -156,7 +156,7 @@ select option{background:#111820}
           </select>
         </div>
         <div class="field">
-          <label>Gyroscope / IMU</label>
+          <label for="gyro">Gyroscope / IMU</label>
           <select id="gyro">
             <option value="mpu6000">MPU-6000 (SPI 8kHz native)</option>
             <option value="mpu6500">MPU-6500 (SPI 8kHz)</option>
@@ -166,7 +166,7 @@ select option{background:#111820}
           </select>
         </div>
         <div class="field">
-          <label>PID Loop Rate</label>
+          <label for="pidRate">PID Loop Rate</label>
           <select id="pidRate">
             <option value="1000">1kHz (1000µs)</option>
             <option value="2000">2kHz (500µs)</option>
@@ -179,7 +179,7 @@ select option{background:#111820}
         <div class="card-title" style="margin-bottom:14px">Radio Link</div>
 
         <div class="field">
-          <label>RC Protocol / Receiver</label>
+          <label for="rcProto">RC Protocol / Receiver</label>
           <select id="rcProto">
             <option value="elrs250">ELRS 250Hz (4ms)</option>
             <option value="elrs500" selected>ELRS 500Hz (2ms)</option>
@@ -191,7 +191,7 @@ select option{background:#111820}
           </select>
         </div>
         <div class="field">
-          <label>DShot Protocol</label>
+          <label for="dshot">DShot Protocol</label>
           <select id="dshot">
             <option value="300">DShot300 (111µs)</option>
             <option value="600" selected>DShot600 (55µs)</option>

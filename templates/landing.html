@@ -1,4 +1,7 @@
 {% extends "base.html" %}
+{# This page already provides its own <main> landmark, so suppress base.html's default wrapper. #}
+{% block main_open %}{% endblock %}
+{% block main_close %}{% endblock %}
 
 {% block title %}CONFIGDOCTOR Edition | FPV Flight Workspace{% endblock %}
 {% block page_og_title %}CONFIGDOCTOR Edition — FPV Flight Workspace{% endblock %}

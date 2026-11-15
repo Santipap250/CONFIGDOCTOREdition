@@ -35,11 +35,65 @@
 {% block before_nav %}{% endblock %}
 {% if _chrome | trim == "true" %}{% include "partials/nav.html" %}{% endif %}
 {% if _chrome | trim == "true" %}{% include "partials/page_actions.html" %}{% endif %}
+{% block main_open %}<main id="main-content">{% endblock %}
 {% block content %}{% endblock %}
+{% block main_close %}</main>{% endblock %}
 {% if _chrome | trim == "true" %}{% include "partials/footer_nav.html" %}{% endif %}
 {% set _bnav %}{% block show_bottom_nav %}true{% endblock %}{% endset %}
 {% if _chrome | trim == "true" and _bnav | trim == "true" %}{% include "partials/bottom_nav.html" %}{% endif %}
 {% block extra_scripts %}{% endblock %}
+<script>
+/* Accessibility safety net: give form controls that have no programmatic label an accessible name
+   (from the nearest visible label text, else the placeholder). Only ever ADDS aria-label to controls
+   that have no label/aria-label/aria-labelledby/title; never changes ids, names, values or handlers. */
+(function () {
+  'use strict';
+  var SKIP = /^(hidden|submit|button|reset|image|checkbox|radio)$/i;
+  function clean(t) {
+    return (t || '').replace(/[^\p{L}\p{M}\p{N}\s().\/+\-\u00d7%'"]/gu, ' ').replace(/\s+/g, ' ').trim();
+  }
+  function firstText(node) {
+    if (!node || node.nodeType !== 1) return '';
+    var w = document.createTreeWalker(node, NodeFilter.SHOW_TEXT, null), t;
+    while ((t = w.nextNode())) {
+      var s = clean(t.nodeValue);
+      if (s.length > 1 && /\p{L}/u.test(s)) return s.slice(0, 60);
+    }
+    return '';
+  }
+  function nameFor(el) {
+    var ph = clean(el.getAttribute('placeholder'));
+    if ((/^(search|text|email|url|tel|password)$/i.test(el.type || '') || el.tagName === 'TEXTAREA') &&
+        /\p{L}{3,}/u.test(ph)) return ph;
+    var cand = [el.previousElementSibling,
+      el.parentElement && el.parentElement.previousElementSibling,
+      el.parentElement && el.parentElement.parentElement && el.parentElement.parentElement.previousElementSibling];
+    for (var i = 0; i < cand.length; i++) {
+      if (cand[i] && !/^(INPUT|SELECT|TEXTAREA|SCRIPT|STYLE)$/.test(cand[i].tagName)) {
+        var t = firstText(cand[i]);
+        if (t) return t;
+      }
+    }
+    var ph2 = clean(el.getAttribute('placeholder'));
+    return /\p{L}/u.test(ph2) ? ph2 : '';
+  }
+  function run() {
+    var els = document.querySelectorAll('input,select,textarea');
+    for (var i = 0; i < els.length; i++) {
+      var el = els[i];
+      if (SKIP.test(el.type || '')) continue;
+      if ((el.labels && el.labels.length) || el.hasAttribute('aria-label') ||
+          el.hasAttribute('aria-labelledby') || el.hasAttribute('title')) continue;
+      var n = nameFor(el);
+      if (n) { el.setAttribute('aria-label', n); el.setAttribute('data-a11y-auto', '1'); }
+    }
+  }
+  var timer = null;
+  function schedule() { clearTimeout(timer); timer = setTimeout(run, 150); }
+  run();
+  if (window.MutationObserver) new MutationObserver(schedule).observe(document.body, {childList: true, subtree: true});
+})();
+</script>
 <script>
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {

@@ -109,7 +109,7 @@ select option{background:#1a2030}
       <div class="form-card-title">Motor Specs</div>
 
       <div class="field">
-        <label>Stator Size
+        <label for="stator">Stator Size
           <span class="tip">เช่น 2306 = 23mm diameter, 6mm height</span>
         </label>
         <select id="stator">
@@ -127,12 +127,12 @@ select option{background:#1a2030}
       </div>
 
       <div class="field">
-        <label>Motor KV</label>
+        <label for="motorKV">Motor KV</label>
         <input type="number" id="motorKV" value="2400" min="200" max="5000" step="50">
       </div>
 
       <div class="field">
-        <label>Battery (S)</label>
+        <label for="motorCells">Battery (S)</label>
         <select id="motorCells">
           <option value="3">3S (11.1V)</option>
           <option value="4" selected>4S (14.8V)</option>
@@ -144,7 +144,7 @@ select option{background:#1a2030}
       <div class="form-card-title" style="margin-top:24px">Flight Conditions</div>
 
       <div class="field">
-        <label>Flight Style</label>
+        <label for="mStyle">Flight Style</label>
         <select id="mStyle">
           <option value="freestyle" selected>Freestyle (bursts, tricks)</option>
           <option value="racing">Racing (full throttle ยาว)</option>
@@ -155,19 +155,19 @@ select option{background:#1a2030}
       </div>
 
       <div class="field">
-        <label>Average Throttle % <span class="unit">(0–100)</span>
+        <label for="avgThrottle">Average Throttle % <span class="unit">(0–100)</span>
           <span class="tip">freestyle ~55%, racing ~70%, LR ~40%</span>
         </label>
         <input type="number" id="avgThrottle" value="55" min="5" max="100" step="5">
       </div>
 
       <div class="field">
-        <label>Ambient Temperature <span class="unit">°C</span></label>
+        <label for="ambientT">Ambient Temperature <span class="unit">°C</span></label>
         <input type="number" id="ambientT" value="30" min="-10" max="50" step="1">
       </div>
 
       <div class="field">
-        <label>Flight Duration <span class="unit">นาที</span></label>
+        <label for="flightMin">Flight Duration <span class="unit">นาที</span></label>
         <input type="number" id="flightMin" value="5" min="0.5" max="30" step="0.5">
       </div>
 

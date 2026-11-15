@@ -37,6 +37,7 @@ body {
       padding: 40px 36px;
       max-width: 480px;
       width: 100%;
+      box-sizing: border-box; min-width: 0; overflow-wrap: anywhere;
       text-align: center;
       backdrop-filter: blur(12px);
       box-shadow: 0 0 60px rgba(255,68,85,0.05);
@@ -127,7 +128,7 @@ body {
   <link rel="stylesheet" href="{{ url_for('static', filename='css/edition-pages.css') }}">
 </head>
 <body class="error-500">
-  <div class="card">
+  <div class="card" role="main">
     <div class="icon">🛑</div>
     <div class="code">HTTP 500 — INTERNAL SERVER ERROR</div>
     <h1>Analysis system hiccup</h1>

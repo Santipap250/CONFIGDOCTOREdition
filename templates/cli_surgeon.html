@@ -693,7 +693,19 @@ async function analyze() {
 
   pipe(1);
   document.getElementById('sumText').textContent = 'กำลังวิเคราะห์...';
-  document.getElementById('rulesList').innerHTML = '<div style="color:#3a6050;font-size:12px;padding:16px;text-align:center;font-family:var(--font-d);letter-spacing:.1em;">SCANNING...</div>';
+  /* Keep #rulesEmpty in the DOM (renderRules needs it): hide it and show a removable scanning placeholder instead of wiping the list. */
+  (function () {
+    const list = document.getElementById('rulesList');
+    const empty = document.getElementById('rulesEmpty');
+    if (empty) empty.style.display = 'none';
+    list.querySelectorAll('.rule-card,.scan-placeholder').forEach(e => e.remove());
+    const sp = document.createElement('div');
+    sp.className = 'scan-placeholder';
+    sp.setAttribute('role', 'status');
+    sp.style.cssText = 'color:#3a6050;font-size:12px;padding:16px;text-align:center;font-family:var(--font-d);letter-spacing:.1em;';
+    sp.textContent = 'SCANNING...';
+    list.appendChild(sp);
+  })();
 
   try {
     pipe(2);
@@ -913,7 +925,9 @@ function applyResult(data) {
 
 function renderRules(rules) {
   const list = document.getElementById('rulesList');
-  document.getElementById('rulesEmpty').style.display = rules.length ? 'none' : 'block';
+  list.querySelectorAll('.scan-placeholder').forEach(e => e.remove());
+  const emptyEl = document.getElementById('rulesEmpty');
+  if (emptyEl) emptyEl.style.display = rules.length ? 'none' : 'block';
 
   const existing = list.querySelectorAll('.rule-card');
   existing.forEach(e => e.remove());

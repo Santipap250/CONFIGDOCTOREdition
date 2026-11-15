@@ -763,7 +763,7 @@ pre::-webkit-scrollbar-thumb{background:rgba(0,255,68,.2);border-radius:2px}
       <summary>⚙️ ปรับเพิ่มความแม่นยำ<span class="adv-hint">Motor KV · BF Version</span></summary>
       <div class="adv-b">
         <div>
-          <label class="adv-l">Motor KV (สำคัญที่สุดสำหรับความแม่นยำ)</label>
+          <label for="fKv" class="adv-l">Motor KV (สำคัญที่สุดสำหรับความแม่นยำ)</label>
           <input class="ainput" type="number" name="motor_kv" id="fKv" placeholder="เช่น 2306"
             value="{{ request.form.get('motor_kv','') }}" oninput="dCalc()">
           <span class="anote">ใส่ค่านี้เพื่อคำนวณ RPM, Tip Speed, rpm_filter_min_hz ให้แม่นยำขึ้นมาก — ไม่ใส่ระบบจะประมาณจากขนาดลำแทน</span>
@@ -777,7 +777,7 @@ pre::-webkit-scrollbar-thumb{background:rgba(0,255,68,.2);border-radius:2px}
           </div>
         </div>
         <div>
-          <label class="adv-l">Preset Build (เลือกเพื่อ autofill)</label>
+          <label for="presetSel" class="adv-l">Preset Build (เลือกเพื่อ autofill)</label>
           <select class="asel" id="presetSel" name="preset" onchange="onPreset(this.value)">
             <option value="">-- เลือก Preset --</option>
             {% for gname, items in preset_groups.items() %}

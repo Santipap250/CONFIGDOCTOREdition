@@ -1002,26 +1002,39 @@ function selectChoice(ci) {
   }
 }
 
+/* Guard: auto-advance (after selecting a choice) and the Next button must not both advance a step. */
+let navBusy = false;
 function goNext() {
+  if (navBusy) return;
   if (state.answers[state.step] === null) return;
+  if (state.step >= QUESTIONS.length - 1) return;
   const card = el('qCard');
   if (card) {
+    navBusy = true;
     card.classList.add('leaving');
     setTimeout(() => {
-      state.step++;
-      renderQuestion(state.step);
+      navBusy = false;
+      if (state.step < QUESTIONS.length - 1) {
+        state.step++;
+        renderQuestion(state.step);
+      }
     }, 260);
   }
 }
 
 function goBack() {
+  if (navBusy) return;
   if (state.step === 0) return;
   const card = el('qCard');
   if (card) {
+    navBusy = true;
     card.style.animation = 'qSlideIn .3s cubic-bezier(.4,0,.2,1) reverse both';
     setTimeout(() => {
-      state.step--;
-      renderQuestion(state.step);
+      navBusy = false;
+      if (state.step > 0) {
+        state.step--;
+        renderQuestion(state.step);
+      }
     }, 260);
   }
 }
