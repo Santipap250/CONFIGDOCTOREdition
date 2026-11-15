@@ -23,6 +23,8 @@ def blackbox_analyze():
         data     = request.get_json(force=True) or {}
         csv_text = data.get('csv', '')
         filename = data.get('filename', 'upload.csv')
+        if not isinstance(csv_text, str):
+            return jsonify({"error": "csv must be a string"}), 400
         # Sanitize filename (logged only, never used in file ops)
         filename = secure_filename(str(filename)[:64]) or 'upload.csv'
         if not csv_text:

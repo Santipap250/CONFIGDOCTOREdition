@@ -7,7 +7,7 @@
 from flask import Blueprint, request, jsonify
 
 from extensions import _rate, logger
-from core import _get_db, _db_lock, _ip_hash
+from core import _get_db, _db_lock, _ip_hash, _lock_community_vote
 
 bp = Blueprint('api_community', __name__)
 
@@ -55,6 +55,7 @@ def api_rating_post():
         with _db_lock:
             conn = _get_db()
             try:
+                _lock_community_vote(conn, h)
                 existing = conn.execute(
                     "SELECT id FROM ratings WHERE ip_hash = ?", (h,)
                 ).fetchone()
@@ -89,6 +90,7 @@ def api_like_post():
         with _db_lock:
             conn = _get_db()
             try:
+                _lock_community_vote(conn, h)
                 existing = conn.execute(
                     "SELECT id FROM likes WHERE ip_hash = ?", (h,)
                 ).fetchone()

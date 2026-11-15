@@ -86,7 +86,8 @@ def _fval(row: Dict, col: Optional[str], default: float = 0.0) -> float:
         return default
     v = row.get(col, "")
     try:
-        return float(v)
+        value = float(v)
+        return value if math.isfinite(value) else default
     except (ValueError, TypeError):
         return default
 
