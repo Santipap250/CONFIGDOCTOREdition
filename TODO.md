@@ -48,6 +48,14 @@
 - [ ] Push branch, ส่ง PR ไป `main`, สร้างและตรวจ Vercel Preview; รายงาน audit findings P0/P1/P2, fixes, pages/tools changed, test results, responsive/performance results, setup ที่ยังต้องทำ, PR URL และ Preview URL.
 - [ ] ห้าม merge PR หรือ deploy/promote Production จนกว่าเจ้าของตรวจรับ Preview และอนุมัติ.
 
+## 8. Follow-up: Tool Center icons and artwork (branch `feat/tool-card-artwork-motion`)
+
+- [x] เปลี่ยน glyph text ของ tool ทั้ง 30 รายการเป็น icon vector ที่แตกต่างกันและสื่อความหมายของเครื่องมือนั้น.
+- [x] เพิ่ม illustration ในกรอบของการ์ดครบทั้ง 30 รายการ โดย mapping ต้อง unique, อ้างอิงเครื่องมือจริง และทำงานกับ Saved cards ที่ clone จากการ์ดต้นทาง.
+- [x] เพิ่ม motion ที่โดดเด่นแต่ไม่รบกวน; เคารพ `prefers-reduced-motion`, แสดงเนื้อหาได้เมื่อ JavaScript ไม่พร้อม, และคง Theme/Language/keyboard/touch behavior เดิม.
+- [x] ไม่มี dependency ใหม่โดยไม่จำเป็น; parity ของ source assets กับ `public/static/`; ทดสอบทุกการ์ด, route, filter/search/Saved และ viewport มือถือ/desktop.
+- [ ] Push branch, เปิด PR และยืนยัน Vercel Preview; ห้าม merge หรือ deploy Production ก่อนเจ้าของตรวจรับและอนุมัติ.
+
 ## หลักฐานสถานะเริ่มต้น
 
 - [x] ยืนยัน `origin/main` SHA `f6b39ba2bada48d8c570b1784575c72abfb43521`; branch ใหม่ตรงกับ main และ worktree สะอาดก่อนเริ่มแก้โค้ด.

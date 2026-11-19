@@ -45,6 +45,14 @@
 - **Wordmark & logo:** รักษา CONFIGDOCTOR Edition wordmark และ assets เดิม; ไม่สร้าง identity ซ้ำหรือเปลี่ยนชื่อผลิตภัณฑ์.
 - **Signature brand color:** emerald-mint เป็นสี action ที่จดจำได้ บนพื้น graphite/deep-navy; ใช้ตาม contrast/accessibility.
 
+## Follow-up: Tool Center artwork system
+
+- เริ่มจาก `origin/main` SHA `6fd538623542389378b431b697400b43a6c590e5` บน branch `feat/tool-card-artwork-motion`; แตะเฉพาะ Landing Tool Center และ asset mirrors.
+- สร้าง icon vector และ illustration panel ที่มีความหมายเฉพาะสำหรับ tool ทั้ง 30 รายการ โดยใช้ SVG sprite แบบ same-origin เพื่อลดจำนวน request และให้ภาพคมชัดทุก viewport.
+- แบ่งสีตาม Analyze/Tune/Build/Learn; ใช้ technical line art, telemetry, hardware silhouettes และ restrained glow บนกรอบ obsidian/emerald ที่มีอยู่.
+- เพิ่ม motion แบบเบา (float, scan/sheen, focus/hover emphasis) เฉพาะเมื่อ `prefers-reduced-motion: no-preference`; เนื้อหาและการ์ดต้องไม่หายเมื่อ JS ใช้ไม่ได้.
+- คงลิงก์, search/filter, Saved cloning, Thai/English labels, theme toggle, mobile bottom navigation และ asset parity; ไม่เพิ่ม dependency.
+
 ## ข้อจำกัดและแนวทาง rollback
 
 ทุกการเปลี่ยนต้องแยก review ได้ใน branch/PR และสามารถ revert เป็น commit ได้. ไม่ใช้ rewrite ที่เสี่ยงสูง, ไม่เพิ่ม dependency หากทำด้วย existing stack ได้, ไม่แก้ default configuration/credentials ของ production. ยืนยัน route/API contract และ test เดิมก่อน push. Preview verification เป็นคนละขั้นกับ production publish; ไม่มี merge/promotion อัตโนมัติ.
