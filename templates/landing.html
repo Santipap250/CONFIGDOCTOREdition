@@ -17,6 +17,7 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/landing-premium.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/landing-elite.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/landing-motion.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/landing-tool-art.css') }}">
 <meta name="application-name" content="CONFIGDOCTOR Edition">
 {% endblock %}
 
@@ -158,9 +159,11 @@
           <div class="group-heading"><h3 id="group-{{ group.id }}">{{ group.title }}</h3><span class="group-count">{{ '%02d'|format(group.tools|length) }}</span></div>
           <div class="tool-grid">
             {% for tool in group.tools %}
-            <article class="tool-card-shell" data-tool-card data-category="{{ group.id }}" data-search="{{ (group.title ~ ' ' ~ tool.title ~ ' ' ~ tool.summary ~ ' ' ~ tool.keywords)|lower }}" data-tool-href="{{ url_for(tool.endpoint) }}">
+            {% set art_id = tool.endpoint|replace('.', '-') %}
+            <article class="tool-card-shell" data-tool-card data-category="{{ group.id }}" data-art-id="{{ art_id }}" style="--art-index: {{ loop.index0 }};" data-search="{{ (group.title ~ ' ' ~ tool.title ~ ' ' ~ tool.summary ~ ' ' ~ tool.keywords)|lower }}" data-tool-href="{{ url_for(tool.endpoint) }}">
             <a class="tool-card" href="{{ url_for(tool.endpoint) }}">
-              <span class="tool-glyph" aria-hidden="true">{{ tool.glyph }}</span>
+              <span class="tool-visual" aria-hidden="true"><svg class="tool-artwork" viewBox="0 0 320 148" focusable="false"><use href="{{ url_for('static', filename='img/tool-artwork-sprite.svg') }}#art-{{ art_id }}"></use></svg></span>
+              <span class="tool-glyph" aria-hidden="true"><svg viewBox="0 0 48 48" focusable="false"><use href="{{ url_for('static', filename='img/tool-artwork-sprite.svg') }}#icon-{{ art_id }}"></use></svg></span>
               <span class="tool-content"><strong>{{ tool.title }}</strong><small>{{ tool.summary }}</small></span>
             </a>
             <button type="button" class="tool-save" data-save-tool="{{ url_for(tool.endpoint) }}" aria-pressed="false" aria-label="บันทึก {{ tool.title }} ไว้ใน Saved" title="บันทึกเครื่องมือนี้">
