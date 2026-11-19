@@ -16,6 +16,7 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@500;600;700;800&family=Sarabun:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/landing-premium.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/landing-elite.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/landing-motion.css') }}">
 <meta name="application-name" content="CONFIGDOCTOR Edition">
 {% endblock %}
 
@@ -309,6 +310,7 @@
   updateCatalog();
 })();
 </script>
+<script src="{{ url_for('static', filename='js/landing-motion.js') }}" defer></script>
 <script>
 (() => {
   const video = document.getElementById('hero-background-video');
