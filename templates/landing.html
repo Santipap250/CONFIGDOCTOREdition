@@ -15,6 +15,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@500;600;700;800&family=Sarabun:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/landing-premium.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/landing-elite.css') }}">
 <meta name="application-name" content="CONFIGDOCTOR Edition">
 {% endblock %}
 
@@ -86,6 +87,25 @@
       </ol>
       <div class="workflow-foot"><span class="status-dot" aria-hidden="true"></span><span>{{ tool_count }} เครื่องมือและแหล่งข้อมูล</span><span class="workflow-foot-note">เลือกใช้ตามงาน</span></div>
     </aside>
+  </section>
+
+  <section class="elite-signal-strip page-width" aria-label="Workspace highlights">
+    <div class="elite-signal-intro">
+      <span class="elite-signal-overline">FLIGHT CONTROL / CONFIGDOCTOR</span>
+      <strong data-label-th="ทุกอย่างสำหรับเที่ยวบินถัดไป รวมไว้ในพื้นที่ทำงานเดียว" data-label-en="Everything for your next flight. In one workspace.">Everything for your next flight. In one workspace.</strong>
+    </div>
+    <div class="elite-signal-stat">
+      <span class="elite-stat-value">{{ tool_count }}</span>
+      <span class="elite-stat-label" data-label-th="เครื่องมือ FPV" data-label-en="FPV TOOLS">FPV TOOLS</span>
+    </div>
+    <div class="elite-signal-stat">
+      <span class="elite-stat-value">{{ '%02d'|format(tool_groups|length) }}</span>
+      <span class="elite-stat-label" data-label-th="หมวดเครื่องมือ" data-label-en="TOOL GROUPS">TOOL GROUPS</span>
+    </div>
+    <div class="elite-signal-stat">
+      <span class="elite-stat-value">LOCAL</span>
+      <span class="elite-stat-label" data-label-th="บันทึกไว้ในอุปกรณ์นี้" data-label-en="SAVED ON DEVICE">SAVED ON DEVICE</span>
+    </div>
   </section>
 
   <section class="quick-section page-width" aria-labelledby="quick-title">
