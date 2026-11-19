@@ -3,7 +3,8 @@
 
 CONFIGDOCTOR Edition is a Flask-based FPV drone configuration and analysis workspace. It brings build checks, tuning guidance, configuration analysis, calculators, and pilot tools into one responsive web application.
 
-**Live application:** https://configdoctor.onrender.com/landing  
+**Production on Vercel:** https://configdoctoredition.vercel.app/landing<br>
+**Alternative Render host:** https://configdoctor.onrender.com/landing<br>
 **GitHub:** https://github.com/Santipap250/CONFIGDOCTOREdition
 
 > The application provides engineering-oriented estimates and checks. Recommendations are starting points, not guarantees; validate every configuration on the bench and in a safe test flight.
@@ -81,7 +82,7 @@ Open http://127.0.0.1:10000/landing. The local app uses SQLite at `data/communit
 The repository is prepared for Vercel's current Flask framework detection: `app.py` exposes a top-level WSGI object named `app`; Vercel detects Flask from `requirements.txt`; and `public/static/**` is published through Vercel's static asset CDN, while large static media is excluded from the Python Function bundle. The legacy `builds`/`routes` configuration has been removed.
 
 1. Push this repository to GitHub.
-2. In Vercel, select **Add New → Project**, import `Santipap250/OBIXCONFIGDOCTOR---Vercel-Ready-Edition`, and keep the project root at `/`.
+2. In Vercel, select **Add New → Project**, import `Santipap250/CONFIGDOCTOREdition`, and keep the project root at `/`.
 3. Leave Build Command and Output Directory on their automatic defaults.
 4. Add the required environment variables before the first production deployment:
 
@@ -91,11 +92,11 @@ The repository is prepared for Vercel's current Flask framework detection: `app.
 | `FLASK_DEBUG` | Yes | `0` |
 | `TRUST_PROXY` | Yes | `1` for Vercel's trusted proxy headers |
 | `FORCE_INSECURE` | Yes | `0` |
-| `BASE_URL` | Recommended | Production URL, e.g. `https://your-domain.vercel.app` |
+| `BASE_URL` | Recommended | Production only: `https://configdoctoredition.vercel.app`; leave it unset in Preview so the Preview host is derived automatically |
 | `DATABASE_URL` | Recommended | Managed PostgreSQL URL for persistent ratings/likes |
 | `REDIS_URL` | Optional | Shared Redis URL for distributed rate limiting |
 
-5. Deploy a Preview first. Verify `/healthz`, `/landing`, `/app`, `/rates-visualizer`, `/team`, `/downloads` and `/static/img/configdoctor-logo.png`. Then promote to Production.
+5. Deploy a Preview first. Verify `/healthz`, `/landing`, `/app`, `/rates-visualizer`, `/team`, `/downloads` and `/static/img/configdoctor-logo.png`. Promote to Production only after the project owner has reviewed the Preview and explicitly approved it.
 
 See [VERCEL_DEPLOYMENT.md](VERCEL_DEPLOYMENT.md) for detailed setup, database notes and troubleshooting.
 

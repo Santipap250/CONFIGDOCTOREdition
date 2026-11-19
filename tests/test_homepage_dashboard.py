@@ -5,7 +5,7 @@ from pathlib import Path
 from flask import url_for
 
 from blueprints.tools_static import HOME_TOOL_GROUPS
-from core import _BASE_URL
+from core import _BASE_URL, _PRODUCTION_BASE_URL
 
 
 class _HeadTextParser(HTMLParser):
@@ -53,6 +53,10 @@ def test_landing_uses_configdoctor_edition_brand_and_metadata(client):
     parser = _HeadTextParser()
     parser.feed(html)
     assert parser.unwrapped_text == []
+
+
+def test_production_base_url_uses_the_requested_host():
+    assert _PRODUCTION_BASE_URL == "https://configdoctoredition.vercel.app"
 
 
 def test_landing_catalog_contains_every_existing_page_endpoint(client, app):

@@ -22,7 +22,7 @@
 
 ## 3) ตั้ง Environment Variables ก่อน Deploy
 
-เพิ่มตัวแปรต่อไปนี้ใน Vercel Project Settings → Environment Variables โดยเลือกทั้ง Preview และ Production ตามการใช้งาน
+เพิ่มตัวแปรต่อไปนี้ใน Vercel Project Settings → Environment Variables โดยเลือก scope ตามความหมายของแต่ละค่า: สำหรับโปรเจกต์นี้ให้ตั้ง `BASE_URL` เฉพาะ Production เป็น `https://configdoctoredition.vercel.app`; ใน Preview ให้เว้น `BASE_URL` ว่างเพื่อให้แอปใช้ host จาก `VERCEL_URL` ของ Preview อัตโนมัติ
 
 | ตัวแปร | ค่า |
 |---|---|
@@ -30,7 +30,7 @@
 | `FLASK_DEBUG` | `0` |
 | `TRUST_PROXY` | `1` |
 | `FORCE_INSECURE` | `0` |
-| `BASE_URL` | URL หลักของ Production เช่น `https://ชื่อโปรเจกต์.vercel.app` |
+| `BASE_URL` | Production: `https://configdoctoredition.vercel.app` (เว้นว่างใน Preview) |
 | `DATABASE_URL` | URL ของ Managed PostgreSQL ที่เปิด SSL — แนะนำให้ตั้งเพื่อเก็บ Ratings/Likes แบบถาวร |
 | `REDIS_URL` | ใส่ URL ของ Redis หากต้องการ Rate Limit แบบแชร์ร่วมกันระหว่างหลาย Function instances (ไม่บังคับ) |
 
@@ -67,7 +67,7 @@ Deploy เป็น Preview ก่อน แล้วเปิด URL Preview �
 - ทดลอง Export จาก OSD
 - ตรวจ Vercel Runtime Logs ว่าไม่มี Import Error, Template Error หรือ Database Error
 
-เมื่อ Preview ผ่านแล้วจึงค่อย Promote/Deploy เป็น Production
+ให้เจ้าของโปรเจกต์ตรวจรับและอนุมัติ Preview ก่อนเท่านั้น จึงค่อย Promote/Deploy เป็น Production; ห้ามเปลี่ยนค่า Production หรือ deploy ก่อนการอนุมัตินี้
 
 ## 5) ข้อจำกัดที่ต้องทราบก่อนเปิดให้คนทั่วไปใช้
 

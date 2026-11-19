@@ -18,7 +18,7 @@ setup(
     long_description_content_type='text/markdown',
     author='SanTiPapHacker',
     author_email='',
-    url='https://github.com/Santipap250/OBIXCONFIGDOCTOR---Vercel-Ready-Edition',
+    url='https://github.com/Santipap250/CONFIGDOCTOREdition',
     license='Proprietary - All Rights Reserved',
     packages=find_packages(),
     python_requires='>=3.11',
