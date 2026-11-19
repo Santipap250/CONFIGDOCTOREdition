@@ -211,7 +211,7 @@ def main() -> int:
             "gh", "pr", "list", "--repo", target_repo, "--head", pr_head,
             "--base", args.base, "--state", "open", "--json", "url",
         ], cwd=root, capture=True)
-        existing = json.loads(prs.stdout or "[]")
+        existing = json.loads((prs.stdout or "").strip() or "[]")
         if existing:
             print(f"\nAn open PR already exists; pushed branch updated: {existing[0]['url']}")
             return 0
