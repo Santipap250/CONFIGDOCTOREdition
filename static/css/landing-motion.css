@@ -1,0 +1,253 @@
+/* CONFIGDOCTOR Edition — Flight Deck Motion & Color Layer
+   Additive, dependency-free motion and category accents for landing-elite.css. */
+.landing-page {
+  --elite-analyze: #76dce8;
+  --elite-analyze-rgb: 118, 220, 232;
+  --elite-tune: #8cf5c5;
+  --elite-tune-rgb: 140, 245, 197;
+  --elite-build: #eacb8e;
+  --elite-build-rgb: 234, 203, 142;
+  --elite-learn: #bda7ff;
+  --elite-learn-rgb: 189, 167, 255;
+}
+
+.landing-page.light {
+  --elite-analyze: #087f9b;
+  --elite-analyze-rgb: 8, 127, 155;
+  --elite-tune: #087f5b;
+  --elite-tune-rgb: 8, 127, 91;
+  --elite-build: #99702e;
+  --elite-build-rgb: 153, 112, 46;
+  --elite-learn: #7254b8;
+  --elite-learn-rgb: 114, 84, 184;
+}
+
+/* A richer but still restrained aurora gives the hero a distinctive flight-deck identity. */
+.landing-page .cd-hero::before {
+  background:
+    linear-gradient(90deg, rgba(3, 12, 13, .96) 0%, rgba(3, 13, 14, .84) 39%, rgba(4, 16, 18, .48) 74%, rgba(4, 15, 18, .40) 100%),
+    radial-gradient(ellipse 38% 60% at 78% 40%, rgba(70, 222, 174, .19), transparent 72%),
+    radial-gradient(ellipse 26% 46% at 91% 70%, rgba(189, 167, 255, .14), transparent 72%),
+    radial-gradient(ellipse 24% 40% at 67% 14%, rgba(234, 203, 142, .10), transparent 72%),
+    repeating-linear-gradient(0deg, transparent 0 47px, rgba(147, 223, 196, .035) 48px, transparent 49px);
+  transform-origin: center;
+}
+
+.landing-page.light .cd-hero::before {
+  background:
+    linear-gradient(90deg, rgba(238, 249, 243, .96) 0%, rgba(237, 248, 243, .82) 44%, rgba(231, 246, 246, .42) 100%),
+    radial-gradient(ellipse 38% 60% at 78% 40%, rgba(37, 171, 125, .17), transparent 72%),
+    radial-gradient(ellipse 26% 46% at 91% 70%, rgba(114, 84, 184, .10), transparent 72%),
+    radial-gradient(ellipse 24% 40% at 67% 14%, rgba(153, 112, 46, .08), transparent 72%),
+    repeating-linear-gradient(0deg, transparent 0 47px, rgba(19, 101, 71, .03) 48px, transparent 49px);
+}
+
+.landing-page .cd-hero::after {
+  border-color: rgba(117, 237, 190, .22);
+  background:
+    radial-gradient(circle, rgba(108, 231, 185, .14) 0 1px, transparent 2px),
+    radial-gradient(circle, transparent 0 34%, rgba(113, 236, 195, .13) 34.15% 34.35%, transparent 34.5% 53%, rgba(118, 220, 232, .13) 53.15% 53.35%, transparent 53.5% 72%, rgba(189, 167, 255, .10) 72.15% 72.35%, transparent 72.5%),
+    conic-gradient(from 210deg, transparent 0 22%, rgba(117, 237, 190, .25) 27%, transparent 37% 58%, rgba(118, 220, 232, .22) 64%, transparent 71% 83%, rgba(189, 167, 255, .18) 88%, transparent 96% 100%);
+}
+
+.landing-page .cd-hero h1 span {
+  background-size: 210% 100%;
+}
+
+/* Distinct, meaningful accents for the four real tool categories. */
+.landing-page .tool-group[data-tool-group="analyze"] { --group-accent: var(--elite-analyze); }
+.landing-page .tool-group[data-tool-group="tune"] { --group-accent: var(--elite-tune); }
+.landing-page .tool-group[data-tool-group="build"] { --group-accent: var(--elite-build); }
+.landing-page .tool-group[data-tool-group="learn"] { --group-accent: var(--elite-learn); }
+
+.landing-page .tool-group .group-count {
+  color: var(--group-accent, var(--elite-mint));
+}
+
+.landing-page .tool-card-shell[data-category="analyze"] {
+  --tool-accent: var(--elite-analyze);
+  --tool-accent-rgb: var(--elite-analyze-rgb);
+}
+.landing-page .tool-card-shell[data-category="tune"] {
+  --tool-accent: var(--elite-tune);
+  --tool-accent-rgb: var(--elite-tune-rgb);
+}
+.landing-page .tool-card-shell[data-category="build"] {
+  --tool-accent: var(--elite-build);
+  --tool-accent-rgb: var(--elite-build-rgb);
+}
+.landing-page .tool-card-shell[data-category="learn"] {
+  --tool-accent: var(--elite-learn);
+  --tool-accent-rgb: var(--elite-learn-rgb);
+}
+
+.landing-page .tool-glyph {
+  border-color: rgba(var(--tool-accent-rgb, 140, 245, 197), .34);
+  background: linear-gradient(145deg, rgba(var(--tool-accent-rgb, 140, 245, 197), .18), rgba(var(--tool-accent-rgb, 140, 245, 197), .045));
+  color: var(--tool-accent, var(--elite-mint));
+  transition: transform .32s cubic-bezier(.2, .8, .2, 1), border-color .28s ease, box-shadow .32s ease, background .28s ease;
+}
+
+.landing-page.light .tool-glyph {
+  border-color: rgba(var(--tool-accent-rgb, 8, 127, 91), .24);
+  background: rgba(var(--tool-accent-rgb, 8, 127, 91), .085);
+}
+
+.landing-page .tool-card-shell {
+  position: relative;
+}
+
+.landing-page .tool-card-shell::before {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  right: 22px;
+  left: 22px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(var(--tool-accent-rgb, 140, 245, 197), .72), transparent);
+  content: "";
+  opacity: 0;
+  transform: scaleX(.42);
+  transform-origin: center;
+  transition: opacity .28s ease, transform .38s cubic-bezier(.2, .8, .2, 1);
+  pointer-events: none;
+}
+
+.landing-page .filter-chip[data-filter="analyze"] { --filter-rgb: var(--elite-analyze-rgb); --filter-accent: var(--elite-analyze); }
+.landing-page .filter-chip[data-filter="tune"] { --filter-rgb: var(--elite-tune-rgb); --filter-accent: var(--elite-tune); }
+.landing-page .filter-chip[data-filter="build"] { --filter-rgb: var(--elite-build-rgb); --filter-accent: var(--elite-build); }
+.landing-page .filter-chip[data-filter="learn"] { --filter-rgb: var(--elite-learn-rgb); --filter-accent: var(--elite-learn); }
+.landing-page .filter-chip[data-filter]:hover,
+.landing-page .filter-chip[data-filter].is-active {
+  border-color: rgba(var(--filter-rgb, 140, 245, 197), .54);
+  background: rgba(var(--filter-rgb, 140, 245, 197), .12);
+  color: var(--filter-accent, var(--elite-mint));
+}
+
+/* The quick-start cards use color as a navigation cue, not decoration. */
+.landing-page .quick-card:nth-child(1) { --quick-accent: var(--elite-tune); --quick-rgb: var(--elite-tune-rgb); }
+.landing-page .quick-card:nth-child(2) { --quick-accent: var(--elite-analyze); --quick-rgb: var(--elite-analyze-rgb); }
+.landing-page .quick-card:nth-child(3) { --quick-accent: var(--elite-build); --quick-rgb: var(--elite-build-rgb); }
+.landing-page .quick-card:nth-child(4) { --quick-accent: var(--elite-learn); --quick-rgb: var(--elite-learn-rgb); }
+.landing-page .quick-card::after {
+  border-color: rgba(var(--quick-rgb, 140, 245, 197), .19);
+  box-shadow: 0 0 0 16px rgba(var(--quick-rgb, 140, 245, 197), .035), 0 0 0 34px rgba(var(--quick-rgb, 140, 245, 197), .022);
+  transition: transform .6s cubic-bezier(.2, .8, .2, 1), opacity .4s ease;
+}
+.landing-page .quick-kicker,
+.landing-page .quick-action {
+  color: var(--quick-accent, var(--elite-mint));
+}
+
+.landing-page .button-primary {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.landing-page .button-primary::after {
+  position: absolute;
+  top: -60%;
+  bottom: -60%;
+  left: -48%;
+  width: 34%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .46), transparent);
+  content: "";
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-180%) rotate(18deg);
+}
+
+.landing-page .workflow-card::before {
+  transform-origin: center;
+}
+
+/* Scroll reveal is progressive enhancement: content stays visible if JS is unavailable. */
+.landing-page .motion-ready:not(.is-motion-visible) {
+  opacity: 0;
+  transform: translate3d(0, 18px, 0);
+}
+.landing-page .motion-ready {
+  transition: opacity .58s ease, transform .72s cubic-bezier(.2, .8, .2, 1);
+  transition-delay: calc(var(--motion-stagger, 0) * 68ms);
+}
+.landing-page .motion-ready.is-motion-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+@keyframes elite-ambient-drift {
+  from { transform: translate3d(-.45%, 0, 0) scale(1.015); }
+  to { transform: translate3d(.65%, -.25%, 0) scale(1.045); }
+}
+@keyframes elite-video-glide {
+  from { transform: scale(1.025) translate3d(-.35%, 0, 0); }
+  to { transform: scale(1.075) translate3d(.45%, -.2%, 0); }
+}
+@keyframes elite-orbit-flight {
+  from { transform: translateY(-50%) rotate(-4deg) scale(.985); }
+  to { transform: translateY(-50%) rotate(14deg) scale(1.025); }
+}
+@keyframes elite-gradient-flow {
+  from { background-position: 0% 50%; }
+  to { background-position: 100% 50%; }
+}
+@keyframes elite-panel-sheen {
+  0%, 72%, 100% { opacity: .22; transform: scaleX(.38); }
+  84% { opacity: .86; transform: scaleX(1); }
+}
+@keyframes elite-signal-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(117, 237, 190, .28); transform: scale(.94); }
+  55% { box-shadow: 0 0 0 8px rgba(117, 237, 190, 0); transform: scale(1.08); }
+}
+@keyframes elite-cta-sweep {
+  0% { opacity: 0; transform: translateX(-180%) rotate(18deg); }
+  18% { opacity: .85; }
+  100% { opacity: 0; transform: translateX(470%) rotate(18deg); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .landing-page .cd-hero::before { animation: elite-ambient-drift 22s ease-in-out infinite alternate; }
+  .landing-page .cd-hero::after { animation: elite-orbit-flight 28s ease-in-out infinite alternate; }
+  .landing-page .hero-bg-video { animation: elite-video-glide 32s ease-in-out infinite alternate; }
+  .landing-page .cd-hero h1 span { animation: elite-gradient-flow 8s ease-in-out infinite alternate; }
+  .landing-page .workflow-card::before { animation: elite-panel-sheen 6.5s ease-in-out infinite; }
+  .landing-page .status-dot { animation: elite-signal-pulse 2.6s ease-out infinite; }
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .landing-page .button-primary:hover::after,
+  .landing-page .button-primary:focus-visible::after { animation: elite-cta-sweep .9s ease-out; }
+  .landing-page .tool-card-shell:hover::before,
+  .landing-page .tool-card-shell:focus-within::before { opacity: 1; transform: scaleX(1); }
+  .landing-page .tool-card-shell:hover .tool-glyph,
+  .landing-page .tool-card-shell:focus-within .tool-glyph {
+    border-color: rgba(var(--tool-accent-rgb, 140, 245, 197), .62);
+    box-shadow: 0 0 22px rgba(var(--tool-accent-rgb, 140, 245, 197), .20);
+    transform: translateY(-2px) rotate(-5deg) scale(1.06);
+  }
+  .landing-page .quick-card:hover::after,
+  .landing-page .quick-card:focus-visible::after { opacity: .8; transform: scale(1.12) rotate(10deg); }
+  .landing-page .quick-card.motion-ready.is-motion-visible:hover { transform: translateY(-5px); }
+}
+
+@media (max-width: 760px) {
+  .landing-page .cd-hero::after { opacity: .34; }
+  .landing-page .tool-card-shell::before { right: 14px; left: 14px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .landing-page *,
+  .landing-page *::before,
+  .landing-page *::after {
+    animation: none !important;
+    scroll-behavior: auto !important;
+    transition-duration: .01ms !important;
+  }
+  .landing-page .motion-ready,
+  .landing-page .motion-ready:not(.is-motion-visible),
+  .landing-page .motion-ready.is-motion-visible {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
