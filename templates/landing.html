@@ -50,7 +50,7 @@
 <main id="main-content">
   <section class="cd-hero page-width" id="overview" aria-labelledby="hero-title">
     <video class="hero-bg-video" id="hero-background-video" muted loop playsinline preload="none" poster="{{ url_for('static', filename='img/landing-background-poster.webp') }}" aria-hidden="true" tabindex="-1">
-      <source data-src="{{ url_for('static', filename='video/landing-background.mp4') }}" type="video/mp4">
+      <source data-src="{{ url_for('static', filename='video/landing-background-58e10cdf293b.mp4') }}" type="video/mp4">
     </video>
     <div class="cd-hero-copy">
       <p class="eyebrow"><span class="eyebrow-line"></span> FPV FLIGHT WORKSPACE</p>
@@ -322,21 +322,39 @@
   const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const smallScreen = window.matchMedia('(max-width: 760px)');
-  const constrained = connection && (connection.saveData || /(^|-)2g$|(^|-)3g$/.test(connection.effectiveType || ''));
-  if (reducedMotion.matches || smallScreen.matches || constrained || !source) return;
+  const hasConstrainedNetwork = () => Boolean(connection && (
+    connection.saveData || /(^|-)2g$|(^|-)3g$/.test(connection.effectiveType || '')
+  ));
+  const shouldSkipVideo = () =>
+    reducedMotion.matches || smallScreen.matches || !source || hasConstrainedNetwork();
+  if (shouldSkipVideo()) return;
   const start = () => {
-    if (!source.dataset.src || reducedMotion.matches || smallScreen.matches || (connection && connection.saveData)) return;
+    if (!source.dataset.src || shouldSkipVideo()) return;
     source.src = source.dataset.src;
     video.load();
-    video.play().catch(() => {});
+    const playback = video.play();
+    if (playback && typeof playback.catch === 'function') playback.catch(() => {});
+  };
+  const waitForIdleAfterLoad = () => {
+    const deferUntilIdle = () => {
+      window.setTimeout(() => {
+        if ('requestIdleCallback' in window) {
+          window.requestIdleCallback(start, { timeout: 1500 });
+        } else {
+          start();
+        }
+      }, 1000);
+    };
+    if (document.readyState === 'complete') deferUntilIdle();
+    else window.addEventListener('load', deferUntilIdle, { once: true });
   };
   if ('IntersectionObserver' in window) {
     const observer = new IntersectionObserver((entries) => {
-      if (entries.some((entry) => entry.isIntersecting)) { observer.disconnect(); start(); }
+      if (entries.some((entry) => entry.isIntersecting)) { observer.disconnect(); waitForIdleAfterLoad(); }
     }, { threshold: 0.1 });
     observer.observe(video);
   } else {
-    start();
+    waitForIdleAfterLoad();
   }
 })();
 </script>

@@ -74,3 +74,14 @@
 ## ประวัติที่ต้องรักษา
 
 - PR #12–#14 merge เข้า `main` ก่อนเริ่มงานนี้; changes และ tests เหล่านั้นอยู่ใน base SHA ข้างต้น. ห้าม cherry-pick ซ้ำหรือย้อนการแก้ไข.
+
+
+## Follow-up: Landing background video resource optimization (branch `perf/landing-video-optimization`)
+
+- [x] Keep the Landing poster as the immediate visual fallback and defer assigning/loading the background MP4 until after the initial page load and an idle opportunity, so video transfer does not compete with the critical paint/LCP window.
+- [x] Reduce the MP4 file size while retaining the existing visual content, framing, and motion at an acceptable inspected quality; keep the existing reduced-motion, mobile, Save-Data, and 2G/3G no-video behavior.
+- [x] Use a content-fingerprinted video URL, mirror identical bytes under `static/` and `public/static/`, and apply long-lived immutable caching only to that fingerprinted URL; preserve the poster/fallback if media cannot load or play.
+- [ ] Deliver the change on this branch through a GitHub PR and verify its Vercel Preview if available; do not merge or deploy/promote Production before owner acceptance.
+
+
+Verification update: the full pytest suite passed (489 tests in 2.90s); Python compileall, `node --check static/sw.js`, `git diff --check`, and byte-identical static/public video mirrors passed. `ffprobe` confirmed H.264 High, 720×1280, 30 fps, 26.666667 seconds, 2,706,358 bytes. Local browser QA observed a 53,490-byte poster at 66 ms and the 2,706,658-byte MP4 transfer starting 1,159 ms after `loadEventEnd`; Chromium left the video source unset at 390×844, under reduced motion, and on simulated 3G, while desktop assigned it. A post-change LCP value was not measured. GitHub PR and Vercel Preview/cache-header runtime verification remain pending.

@@ -25,13 +25,13 @@ def test_landing_uses_optimized_background_video_and_poster(client):
     assert response.status_code == 200
     html = response.get_data(as_text=True)
     assert 'class="hero-bg-video" id="hero-background-video" muted loop playsinline preload="none"' in html
-    assert 'data-src="/static/video/landing-background.mp4"' in html
+    assert 'data-src="/static/video/landing-background-58e10cdf293b.mp4"' in html
     assert 'autoplay' not in html
     assert "prefers-reduced-motion: reduce" in html
     assert "navigator.connection" in html
     assert '/static/img/landing-background-poster.webp' in html
 
-    video = client.get("/static/video/landing-background.mp4")
+    video = client.get("/static/video/landing-background-58e10cdf293b.mp4")
     poster = client.get("/static/img/landing-background-poster.webp")
     assert video.status_code == 200
     assert video.mimetype == "video/mp4"
@@ -80,7 +80,7 @@ def test_service_worker_is_root_scoped_and_not_stale_cached(client):
     assert "STATIC_ALLOWLIST" in response.get_data(as_text=True)
     assert "MAX_ASSET_BYTES" in response.get_data(as_text=True)
     assert "hero-drone-premium.webp" not in response.get_data(as_text=True)
-    assert "/static/video/landing-background.mp4" not in response.get_data(as_text=True)
+    assert "/static/video/landing-background-" not in response.get_data(as_text=True)
 
 
 def test_service_worker_static_cache_is_an_explicit_bounded_allowlist():
@@ -91,7 +91,7 @@ def test_service_worker_static_cache_is_an_explicit_bounded_allowlist():
     assert "rawContentLength !== null" in source
     assert "contentLength !== null && contentLength <= MAX_ASSET_BYTES" in source
     assert "cache.put(request, response.clone())" in source
-    assert "landing-background.mp4" not in source
+    assert "landing-background-" not in source
 
 
 def test_vercel_service_worker_mirror_matches_source():
