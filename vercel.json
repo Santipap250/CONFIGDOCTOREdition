@@ -5,5 +5,16 @@
       "maxDuration": 60,
       "excludeFiles": "{tests/**,**/*.test.py,**/test_*.py,fixtures/**,**/__pycache__/**,**/*.pyc,data/*.db,requirements-dev.txt,static/img/**,static/css/**,static/js/**,static/video/**,static/favicon.png,static/android-chrome-192x192.png,static/apple-touch-icon.png}"
     }
-  }
+  },
+  "headers": [
+    {
+      "source": "/static/video/landing-background-58e10cdf293b.mp4",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    }
+  ]
 }

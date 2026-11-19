@@ -53,6 +53,14 @@
 - เพิ่ม motion แบบเบา (float, scan/sheen, focus/hover emphasis) เฉพาะเมื่อ `prefers-reduced-motion: no-preference`; เนื้อหาและการ์ดต้องไม่หายเมื่อ JS ใช้ไม่ได้.
 - คงลิงก์, search/filter, Saved cloning, Thai/English labels, theme toggle, mobile bottom navigation และ asset parity; ไม่เพิ่ม dependency.
 
+## Follow-up: Landing background video performance
+
+- เริ่ม branch `perf/landing-video-optimization` จาก `origin/main` SHA `9a4c0c88d0f3b087f2090fbc4efd05065d78de90`; ห้ามแก้ `main`, merge PR หรือ deploy/promote Production ก่อนเจ้าของตรวจ Preview และอนุมัติ.
+- รักษา artwork, framing, ความยาว และ motion ของวิดีโอเดิมไว้เป็นหลัก; ทดลอง re-encode H.264 ขนาด 720×1280 ที่ 30 fps แล้วเลือกคุณภาพภาพที่ตรวจจริงได้ พร้อมขนาดไฟล์ที่ลดลงอย่างมีนัยสำคัญ.
+- ให้ poster เป็นภาพเริ่มต้นและปล่อย critical paint/LCP ก่อนเริ่มโหลดวิดีโอ; ค่อยโหลดเมื่อหน้าเสร็จและ browser ว่าง โดยคง `prefers-reduced-motion`, mobile, Save-Data และเครือข่าย 2G/3G เป็นเงื่อนไขไม่โหลด.
+- ใช้ชื่อไฟล์ตาม content fingerprint, เก็บสำเนาให้ตรงกันทั้ง `static/` และ `public/static/`, และกำหนด immutable browser cache เฉพาะ URL ที่ fingerprint แล้ว; ไม่เพิ่ม dependency.
+- รักษา fallback หากวิดีโอโหลด/เล่นไม่ได้; เปลี่ยนเฉพาะ landing asset/template/cache rule/tests ที่จำเป็น และส่งผ่าน branch/PR กับ Vercel Preview เท่านั้น.
+
 ## ข้อจำกัดและแนวทาง rollback
 
 ทุกการเปลี่ยนต้องแยก review ได้ใน branch/PR และสามารถ revert เป็น commit ได้. ไม่ใช้ rewrite ที่เสี่ยงสูง, ไม่เพิ่ม dependency หากทำด้วย existing stack ได้, ไม่แก้ default configuration/credentials ของ production. ยืนยัน route/API contract และ test เดิมก่อน push. Preview verification เป็นคนละขั้นกับ production publish; ไม่มี merge/promotion อัตโนมัติ.
