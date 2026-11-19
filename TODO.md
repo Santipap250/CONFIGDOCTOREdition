@@ -87,4 +87,9 @@
 Verification update: final pytest passed (489 tests in 2.74s); Python compileall, `node --check` for the service worker and inline Landing script, `vercel.json` parsing, `git diff --check`, stale-path scan, and static/public byte parity passed. `ffprobe` confirmed H.264 High, 720×1280, 30 fps, 26.666667 seconds, 2,706,358 bytes. Local browser QA observed the 53,490-byte poster at 66 ms and MP4 transfer beginning 1,159 ms after `loadEventEnd`; Chromium left the source unset at 390×844, under reduced motion, and on simulated 3G. No post-change LCP value was measured. PR #20's exact Vercel deployment is `READY`, but deployed HTML/video response and Cache-Control remain unverified because Preview requires SSO and no temporary share link was approved.
 
 
-Handoff status: PR #20 is open, and Vercel deployment `dpl_FL1CMzri7QCujhBZ9djq4DfnMPne` for commit `038acf9891c16cfd1b9967dec6374c478ec29411` is `READY` at `https://configdoctor-edition-245teovy4-obixconfig.vercel.app`. It remains unmerged; no Production deployment or promotion was performed. The Preview requires Vercel SSO. The owner declined a temporary share link, so the deployed HTML/video response and runtime Cache-Control header are not verified; only source configuration and automated checks are verified.
+Handoff status: PR #20 is now merged; see the current merge and Production records below. The owner chose to keep the current Production deployment, with no rollback. The Preview remains SSO-protected, and deployed HTML/video response headers are unverified because no temporary share link was approved.
+
+
+Merge record: GitHub reports PR #20 was merged by `Santipap250` at 2026-11-20 05:54:42 +07 as merge commit `d2ad28d01d7f88312cec7022c3d984d467864bde`.
+Production record: Vercel deployment `dpl_CQo4fhweFycmeRybmTEWSBrMSqQX` for that commit is `READY` and carries the `configdoctor-edition-obixconfig.vercel.app` alias.
+Owner decision: keep the current Production deployment; no rollback was performed. No temporary Preview share link was created, so the deployed Cache-Control response remains unverified.
