@@ -36,6 +36,7 @@ REQUIRED_FILES = [
     "tests/test_landing_elite.py",
 ]
 PROTECTED_BRANCHES = {"main", "master", "production", "prod"}
+ANSI_ESCAPE_RE = re.compile(r"\x1B\[[0-?]*[ -/]*[@-~]")
 
 
 class WorkflowError(RuntimeError):
@@ -121,10 +122,14 @@ def main() -> int:
 
     try:
         root = find_repo_root()
+        gh_env = os.environ.copy()
+        gh_env["NO_COLOR"] = "1"
+        for color_key in ("CLICOLOR_FORCE", "FORCE_COLOR", "GH_FORCE_TTY"):
+            gh_env.pop(color_key, None)
         if not args.dry_run:
             if not shutil.which("gh"):
                 raise WorkflowError("GitHub CLI `gh` is required. Install it and authenticate separately; this script will not store credentials.")
-            run(["gh", "auth", "status", "--hostname", "github.com"], cwd=root)
+            run(["gh", "auth", "status", "--hostname", "github.com"], cwd=root, env=gh_env)
 
         branch = run(["git", "branch", "--show-current"], cwd=root, capture=True).stdout.strip()
         if not branch:
@@ -210,8 +215,9 @@ def main() -> int:
         prs = run([
             "gh", "pr", "list", "--repo", target_repo, "--head", pr_head,
             "--base", args.base, "--state", "open", "--json", "url",
-        ], cwd=root, capture=True)
-        existing = json.loads((prs.stdout or "").strip() or "[]")
+        ], cwd=root, env=gh_env, capture=True)
+        clean_json = ANSI_ESCAPE_RE.sub("", prs.stdout or "").strip() or "[]"
+        existing = json.loads(clean_json)
         if existing:
             print(f"\nAn open PR already exists; pushed branch updated: {existing[0]['url']}")
             return 0
@@ -219,9 +225,9 @@ def main() -> int:
         created = run([
             "gh", "pr", "create", "--repo", target_repo, "--base", args.base,
             "--head", pr_head, "--title", args.title, "--body", args.body,
-        ], cwd=root, capture=True)
+        ], cwd=root, env=gh_env, capture=True)
         print("\nPull request created:")
-        print((created.stdout or "").strip())
+        print(ANSI_ESCAPE_RE.sub("", created.stdout or "").strip())
         return 0
 
     except WorkflowError as exc:
