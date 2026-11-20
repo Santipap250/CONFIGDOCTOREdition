@@ -371,15 +371,34 @@ pre::-webkit-scrollbar-thumb{background:rgba(0,255,68,.2);border-radius:2px}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
 
 <link rel="stylesheet" href="{{ url_for('static', filename='css/ui-enhance.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/analyzer-workbench.css') }}">
+<script src="{{ url_for('static', filename='js/analyzer-workbench.js') }}" defer></script>
 {% endblock %}
 {% block content %}
 
-<div class="shell">
+<div class="shell analyzer-shell" data-mobile-view="{{ 'results' if analysis else 'setup' }}">
 
 <h1 class="cd-sr-only">Drone Analyzer — CONFIGDOCTOR Edition</h1>
 
+<nav class="analyzer-view-tabs" role="tablist" aria-label="มุมมองเครื่องมือวิเคราะห์โดรน">
+  <button class="analyzer-view-tab" type="button" role="tab" id="analyzer-tab-setup"
+          aria-controls="analyzer-setup" aria-selected="{{ 'false' if analysis else 'true' }}"
+          data-analyzer-view="setup">
+    <span class="analyzer-tab-index">01</span>
+    <span class="analyzer-tab-copy"><strong>ตั้งค่าสเปค</strong><small>BUILD CONFIGURATION</small></span>
+    <span class="analyzer-tab-arrow" aria-hidden="true">↗</span>
+  </button>
+  <button class="analyzer-view-tab" type="button" role="tab" id="analyzer-tab-results"
+          aria-controls="analyzer-results" aria-selected="{{ 'true' if analysis else 'false' }}"
+          data-analyzer-view="results">
+    <span class="analyzer-tab-index">02</span>
+    <span class="analyzer-tab-copy"><strong>ผลวิเคราะห์</strong><small>PID · FILTER · CLI</small></span>
+    <span class="analyzer-tab-arrow" aria-hidden="true">↗</span>
+  </button>
+</nav>
+
 <!-- ════ LEFT: FORM ════ -->
-<aside class="panel">
+<aside class="panel" id="analyzer-setup" aria-labelledby="analyzer-tab-setup">
   <div class="ph">
     <div class="ph-eyebrow"><span class="ph-dot"></span>DRONE ANALYZER</div>
     <div class="ph-h1">วิเคราะห์โดรน FPV</div>
@@ -533,7 +552,7 @@ pre::-webkit-scrollbar-thumb{background:rgba(0,255,68,.2);border-radius:2px}
 </aside>
 
 <!-- ════ RIGHT: OUTPUT ════ -->
-<div class="out">
+<div class="out" id="analyzer-results" aria-labelledby="analyzer-tab-results" tabindex="-1">
 
 {% if not analysis %}
 <div class="empty">
@@ -962,6 +981,13 @@ save</pre>
 </div><!-- /out -->
 </div><!-- /shell -->
 
+<div class="analyzer-mobile-dock" id="analyzerMobileDock" aria-label="เริ่มวิเคราะห์บนมือถือ">
+  <button type="button" class="analyzer-mobile-submit" id="analyzerMobileSubmit">
+    <span class="analyzer-mobile-submit-icon" aria-hidden="true">✦</span>
+    <span class="analyzer-mobile-submit-copy"><strong>วิเคราะห์โดรน</strong><small>คำนวณ PID · FILTER · สร้าง CLI</small></span>
+    <span class="analyzer-mobile-submit-go" aria-hidden="true">GO&nbsp; ↗</span>
+  </button>
+</div>
 
 <div class="toast" id="toastEl"></div>
 
