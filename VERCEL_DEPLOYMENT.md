@@ -11,7 +11,7 @@ This guide describes deploying the Flask application from GitHub to Vercel. It d
 ## 2. Import into Vercel
 
 1. Open the Vercel dashboard and choose **Add New → Project**.
-2. Import `Santipap250/OBIXCONFIGDOCTOR---Vercel-Ready-Edition` (or the repository where you uploaded this project).
+2. Import `Santipap250/CONFIGDOCTOREdition` (or the repository where you uploaded this project).
 3. Set Root Directory to `/`.
 4. Keep Framework Preset on automatic detection / Flask if shown.
 5. Do not enter a custom Build Command or Output Directory. Vercel detects Flask through the top-level WSGI object in `app.py` and the Flask dependency in `requirements.txt`.
@@ -33,11 +33,11 @@ Add the result as `SECRET_KEY`. Do not paste it into GitHub or share it in chat.
 | `FLASK_DEBUG` | `0` | Yes |
 | `TRUST_PROXY` | `1` | Yes |
 | `FORCE_INSECURE` | `0` | Yes |
-| `BASE_URL` | `https://<your-production-domain>` | Recommended |
+| `BASE_URL` | Production only: `https://configdoctoredition.vercel.app` | Recommended |
 | `DATABASE_URL` | Managed PostgreSQL connection string with SSL | Recommended for production |
 | `REDIS_URL` | Managed Redis connection string | Optional |
 
-Set variables for **Preview** and **Production** as appropriate. After assigning a custom domain, update `BASE_URL` to that canonical domain and redeploy.
+Set variables for **Preview** and **Production** as appropriate. Leave `BASE_URL` unset for Preview deployments so the app derives the Preview host from `VERCEL_URL`. For this project's Production scope, the canonical value is `https://configdoctoredition.vercel.app`; changing the currently deployed Production variable and redeploying is a separate owner-approved step.
 
 ## 4. Persistent PostgreSQL for community data
 

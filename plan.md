@@ -64,3 +64,10 @@
 ## ข้อจำกัดและแนวทาง rollback
 
 ทุกการเปลี่ยนต้องแยก review ได้ใน branch/PR และสามารถ revert เป็น commit ได้. ไม่ใช้ rewrite ที่เสี่ยงสูง, ไม่เพิ่ม dependency หากทำด้วย existing stack ได้, ไม่แก้ default configuration/credentials ของ production. ยืนยัน route/API contract และ test เดิมก่อน push. Preview verification เป็นคนละขั้นกับ production publish; ไม่มี merge/promotion อัตโนมัติ.
+
+
+## Follow-up: canonical Vercel hostname alignment
+
+Use the existing Flask/Jinja configuration rather than introducing a new URL mechanism. The desired canonical Production host is `https://configdoctoredition.vercel.app`; `core.py` already lets an explicit `BASE_URL` override the source default and derives a Vercel Preview URL from `VERCEL_URL`, so preserve Preview behavior and change only the Production fallback in source. Align the README, Vercel setup guides, package repository metadata, and current handoff notes; add a regression assertion that the Production fallback is the requested host. Keep any pre-existing Vercel alias only as a compatibility URL if still attached, and do not rewrite dated historical deployment findings in `BUILD_REPORT.md`; append a dated status instead.
+
+Work from `origin/main` at `d2ad28d01d7f88312cec7022c3d984d467864bde` on `fix/canonical-domain-configdoctoredition`. Production Vercel `BASE_URL` is currently an explicit value for the prior host, so source changes alone will not change current Production metadata. Do not edit that Production environment variable, trigger a Production redeploy, merge the PR, or promote any deployment until the owner has reviewed and approved the PR's Preview. Verify the branch using the existing tests, compile checks, and hostname scans, then deliver through a PR and report whether Preview is `READY` or blocked by SSO.
